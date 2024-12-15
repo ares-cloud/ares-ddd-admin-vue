@@ -3,6 +3,9 @@ import localeLogin from '@/views/login/locale/en-US';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 
+// 自定义页面
+import localeAuthority from '@/views/authority/locale/en-US';
+
 import localeSettings from './en-US/settings';
 
 export default {
@@ -25,4 +28,16 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeAuthority,
+  // Common operations
+  'common.operations': 'Operations',
+  'common.search': 'Search',
+  'common.reset': 'Reset',
+  'common.success.operation': 'Operation Successful',
+  'common.error.operation': 'Operation Failed',
+  'common.confirm': 'Confirm',
+  'common.cancel': 'Cancel',
+  'common.delete': 'Delete',
+  'common.edit': 'Edit',
+  'common.create': 'Create',
 };

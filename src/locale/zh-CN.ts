@@ -3,6 +3,9 @@ import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
+// 自定义页面
+import localeAuthority from '@/views/authority/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -25,4 +28,16 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeAuthority,
+  // 通用操作按钮
+  'common.operations': '操作',
+  'common.search': '查询',
+  'common.reset': '重置',
+  'common.success.operation': '操作成功',
+  'common.error.operation': '操作失败',
+  'common.confirm': '确认',
+  'common.cancel': '取消',
+  'common.delete': '删除',
+  'common.edit': '编辑',
+  'common.create': '新建',
 };
