@@ -13,30 +13,26 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item
-                  field="tenantName"
-                  :label="t('authority.tenant.searchTable.form.tenantName')"
+                  field="name"
+                  :label="t('authority.tenant.searchTable.form.name')"
                 >
                   <a-input
-                    v-model="formModel.tenantName"
+                    v-model="formModel.name"
                     :placeholder="
-                      t(
-                        'authority.tenant.searchTable.form.tenantName.placeholder'
-                      )
+                      t('authority.tenant.searchTable.form.name.placeholder')
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="tenantCode"
-                  :label="t('authority.tenant.searchTable.form.tenantCode')"
+                  field="code"
+                  :label="t('authority.tenant.searchTable.form.code')"
                 >
                   <a-input
-                    v-model="formModel.tenantCode"
+                    v-model="formModel.code"
                     :placeholder="
-                      t(
-                        'authority.tenant.searchTable.form.tenantCode.placeholder'
-                      )
+                      t('authority.tenant.searchTable.form.code.placeholder')
                     "
                   />
                 </a-form-item>
@@ -79,109 +75,113 @@
         row-key="id"
         :loading="storeLoading"
         :pagination="pagination"
-        :columns="columns"
         :data="renderData"
         @page-change="onPageChange"
-      />
+      >
+        <template #columns>
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.name')"
+            data-index="name"
+          />
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.code')"
+            data-index="code"
+          />
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.description')"
+            data-index="description"
+          />
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.expireTime')"
+            data-index="expireTime"
+          >
+            <template #cell="{ record }">
+              {{ proxy?.$filters.formatTimestamp(record.expireTime) }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.isDefault')"
+            data-index="isDefault"
+          >
+            <template #cell="{ record }">
+              {{ record.isDefault === 1 ? t('common.yes') : t('common.no') }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.status')"
+            data-index="status"
+          >
+            <template #cell="{ record }">
+              {{
+                record.status === 1
+                  ? t('authority.status.enabled')
+                  : t('authority.status.disabled')
+              }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            :title="t('authority.tenant.searchTable.columns.adminUsername')"
+            data-index="adminUsername"
+          >
+            <template #cell="{ record }">
+              {{ record?.adminUser?.username }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            :title="t('common.table.columns.createdAt')"
+            data-index="createdAt"
+          >
+            <template #cell="{ record }">
+              {{ proxy?.$filters.formatTimestamp(record.createdAt) }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            :title="t('common.table.columns.updatedAt')"
+            data-index="updatedAt"
+          >
+            <template #cell="{ record }">
+              {{ proxy?.$filters.formatTimestamp(record.updatedAt) }}
+            </template>
+          </a-table-column>
+          <a-table-column :title="t('common.operations')">
+            <template #cell="{ record }">
+              <a-space>
+                <a-button type="text" @click="openDetailModal(record)">
+                  {{ t('authority.button.view') }}
+                </a-button>
+                <a-button type="text" @click="openEditModal(record)">
+                  {{ t('authority.button.edit') }}
+                </a-button>
+                <a-button
+                  type="text"
+                  status="danger"
+                  @click="handleDelete(record)"
+                >
+                  {{ t('authority.button.delete') }}
+                </a-button>
+              </a-space>
+            </template>
+          </a-table-column>
+        </template>
+      </a-table>
     </a-card>
 
     <!-- 创建/编辑租户的弹窗 -->
-    <a-modal
+    <edit-modal
       v-model:visible="modalVisible"
-      :title="modalTitle"
-      @ok="handleModalOk"
-      @cancel="handleModalCancel"
-    >
-      <a-form
-        ref="formRef"
-        :model="modalForm"
-        :rules="rules"
-        label-align="right"
-        :label-col-props="{ span: 6 }"
-        :wrapper-col-props="{ span: 18 }"
-      >
-        <a-form-item
-          field="tenantName"
-          :label="t('authority.tenant.searchTable.columns.tenantName')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.tenant.searchTable.form.tenantName.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.tenantName"
-            :placeholder="
-              t('authority.tenant.searchTable.form.tenantName.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="tenantCode"
-          :label="t('authority.tenant.searchTable.columns.tenantCode')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.tenant.searchTable.form.tenantCode.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.tenantCode"
-            :placeholder="
-              t('authority.tenant.searchTable.form.tenantCode.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="description"
-          :label="t('authority.tenant.searchTable.columns.description')"
-        >
-          <a-textarea
-            v-model="modalForm.description"
-            :placeholder="
-              t('authority.tenant.searchTable.form.description.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="is_default"
-          :label="t('authority.tenant.searchTable.columns.is_default')"
-        >
-          <a-switch v-model="modalForm.is_default" />
-        </a-form-item>
-        <a-form-item
-          field="expireTime"
-          :label="t('authority.tenant.searchTable.columns.expireTime')"
-          :rules="[{ required: true, message: '请选择过期时间' }]"
-        >
-          <a-date-picker
-            v-model="modalForm.expireTime"
-            show-time
-            style="width: 100%"
-          />
-        </a-form-item>
-        <a-form-item
-          field="status"
-          :label="t('authority.tenant.searchTable.columns.status')"
-        >
-          <a-switch v-model="modalForm.status" />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+      :data="modalForm"
+      @success="handleSuccess"
+    />
+
+    <!-- 详情弹窗 -->
+    <detail-modal v-model:visible="detailVisible" :data="detailData" />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, h, computed } from 'vue';
+  import { ref, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import {
     IconSearch,
     IconRefresh,
@@ -194,46 +194,46 @@
     TenantUpdateRequest,
   } from '@/types/api/authority';
   import { useAppStore } from '@/store';
+  import EditModal from './components/edit-modal.vue';
+  import DetailModal from './components/detail-modal.vue';
+
+  const instance = getCurrentInstance();
+  const proxy = instance?.proxy;
 
   const { t } = useI18n();
   const appStore = useAppStore();
   const storeLoading = computed(() => appStore.loading);
-
+  const detailData = ref<TenantModel>({} as TenantModel);
   const formModel = ref({
-    tenantName: '',
-    tenantCode: '',
+    name: '',
+    code: '',
   });
 
   const renderData = ref<TenantModel[]>([]);
   const modalVisible = ref(false);
+  const detailVisible = ref(false);
   const modalTitle = ref('');
   const formRef = ref();
 
-  const modalForm = reactive({
+  const defaultFormData = {
     id: '',
-    tenantName: '',
-    tenantCode: '',
-    expireTime: '',
-    status: true,
+    name: '',
+    code: '',
+    expireTime: 0,
+    status: 1,
     description: '',
-    is_default: 0,
-  });
-
-  const rules = {
-    tenantName: [
-      {
-        required: true,
-        message: t('authority.tenant.searchTable.form.tenantName.placeholder'),
-      },
-    ],
-    tenantCode: [
-      {
-        required: true,
-        message: t('authority.tenant.searchTable.form.tenantCode.placeholder'),
-      },
-    ],
-    expireTime: [{ required: true, message: '请选择过期时间' }],
+    isDefault: 0,
+    adminUsername: '',
+    adminUser: {
+      username: '',
+      password: '',
+      name: '',
+      email: '',
+      phone: '',
+    },
   };
+  const modalForm = reactive<TenantModel>({ ...defaultFormData });
+
   const pagination = reactive({
     current: 1,
     pageSize: 10,
@@ -253,14 +253,14 @@
       renderData.value = data.list;
       pagination.total = data.total;
     } catch (err) {
-      Message.error('查询失败');
+      Message.error(t('authority.common.search.failed'));
     }
   };
 
   const reset = () => {
     formModel.value = {
-      tenantName: '',
-      tenantCode: '',
+      name: '',
+      code: '',
     };
     search();
   };
@@ -268,12 +268,14 @@
   const openEditModal = (record: TenantModel) => {
     modalTitle.value = t('authority.tenant.modal.title.edit');
     modalForm.id = record.id;
-    modalForm.tenantName = record.tenantName;
-    modalForm.tenantCode = record.tenantCode;
+    modalForm.name = record.name;
+    modalForm.code = record.code;
     modalForm.expireTime = record.expireTime;
-    modalForm.status = record.status === 1;
+    modalForm.status = record.status;
     modalForm.description = record.description;
-    modalForm.is_default = record.is_default;
+    modalForm.isDefault = record.isDefault;
+    modalForm.adminUser.username = record.adminUsername;
+    modalForm.adminUser.password = record.adminUser?.password;
     modalVisible.value = true;
   };
 
@@ -281,7 +283,7 @@
     Modal.confirm({
       title: t('authority.tenant.delete.confirm.title'),
       content: t('authority.tenant.delete.confirm.content', {
-        name: record.tenantName,
+        name: record.name,
       }),
       onOk: async () => {
         try {
@@ -289,74 +291,11 @@
           Message.success(t('common.success.operation'));
           search();
         } catch (err) {
-          Message.error('操作失败');
+          Message.error(t('authority.common.operation.failed'));
         }
       },
     });
   };
-
-  const columns: TableColumnData[] = [
-    {
-      title: t('authority.tenant.searchTable.columns.tenantName'),
-      dataIndex: 'tenantName',
-    },
-    {
-      title: t('authority.tenant.searchTable.columns.tenantCode'),
-      dataIndex: 'tenantCode',
-    },
-    {
-      title: t('authority.tenant.searchTable.columns.description'),
-      dataIndex: 'description',
-    },
-    {
-      title: t('authority.tenant.searchTable.columns.expireTime'),
-      dataIndex: 'expireTime',
-    },
-    {
-      title: t('authority.tenant.searchTable.columns.is_default'),
-      dataIndex: 'is_default',
-      render: ({ record }) => {
-        return h('span', {}, record.is_default === 1 ? '是' : '否');
-      },
-    },
-    {
-      title: t('authority.tenant.searchTable.columns.status'),
-      dataIndex: 'status',
-      render: ({ record }) => {
-        return h(
-          'span',
-          {},
-          record.status === 1
-            ? t('authority.status.enabled')
-            : t('authority.status.disabled')
-        );
-      },
-    },
-    {
-      title: t('common.operations'),
-      dataIndex: 'operations',
-      render: ({ record }) => {
-        return h('div', [
-          h(
-            'a',
-            {
-              style: { marginRight: '15px' },
-              onClick: () => openEditModal(record as TenantModel),
-            },
-            t('authority.button.edit')
-          ),
-          h(
-            'a',
-            {
-              style: { color: '#FF7D00' },
-              onClick: () => handleDelete(record as TenantModel),
-            },
-            t('authority.button.delete')
-          ),
-        ]);
-      },
-    },
-  ];
 
   const onPageChange = (current: number) => {
     pagination.current = current;
@@ -365,40 +304,21 @@
 
   const openCreateModal = () => {
     modalTitle.value = t('authority.tenant.modal.title.create');
-    modalForm.id = '';
-    modalForm.tenantName = '';
-    modalForm.tenantCode = '';
-    modalForm.expireTime = '';
-    modalForm.status = true;
-    modalForm.description = '';
-    modalForm.is_default = 0;
+    Object.assign(modalForm, defaultFormData);
     modalVisible.value = true;
   };
 
-  const handleModalOk = async () => {
-    const result = await formRef.value?.validate();
-    if (!result) {
-      try {
-        const submitData = {
-          ...modalForm,
-          status: modalForm.status ? 1 : 0,
-        };
-        if (modalForm.id) {
-          await tenantApi.update(submitData as TenantUpdateRequest);
-        } else {
-          await tenantApi.create(submitData as TenantCreateRequest);
-        }
-        modalVisible.value = false;
-        Message.success(t('common.success.operation'));
-        search();
-      } catch (err) {
-        Message.error('操作失败');
-      }
-    }
+  const openDetailModal = (record: TenantModel) => {
+    detailData.value = { ...record };
+    detailVisible.value = true;
   };
 
-  const handleModalCancel = () => {
-    modalVisible.value = false;
+  const handleSuccess = (needReset?: boolean) => {
+    if (needReset) {
+      reset();
+    } else {
+      search();
+    }
   };
 
   // 初始加载

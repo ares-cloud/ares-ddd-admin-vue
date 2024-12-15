@@ -81,147 +81,16 @@
       />
     </a-card>
     <!-- 创建/编辑用户的弹窗 -->
-    <a-modal
-      v-model:visible="modalVisible"
-      :title="modalTitle"
-      @ok="handleModalOk"
-      @cancel="handleModalCancel"
-    >
-      <a-form
-        ref="formRef"
-        :model="modalForm"
-        :rules="rules"
-        label-align="right"
-        :label-col-props="{ span: 6 }"
-        :wrapper-col-props="{ span: 18 }"
-      >
-        <a-form-item
-          field="username"
-          :label="t('authority.user.searchTable.columns.userName')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.user.searchTable.form.userName.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.username"
-            :placeholder="
-              t('authority.user.searchTable.form.userName.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="!modalForm.id"
-          field="password"
-          :label="t('authority.user.searchTable.columns.password')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.user.searchTable.form.password.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input-password
-            v-model="modalForm.password"
-            :placeholder="
-              t('authority.user.searchTable.form.password.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="name"
-          :label="t('authority.user.searchTable.columns.name')"
-          :rules="[
-            {
-              required: true,
-              message: t('authority.user.searchTable.form.name.placeholder'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.name"
-            :placeholder="t('authority.user.searchTable.form.name.placeholder')"
-          />
-        </a-form-item>
-        <a-form-item
-          field="email"
-          :label="t('authority.user.searchTable.columns.email')"
-          :rules="[
-            {
-              required: true,
-              message: t('authority.user.searchTable.form.email.placeholder'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.email"
-            :placeholder="
-              t('authority.user.searchTable.form.email.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="phone"
-          :label="t('authority.user.searchTable.columns.phone')"
-        >
-          <a-input
-            v-model="modalForm.phone"
-            :placeholder="
-              t('authority.user.searchTable.form.phone.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="roleIds"
-          :label="t('authority.user.searchTable.columns.role')"
-          :rules="[
-            {
-              required: true,
-              message: t('authority.user.searchTable.form.role.placeholder'),
-            },
-          ]"
-        >
-          <a-select
-            v-model="modalForm.roleIds"
-            multiple
-            :placeholder="t('authority.user.searchTable.form.role.placeholder')"
-          >
-            <!-- <a-option v-for="role in roles" :key="role.id" :value="role.id">
-              {{ role.roleName }}
-            </a-option> -->
-          </a-select>
-        </a-form-item>
-        <a-form-item
-          v-if="!modalForm.id"
-          field="invitationCode"
-          :label="t('authority.user.searchTable.columns.invitationCode')"
-        >
-          <a-input
-            v-model="modalForm.invitationCode"
-            :placeholder="
-              t('authority.user.searchTable.form.invitationCode.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="status"
-          :label="t('authority.user.searchTable.columns.status')"
-        >
-          <a-switch v-model="modalForm.status" />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+    <edit-modal
+      v-model:visible="editVisible"
+      :data="currentData"
+      @success="handleSuccess"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { h, reactive, ref } from 'vue';
+  import { getCurrentInstance, h, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -231,14 +100,12 @@
     IconSearch,
   } from '@arco-design/web-vue/es/icon';
   import { userApi } from '@/api/authority';
-  import type {
-    UserCreateRequest,
-    UserModel,
-    UserUpdateRequest,
-  } from '@/types/api/authority';
+  import type { UserModel } from '@/types/api/authority';
+  import EditModal from './components/edit-modal.vue';
 
   const { t } = useI18n();
-
+  const instance = getCurrentInstance();
+  const proxy = instance?.proxy;
   const formModel = ref({
     username: '',
     email: '',
@@ -247,11 +114,9 @@
 
   const loading = ref(false);
   const renderData = ref<UserModel[]>([]);
-  const modalVisible = ref(false);
-  const modalTitle = ref('');
-  const formRef = ref();
-
-  const modalForm = reactive({
+  const editVisible = ref(false);
+  const currentData = ref<UserModel>({} as UserModel);
+  const defaultFormData = {
     id: '',
     username: '',
     password: '',
@@ -260,29 +125,7 @@
     phone: '',
     roleIds: [] as number[],
     invitationCode: '',
-    status: true,
-  });
-
-  const rules = {
-    username: [
-      {
-        required: true,
-        message: t('authority.user.searchTable.form.userName.placeholder'),
-      },
-    ],
-    password: [{ required: true, message: '请输入密码' }],
-    email: [
-      {
-        required: true,
-        message: t('authority.user.searchTable.form.email.placeholder'),
-      },
-    ],
-    roleId: [
-      {
-        required: true,
-        message: t('authority.user.searchTable.form.role.placeholder'),
-      },
-    ],
+    status: 1,
   };
 
   const pagination = reactive({
@@ -321,16 +164,10 @@
   };
 
   const openEditModal = (record: UserModel) => {
-    modalTitle.value = t('authority.user.modal.title.edit');
-    modalForm.id = record.id;
-    modalForm.username = record.username;
-    modalForm.name = record.name;
-    modalForm.email = record.email;
-    modalForm.phone = record.phone;
-    modalForm.roleIds = record.roleIds;
-    modalForm.status = record.status === 1;
-    modalVisible.value = true;
+    currentData.value = { ...record };
+    editVisible.value = true;
   };
+
   const handleDelete = async (record: UserModel) => {
     Modal.confirm({
       title: t('authority.user.delete.confirm.title'),
@@ -376,12 +213,28 @@
       title: t('authority.user.searchTable.columns.status'),
       dataIndex: 'status',
       render: ({ record }) => {
-        return h('span', {}, record.status === 1 ? '启用' : '禁用');
+        return h(
+          'span',
+          {},
+          record.status === 1
+            ? t('common.status.enabled')
+            : t('common.status.disabled')
+        );
       },
     },
     {
-      title: t('authority.user.searchTable.columns.createdTime'),
-      dataIndex: 'createTime',
+      title: t('common.table.columns.createdAt'),
+      dataIndex: 'createdAt',
+      render: ({ record }) => {
+        return h('span', {}, proxy?.$filters.formatTimestamp(record.createdAt));
+      },
+    },
+    {
+      title: t('common.table.columns.updatedAt'),
+      dataIndex: 'updatedAt',
+      render: ({ record }) => {
+        return h('span', {}, proxy?.$filters.formatTimestamp(record.updatedAt));
+      },
     },
     {
       title: t('common.operations'),
@@ -415,43 +268,16 @@
   };
 
   const openCreateModal = () => {
-    modalTitle.value = t('authority.user.modal.title.create');
-    modalForm.id = '';
-    modalForm.username = '';
-    modalForm.password = '';
-    modalForm.name = '';
-    modalForm.email = '';
-    modalForm.phone = '';
-    modalForm.roleIds = [];
-    modalForm.invitationCode = '';
-    modalForm.status = true;
-    modalVisible.value = true;
+    currentData.value = defaultFormData;
+    editVisible.value = true;
   };
 
-  const handleModalOk = async () => {
-    const result = await formRef.value?.validate();
-    if (!result) {
-      try {
-        const submitData = {
-          ...modalForm,
-          status: modalForm.status ? 1 : 0,
-        };
-        if (modalForm.id) {
-          await userApi.update(submitData as UserUpdateRequest);
-        } else {
-          await userApi.create(submitData as UserCreateRequest);
-        }
-        modalVisible.value = false;
-        Message.success(t('common.success.operation'));
-        search();
-      } catch (err) {
-        Message.error('操作失败');
-      }
+  const handleSuccess = (needReset?: boolean) => {
+    if (needReset) {
+      reset();
+    } else {
+      search();
     }
-  };
-
-  const handleModalCancel = () => {
-    modalVisible.value = false;
   };
 
   // 初始加载

@@ -8,7 +8,9 @@ export interface UserModel {
   status: number;
   roleIds: number[];
   invitationCode: string;
-  createTime: string;
+  password: string;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 export interface UserCreateRequest {
@@ -37,8 +39,8 @@ export interface RoleModel {
   code: string;
   description: string;
   status: number;
-  createTime: string;
-  updateTime: string;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 export interface RoleCreateRequest {
@@ -72,8 +74,8 @@ export interface PermissionModel {
   properties?: string;
   resources: ResourceModel[];
   status: number;
-  createTime?: number;
-  updateTime?: number;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 export interface PermissionCreateRequest {
@@ -107,25 +109,61 @@ export interface PermissionUpdateRequest {
 }
 
 // 租户相关类型
+export interface TenantAdminUser {
+  username: string;
+  password: string;
+  name: string;
+  email: string;
+  phone: string;
+}
+
 export interface TenantModel {
   id: string;
-  tenantName: string;
-  tenantCode: string;
+  name: string;
+  code: string;
   status: number;
-  expireTime: string;
-  createTime: string;
-  updateTime: string;
-  is_default: number;
-  description: string;
+  expireTime: number;
+  description?: string;
+  isDefault: number;
+  createdAt?: number;
+  updatedAt?: number;
+  adminUser: TenantAdminUser;
+  adminUsername: string;
 }
 
 export interface TenantCreateRequest {
-  tenantName: string;
-  tenantCode: string;
-  expireTime: string;
+  name: string;
+  code: string;
+  expireTime: number;
+  description?: string;
+  isDefault?: number;
+  adminUser: TenantAdminUser;
 }
 
-export interface TenantUpdateRequest extends Partial<TenantCreateRequest> {
+export interface TenantUpdateRequest {
   id: string;
-  status?: number;
+  name: string;
+  code: string;
+  expireTime: number;
+  description?: string;
+  isDefault?: number;
+  status: number;
+}
+
+// 权限树节点模型
+export interface PermissionTreeNode {
+  id: string;
+  name: string;
+  code: string;
+  type: number;
+  icon?: string;
+  path?: string;
+  parentId?: number;
+  sequence?: number;
+  description?: string;
+  localize?: string;
+  properties?: string;
+  resources: ResourceModel[];
+  status: number;
+  children?: PermissionTreeNode[];
 }

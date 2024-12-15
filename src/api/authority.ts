@@ -12,6 +12,7 @@ import type {
   TenantModel,
   TenantCreateRequest,
   TenantUpdateRequest,
+  PermissionTreeNode,
 } from '@/types/api/authority';
 import type { PageRequest, PageResult } from '@/types/api/base';
 
@@ -29,7 +30,13 @@ export const userApi = {
     request<UserModel>(`${BASE_URL}/user`, { method: 'POST', data }),
 
   update: (data: UserUpdateRequest) =>
-    request<UserModel>(`${BASE_URL}/user/${data.id}`, { method: 'PUT', data }),
+    request<UserModel>(`${BASE_URL}/user`, { method: 'PUT', data }),
+
+  updateStatus: (id: string, status: number) =>
+    request<void>(`${BASE_URL}/user/${id}/status`, {
+      method: 'PUT',
+      data: { status },
+    }),
 
   delete: (id: string) =>
     request<void>(`${BASE_URL}/user/${id}`, { method: 'DELETE' }),
@@ -50,7 +57,7 @@ export const roleApi = {
     request<RoleModel>(`${BASE_URL}/role`, { method: 'POST', data }),
 
   update: (data: RoleUpdateRequest) =>
-    request<RoleModel>(`${BASE_URL}/role/${data.id}`, { method: 'PUT', data }),
+    request<RoleModel>(`${BASE_URL}/role`, { method: 'PUT', data }),
 
   delete: (id: string) =>
     request<void>(`${BASE_URL}/role/${id}`, { method: 'DELETE' }),
@@ -67,6 +74,11 @@ export const permissionsApi = {
       params,
     }),
 
+  getTree: () =>
+    request<PermissionTreeNode[]>(`${BASE_URL}/permissions/tree`, {
+      method: 'GET',
+    }),
+
   create: (data: PermissionCreateRequest) =>
     request<PermissionModel>(`${BASE_URL}/permissions`, {
       method: 'POST',
@@ -74,7 +86,7 @@ export const permissionsApi = {
     }),
 
   update: (data: PermissionUpdateRequest) =>
-    request<PermissionModel>(`${BASE_URL}/permissions/${data.id}`, {
+    request<PermissionModel>(`${BASE_URL}/permissions`, {
       method: 'PUT',
       data,
     }),
@@ -100,7 +112,7 @@ export const tenantApi = {
     request<TenantModel>(`${BASE_URL}/tenant`, { method: 'POST', data }),
 
   update: (data: TenantUpdateRequest) =>
-    request<TenantModel>(`${BASE_URL}/tenant/${data.id}`, {
+    request<TenantModel>(`${BASE_URL}/tenant`, {
       method: 'PUT',
       data,
     }),
@@ -110,4 +122,20 @@ export const tenantApi = {
 
   getById: (id: string) =>
     request<TenantModel>(`${BASE_URL}/tenant/${id}`, { method: 'GET' }),
+
+  // 获取租户权限
+  getTenantPermissions: (tenantId: string) =>
+    request<PermissionTreeNode[]>(
+      `${BASE_URL}/tenant/${tenantId}/permissions`,
+      {
+        method: 'GET',
+      }
+    ),
+
+  // 分配权限给租户
+  assignPermissions: (tenantId: string, permissionIds: string[]) =>
+    request<void>(`${BASE_URL}/tenant/${tenantId}/permissions`, {
+      method: 'PUT',
+      data: { permissionIds },
+    }),
 };

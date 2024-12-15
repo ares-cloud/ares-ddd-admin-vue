@@ -40,4 +40,15 @@ export default {
   'common.delete': '删除',
   'common.edit': '编辑',
   'common.create': '新建',
+  'common.yes': '是',
+  'common.no': '否',
+  'common.table.columns.createdAt': '创建时间',
+  'common.table.columns.updatedAt': '更新时间',
+  // 状态相关
+  'common.status.enabled': '启用',
+  'common.status.disabled': '禁用',
+  'common.status.normal': '正常',
+  'common.status.abnormal': '异常',
+  'common.status.locked': '锁定',
+  'common.status.deleted': '已删除',
 };

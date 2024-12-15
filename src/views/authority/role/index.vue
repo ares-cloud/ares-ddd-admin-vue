@@ -141,7 +141,11 @@
           field="status"
           :label="t('authority.role.searchTable.columns.status')"
         >
-          <a-switch v-model="modalForm.status" />
+          <a-switch
+            v-model="modalForm.status"
+            :checked-value="1"
+            :unchecked-value="2"
+          />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -149,7 +153,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { h, reactive, ref } from 'vue';
+  import { getCurrentInstance, h, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -165,6 +169,8 @@
     RoleUpdateRequest,
   } from '@/types/api/authority';
 
+  const instance = getCurrentInstance();
+  const proxy = instance?.proxy;
   const { t } = useI18n();
 
   const formModel = ref({
@@ -288,6 +294,20 @@
             ? t('authority.status.enabled')
             : t('authority.status.disabled')
         );
+      },
+    },
+    {
+      title: t('common.table.columns.createdAt'),
+      dataIndex: 'createdAt',
+      render: ({ record }) => {
+        return h('span', {}, proxy?.$filters.formatTimestamp(record.createdAt));
+      },
+    },
+    {
+      title: t('common.table.columns.updatedAt'),
+      dataIndex: 'updatedAt',
+      render: ({ record }) => {
+        return h('span', {}, proxy?.$filters.formatTimestamp(record.updatedAt));
       },
     },
     {

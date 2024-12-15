@@ -40,4 +40,15 @@ export default {
   'common.delete': 'Delete',
   'common.edit': 'Edit',
   'common.create': 'Create',
+  'common.yes': 'Yes',
+  'common.no': 'No',
+  'common.table.columns.createdAt': 'Created Time',
+  'common.table.columns.updatedAt': 'Updated Time',
+  // Status Related
+  'common.status.enabled': 'Enabled',
+  'common.status.disabled': 'Disabled',
+  'common.status.normal': 'Normal',
+  'common.status.abnormal': 'Abnormal',
+  'common.status.locked': 'Locked',
+  'common.status.deleted': 'Deleted',
 };

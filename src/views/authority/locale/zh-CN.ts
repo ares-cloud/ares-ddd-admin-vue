@@ -42,7 +42,7 @@ export default {
   'authority.role.searchTable.columns.status': '状态',
   'authority.role.modal.title.edit': '编辑角色',
   'authority.role.delete.confirm.title': '确认删除',
-  'authority.role.delete.confirm.content': '确定删除角色 {name} 吗？',
+  'authority.role.delete.confirm.content': '确定删��角色 {name} 吗？',
 
   // 权限管理
   'authority.permission.searchTable.form.name': '权限名称',
@@ -84,13 +84,13 @@ export default {
     '请输入属性信息',
 
   // 租户管理
-  'authority.tenant.searchTable.form.tenantName': '租户名称',
-  'authority.tenant.searchTable.form.tenantName.placeholder': '请输入租户名称',
-  'authority.tenant.searchTable.form.tenantCode': '租户编码',
-  'authority.tenant.searchTable.form.tenantCode.placeholder': '请输入租户编码',
+  'authority.tenant.searchTable.form.name': '租户名称',
+  'authority.tenant.searchTable.form.name.placeholder': '请输入租户名称',
+  'authority.tenant.searchTable.form.code': '租户编码',
+  'authority.tenant.searchTable.form.code.placeholder': '请输入租户编码',
   'authority.tenant.searchTable.operation.create': '新建租户',
-  'authority.tenant.searchTable.columns.tenantName': '租户名称',
-  'authority.tenant.searchTable.columns.tenantCode': '租户编码',
+  'authority.tenant.searchTable.columns.name': '租户名称',
+  'authority.tenant.searchTable.columns.code': '租户编码',
   'authority.tenant.searchTable.columns.status': '状态',
   'authority.tenant.searchTable.columns.expireTime': '过期时间',
   'authority.tenant.modal.title.create': '创建租户',
@@ -98,13 +98,36 @@ export default {
   'authority.tenant.delete.confirm.title': '确认删除',
   'authority.tenant.delete.confirm.content': '确定要删除租户 {name} 吗？',
   'authority.tenant.searchTable.columns.description': '描述',
-  'authority.tenant.searchTable.columns.is_default': '是否默认',
+  'authority.tenant.searchTable.columns.isDefault': '是否默认',
   'authority.tenant.searchTable.form.description.placeholder': '请输入描述信息',
-  'authority.tenant.searchTable.form.is_default': '是否默认租户',
+  'authority.tenant.searchTable.form.isDefault': '是否默认租户',
+  'authority.tenant.searchTable.columns.adminUsername': '管理员',
+  'authority.tenant.searchTable.form.adminUser.username': '管理员用户名',
+  'authority.tenant.searchTable.form.adminUser.username.placeholder':
+    '请输入管理员用户名',
+  'authority.tenant.searchTable.form.adminUser.password': '管理员密码',
+  'authority.tenant.searchTable.form.adminUser.password.placeholder':
+    '请输��管理员密码',
+  'authority.tenant.searchTable.form.adminUser.email': '管理员邮箱',
+  'authority.tenant.searchTable.form.adminUser.email.placeholder':
+    '请输入管理员邮箱',
+  'authority.tenant.searchTable.form.adminUser.phone': '管理员手机号',
+  'authority.tenant.searchTable.form.adminUser.phone.placeholder':
+    '请输入管理员手机号',
+  'authority.tenant.modal.title.detail': '租户详情',
+  'authority.tenant.detail.tenant.title': '租户信息',
+  'authority.tenant.detail.admin.title': '管理员信息',
 
   // 通用
   'authority.status.enabled': '启用',
   'authority.status.disabled': '禁用',
   'authority.button.edit': '编辑',
   'authority.button.delete': '删除',
+  'authority.button.view': '查看',
+  'authority.button.assign': '分配',
+  'authority.common.expireTime.placeholder': '请选择过期时间',
+  'authority.common.operation.success': '操作成功',
+  'authority.common.operation.failed': '操作失败',
+  'authority.common.delete.failed': '删除失败',
+  'authority.common.search.failed': '查询失败',
 };

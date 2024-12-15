@@ -75,15 +75,15 @@ export default {
     'Are you sure to delete permission {name}?',
 
   // Tenant Management
-  'authority.tenant.searchTable.form.tenantName': 'Tenant Name',
-  'authority.tenant.searchTable.form.tenantName.placeholder':
+  'authority.tenant.searchTable.form.name': 'Tenant Name',
+  'authority.tenant.searchTable.form.name.placeholder':
     'Please enter tenant name',
-  'authority.tenant.searchTable.form.tenantCode': 'Tenant Code',
-  'authority.tenant.searchTable.form.tenantCode.placeholder':
+  'authority.tenant.searchTable.form.code': 'Tenant Code',
+  'authority.tenant.searchTable.form.code.placeholder':
     'Please enter tenant code',
   'authority.tenant.searchTable.operation.create': 'Create Tenant',
-  'authority.tenant.searchTable.columns.tenantName': 'Tenant Name',
-  'authority.tenant.searchTable.columns.tenantCode': 'Tenant Code',
+  'authority.tenant.searchTable.columns.name': 'Tenant Name',
+  'authority.tenant.searchTable.columns.code': 'Tenant Code',
   'authority.tenant.searchTable.columns.status': 'Status',
   'authority.tenant.searchTable.columns.expireTime': 'Expire Time',
   'authority.tenant.modal.title.create': 'Create Tenant',
@@ -92,14 +92,23 @@ export default {
   'authority.tenant.delete.confirm.content':
     'Are you sure to delete tenant {name}?',
   'authority.tenant.searchTable.columns.description': 'Description',
-  'authority.tenant.searchTable.columns.is_default': 'Default',
+  'authority.tenant.searchTable.columns.isDefault': 'Default',
   'authority.tenant.searchTable.form.description.placeholder':
     'Please enter description',
-  'authority.tenant.searchTable.form.is_default': 'Default Tenant',
+  'authority.tenant.searchTable.form.isDefault': 'Default Tenant',
+  'authority.tenant.detail.tenant.title': 'Tenant Information',
+  'authority.tenant.detail.admin.title': 'Admin Information',
 
   // Common
   'authority.status.enabled': 'Enabled',
   'authority.status.disabled': 'Disabled',
   'authority.button.edit': 'Edit',
   'authority.button.delete': 'Delete',
+  'authority.button.view': 'View',
+  'authority.button.assign': 'Assign',
+  'authority.common.expireTime.placeholder': 'Please select expire time',
+  'authority.common.operation.success': 'Operation successful',
+  'authority.common.operation.failed': 'Operation failed',
+  'authority.common.delete.failed': 'Delete failed',
+  'authority.common.search.failed': 'Search failed',
 };
