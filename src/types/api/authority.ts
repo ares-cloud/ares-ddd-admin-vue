@@ -38,7 +38,9 @@ export interface RoleModel {
   name: string;
   code: string;
   description: string;
+  localize: string;
   status: number;
+  permIds: number[];
   createdAt?: number;
   updatedAt?: number;
 }
@@ -47,11 +49,13 @@ export interface RoleCreateRequest {
   name: string;
   code: string;
   description?: string;
+  localize?: string;
 }
 
 export interface RoleUpdateRequest extends Partial<RoleCreateRequest> {
   id: number;
   status?: number;
+  permIds: number[];
 }
 
 // 权限相关类型
@@ -180,7 +184,7 @@ export interface SimplePermissionTreeNode {
   children?: SimplePermissionTreeNode[];
 }
 
-// 添加简化版权限树响应类型
+// 添加简化版权���树响应类型
 export interface SimplePermissionTreeResponse {
   ids: number[];
   tree: SimplePermissionTreeNode[];

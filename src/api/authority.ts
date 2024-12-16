@@ -61,7 +61,7 @@ export const roleApi = {
   update: (data: RoleUpdateRequest) =>
     request<RoleModel>(`${BASE_URL}/role`, { method: 'PUT', data }),
 
-  delete: (id: string) =>
+  delete: (id: number) =>
     request<void>(`${BASE_URL}/role/${id}`, { method: 'DELETE' }),
 
   getById: (id: string) =>

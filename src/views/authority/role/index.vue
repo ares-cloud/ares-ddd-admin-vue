@@ -82,73 +82,18 @@
     </a-card>
 
     <!-- 创建/编辑角色的弹窗 -->
-    <a-modal
+    <edit-modal
       v-model:visible="modalVisible"
-      :title="modalTitle"
-      @ok="handleModalOk"
-      @cancel="handleModalCancel"
-    >
-      <a-form
-        ref="formRef"
-        :model="modalForm"
-        :rules="rules"
-        label-align="right"
-        :label-col-props="{ span: 6 }"
-        :wrapper-col-props="{ span: 18 }"
-      >
-        <a-form-item
-          field="name"
-          :label="t('authority.role.searchTable.columns.name')"
-          :rules="[
-            {
-              required: true,
-              message: t('authority.role.searchTable.form.name.placeholder'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.name"
-            :placeholder="t('authority.role.searchTable.form.name.placeholder')"
-          />
-        </a-form-item>
-        <a-form-item
-          field="code"
-          :label="t('authority.role.searchTable.columns.code')"
-          :rules="[
-            {
-              required: true,
-              message: t('authority.role.searchTable.form.code.placeholder'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.code"
-            :placeholder="t('authority.role.searchTable.form.code.placeholder')"
-          />
-        </a-form-item>
-        <a-form-item
-          field="description"
-          :label="t('authority.role.searchTable.columns.description')"
-        >
-          <a-textarea
-            v-model="modalForm.description"
-            :placeholder="
-              t('authority.role.searchTable.form.description.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="status"
-          :label="t('authority.role.searchTable.columns.status')"
-        >
-          <a-switch
-            v-model="modalForm.status"
-            :checked-value="1"
-            :unchecked-value="2"
-          />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+      :data="modalForm"
+      @success="handleSuccess"
+    />
+
+    <!-- 权限分配弹窗 -->
+    <assign-permission-modal
+      v-model:visible="assignPermissionVisible"
+      :role-id="currentRoleId"
+      @success="handleAssignSuccess"
+    />
   </div>
 </template>
 
@@ -168,6 +113,8 @@
     RoleModel,
     RoleUpdateRequest,
   } from '@/types/api/authority';
+  import EditModal from './components/edit-modal.vue';
+  import AssignPermissionModal from './components/assign-permission-modal.vue';
 
   const instance = getCurrentInstance();
   const proxy = instance?.proxy;
@@ -181,31 +128,18 @@
   const loading = ref(false);
   const renderData = ref<RoleModel[]>([]);
   const modalVisible = ref(false);
-  const modalTitle = ref('');
-  const formRef = ref();
-
-  const modalForm = reactive({
-    id: '',
+  const defaultFormData = {
+    id: 0,
     name: '',
     code: '',
     description: '',
-    status: true,
-  });
-
-  const rules = {
-    name: [
-      {
-        required: true,
-        message: t('authority.role.searchTable.form.name.placeholder'),
-      },
-    ],
-    code: [
-      {
-        required: true,
-        message: t('authority.role.searchTable.form.code.placeholder'),
-      },
-    ],
+    status: 1,
+    localize: '',
+    permIds: [] as number[],
   };
+
+  const modalForm = reactive<RoleModel>({ ...defaultFormData });
+
   const pagination = reactive({
     current: 1,
     pageSize: 10,
@@ -233,22 +167,18 @@
   };
 
   const openCreateModal = () => {
-    modalTitle.value = t('authority.role.searchTable.operation.create');
-    modalForm.id = '';
-    modalForm.name = '';
-    modalForm.code = '';
-    modalForm.description = '';
-    modalForm.status = true;
+    Object.assign(modalForm, defaultFormData);
     modalVisible.value = true;
   };
 
   const openEditModal = (record: RoleModel) => {
-    modalTitle.value = t('authority.role.modal.title.edit');
     modalForm.id = record.id;
     modalForm.name = record.name;
     modalForm.code = record.code;
     modalForm.description = record.description;
-    modalForm.status = record.status === 1;
+    modalForm.status = record.status;
+    modalForm.localize = record.localize;
+    modalForm.permIds = record.permIds;
     modalVisible.value = true;
   };
 
@@ -268,6 +198,21 @@
         }
       },
     });
+  };
+
+  const assignPermissionVisible = ref(false);
+  const currentRoleId = ref<number>(0);
+
+  // 打开权限分配弹窗
+  const openAssignPermissionModal = (record: RoleModel) => {
+    currentRoleId.value = record.id;
+    assignPermissionVisible.value = true;
+  };
+
+  // 处理权限分配成功
+  const handleAssignSuccess = () => {
+    assignPermissionVisible.value = false;
+    Message.success(t('authority.role.permission.assign.success'));
   };
 
   const columns: TableColumnData[] = [
@@ -326,6 +271,14 @@
           h(
             'a',
             {
+              style: { marginRight: '15px' },
+              onClick: () => openAssignPermissionModal(record as RoleModel),
+            },
+            t('authority.button.assign')
+          ),
+          h(
+            'a',
+            {
               style: { color: '#FF7D00' },
               onClick: () => handleDelete(record as RoleModel),
             },
@@ -349,31 +302,14 @@
     search();
   };
 
-  const handleModalOk = async () => {
-    const result = await formRef.value?.validate();
-    if (!result) {
-      try {
-        const submitData = {
-          ...modalForm,
-          status: modalForm.status ? 1 : 0,
-        };
-        if (modalForm.id) {
-          await roleApi.update(submitData as RoleUpdateRequest);
-        } else {
-          await roleApi.create(submitData as RoleCreateRequest);
-        }
-        modalVisible.value = false;
-        Message.success(t('common.success.operation'));
-        search();
-      } catch (err) {
-        console.error(err);
-      }
+  const handleSuccess = (needReset?: boolean) => {
+    if (needReset) {
+      reset();
+    } else {
+      search();
     }
   };
 
-  const handleModalCancel = () => {
-    modalVisible.value = false;
-  };
   // 初始加载
   search();
 </script>

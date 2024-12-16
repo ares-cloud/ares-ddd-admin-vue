@@ -46,8 +46,24 @@ export default {
   'authority.role.searchTable.columns.status': 'Status',
   'authority.role.modal.title.edit': 'Edit Role',
   'authority.role.delete.confirm.title': 'Confirm Delete',
+  'authority.role.searchTable.columns.name': 'Role Name',
+  'authority.role.searchTable.columns.code': 'Role Code',
+  'authority.role.searchTable.columns.localize': 'Localization Key',
+  'authority.role.searchTable.form.name.placeholder': 'Please enter role name',
+  'authority.role.searchTable.form.code.placeholder': 'Please enter role code',
+  'authority.role.searchTable.form.localize.placeholder':
+    'Please enter localization key',
+  'authority.role.modal.title.create': 'Create Role',
+  'authority.role.modal.title.assignPermission': 'Assign Permissions',
   'authority.role.delete.confirm.content':
-    'Are you sure to delete role {name}?',
+    'Are you sure you want to delete role {name}?',
+  'authority.role.permission.available': 'Available Permissions',
+  'authority.role.permission.current': 'Current Permissions',
+  'authority.role.permission.select.required': 'Please select permissions',
+  'authority.role.permission.load.failed': 'Failed to load permissions',
+  'authority.role.permission.assign.success':
+    'Permissions assigned successfully',
+  'authority.role.permission.assign.failed': 'Failed to assign permissions',
 
   // Permission Management
   'authority.permission.searchTable.form.permissionName': 'Permission Name',
