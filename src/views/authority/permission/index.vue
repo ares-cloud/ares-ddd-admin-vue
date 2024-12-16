@@ -76,238 +76,39 @@
         </a-col>
       </a-row>
       <a-table
+        v-model:expanded-keys="expandedKeys"
         row-key="id"
         :loading="loading"
-        :pagination="pagination"
+        :pagination="false"
         :columns="columns"
         :data="renderData"
-        @page-change="onPageChange"
+        show-empty-tree
+        style="margin-top: 20px"
       />
     </a-card>
 
     <!-- 创建/编辑权限的弹窗 -->
-    <a-modal
+    <edit-modal
       v-model:visible="modalVisible"
-      :title="modalTitle"
-      @ok="handleModalOk"
-      @cancel="handleModalCancel"
-    >
-      <a-form
-        ref="formRef"
-        :model="modalForm"
-        :rules="rules"
-        label-align="right"
-        :label-col-props="{ span: 6 }"
-        :wrapper-col-props="{ span: 18 }"
-      >
-        <a-form-item
-          field="name"
-          :label="t('authority.permission.searchTable.columns.name')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.permission.searchTable.form.name.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.name"
-            :placeholder="
-              t('authority.permission.searchTable.form.name.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="code"
-          :label="t('authority.permission.searchTable.columns.code')"
-          :rules="[
-            {
-              required: true,
-              message: t(
-                'authority.permission.searchTable.form.code.placeholder'
-              ),
-            },
-          ]"
-        >
-          <a-input
-            v-model="modalForm.code"
-            :placeholder="
-              t('authority.permission.searchTable.form.code.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="type"
-          :label="t('authority.permission.searchTable.columns.type')"
-          :rules="[{ required: true, message: '请选择权限类型' }]"
-        >
-          <a-select v-model="modalForm.type">
-            <a-option :value="1">{{
-              t('authority.permission.type.menu')
-            }}</a-option>
-            <a-option :value="2">{{
-              t('authority.permission.type.button')
-            }}</a-option>
-            <a-option :value="3">{{
-              t('authority.permission.type.api')
-            }}</a-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item
-          field="status"
-          :label="t('authority.permission.searchTable.columns.status')"
-        >
-          <a-switch
-            v-model="modalForm.status"
-            :checked-value="1"
-            :unchecked-value="2"
-          />
-        </a-form-item>
-        <a-form-item
-          field="resources"
-          :label="t('authority.permission.searchTable.columns.resources')"
-        >
-          <div class="resource-list">
-            <div
-              v-for="(resource, index) in modalForm.resources"
-              :key="index"
-              class="resource-item"
-            >
-              <a-select
-                v-model="resource.method"
-                style="width: 120px"
-                :placeholder="t('authority.permission.form.method.placeholder')"
-              >
-                <a-option value="GET">GET</a-option>
-                <a-option value="POST">POST</a-option>
-                <a-option value="PUT">PUT</a-option>
-                <a-option value="DELETE">DELETE</a-option>
-              </a-select>
-              <a-input
-                v-model="resource.path"
-                :placeholder="t('authority.permission.form.path.placeholder')"
-                style="width: calc(100% - 160px); margin: 0 8px"
-              />
-              <a-button
-                type="text"
-                status="danger"
-                @click="removeResource(index)"
-              >
-                <icon-delete />
-              </a-button>
-            </div>
-            <div class="resource-add">
-              <a-button type="outline" @click="addResource">
-                <template #icon>
-                  <icon-plus />
-                </template>
-                {{ t('authority.permission.form.resource.add') }}
-              </a-button>
-            </div>
-          </div>
-        </a-form-item>
-        <a-form-item
-          field="icon"
-          :label="t('authority.permission.searchTable.columns.icon')"
-        >
-          <a-input
-            v-model="modalForm.icon"
-            :placeholder="
-              t('authority.permission.searchTable.form.icon.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="path"
-          :label="t('authority.permission.searchTable.columns.path')"
-        >
-          <a-input
-            v-model="modalForm.path"
-            :placeholder="
-              t('authority.permission.searchTable.form.path.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="parentId"
-          :label="t('authority.permission.searchTable.columns.parentId')"
-        >
-          <a-input-number
-            v-model="modalForm.parentId"
-            :placeholder="
-              t('authority.permission.searchTable.form.parentId.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="sequence"
-          :label="t('authority.permission.searchTable.columns.sequence')"
-        >
-          <a-input-number
-            v-model="modalForm.sequence"
-            :placeholder="
-              t('authority.permission.searchTable.form.sequence.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="description"
-          :label="t('authority.permission.searchTable.columns.description')"
-        >
-          <a-textarea
-            v-model="modalForm.description"
-            :placeholder="
-              t('authority.permission.searchTable.form.description.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="localize"
-          :label="t('authority.permission.searchTable.columns.localize')"
-        >
-          <a-input
-            v-model="modalForm.localize"
-            :placeholder="
-              t('authority.permission.searchTable.form.localize.placeholder')
-            "
-          />
-        </a-form-item>
-        <a-form-item
-          field="properties"
-          :label="t('authority.permission.searchTable.columns.properties')"
-        >
-          <a-textarea
-            v-model="modalForm.properties"
-            :placeholder="
-              t('authority.permission.searchTable.form.properties.placeholder')
-            "
-          />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+      :data="modalForm"
+      @success="handleSuccess"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, h, getCurrentInstance } from 'vue';
+  import { getCurrentInstance, h, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import {
-    IconSearch,
-    IconRefresh,
     IconPlus,
-    IconDelete,
+    IconRefresh,
+    IconSearch,
   } from '@arco-design/web-vue/es/icon';
   import { permissionsApi } from '@/api/authority';
-  import type {
-    PermissionModel,
-    PermissionCreateRequest,
-    PermissionUpdateRequest,
-    ResourceModel,
-  } from '@/types/api/authority';
+  import type { PermissionModel, ResourceModel } from '@/types/api/authority';
+  import EditModal from './components/edit-modal.vue';
 
   const { t } = useI18n();
   const instance = getCurrentInstance();
@@ -319,10 +120,9 @@
 
   const loading = ref(false);
   const renderData = ref<PermissionModel[]>([]);
+  const expandedKeys = ref<(string | number)[]>([]);
   const modalVisible = ref(false);
   const modalTitle = ref('');
-  const formRef = ref();
-
   const defaultFormData = {
     id: '',
     name: '',
@@ -340,39 +140,65 @@
   };
   const modalForm = reactive<PermissionModel>({ ...defaultFormData });
 
-  const rules = {
-    name: [
-      {
-        required: true,
-        message: t('authority.permission.searchTable.form.name.placeholder'),
-      },
-    ],
-    code: [
-      {
-        required: true,
-        message: t('authority.permission.searchTable.form.code.placeholder'),
-      },
-    ],
-    type: [{ required: true, message: '请选择权限类型' }],
-  };
   const pagination = reactive({
     current: 1,
-    pageSize: 10,
+    pageSize: 500,
     total: 0,
     showTotal: true,
     showJumper: true,
     showPageSize: true,
   });
 
+  const sortBySequence = (items: PermissionModel[]): PermissionModel[] => {
+    return items
+      .sort((a, b) => (a.sequence || 0) - (b.sequence || 0))
+      .map((item) => ({
+        ...item,
+        children: item.children?.length ? sortBySequence(item.children) : [],
+      }));
+  };
+
+  const buildPermissionTreeOptimizedWithSorting = (
+    data: PermissionModel[]
+  ): PermissionModel[] => {
+    const idMap: Record<number, PermissionModel> = {};
+    const tree: PermissionModel[] = [];
+
+    // 先建立 id 映射
+    data.forEach((item) => {
+      idMap[item.id] = { ...item, children: [] };
+    });
+
+    // 建立层级关系
+    data.forEach((item) => {
+      if (item.parentId === 0 || !item.parentId) {
+        // 顶级节点
+        tree.push(idMap[item.id]);
+      } else if (idMap[item.parentId]) {
+        // 子节点添加到父节点的 children 中
+        let ch: PermissionModel[] | undefined = idMap[item.parentId].children;
+        const it = idMap[item.id];
+        if (ch) {
+          ch.push(it);
+        } else {
+          ch = [it];
+        }
+        idMap[item.parentId].children = ch;
+      }
+    });
+
+    return tree;
+  };
+
   const search = async () => {
     loading.value = true;
     try {
       const data = await permissionsApi.getList({
-        pageNum: pagination.current,
-        pageSize: pagination.pageSize,
+        current: pagination.current,
+        size: pagination.pageSize,
         ...formModel.value,
       });
-      renderData.value = data.list;
+      renderData.value = buildPermissionTreeOptimizedWithSorting(data.list);
       pagination.total = data.total;
     } catch (err) {
       console.error(err);
@@ -431,9 +257,9 @@
       dataIndex: 'type',
       render: ({ record }) => {
         const typeMap = {
-          0: t('authority.permission.type.menu'),
-          1: t('authority.permission.type.button'),
-          2: t('authority.permission.type.api'),
+          1: t('authority.permission.type.menu'),
+          2: t('authority.permission.type.button'),
+          3: t('authority.permission.type.api'),
         };
         return h('span', {}, typeMap[record.type as keyof typeof typeMap]);
       },
@@ -507,52 +333,18 @@
     search();
   };
 
-  const onPageChange = (current: number) => {
-    pagination.current = current;
-    search();
-  };
-
   const openCreateModal = () => {
     modalTitle.value = t('authority.permission.searchTable.operation.create');
     Object.assign(modalForm, defaultFormData);
     modalVisible.value = true;
   };
 
-  const handleModalOk = async () => {
-    const result = await formRef.value?.validate();
-    if (!result) {
-      try {
-        const submitData = {
-          ...modalForm,
-          status: modalForm.status ? 1 : 0,
-        };
-        if (modalForm.id) {
-          await permissionsApi.update(submitData as PermissionUpdateRequest);
-        } else {
-          await permissionsApi.create(submitData as PermissionCreateRequest);
-        }
-        modalVisible.value = false;
-        Message.success(t('common.success.operation'));
-        search();
-      } catch (err) {
-        console.error(err);
-      }
+  const handleSuccess = (needReset?: boolean) => {
+    if (needReset) {
+      reset();
+    } else {
+      search();
     }
-  };
-
-  const handleModalCancel = () => {
-    modalVisible.value = false;
-  };
-
-  const addResource = () => {
-    modalForm.resources.push({
-      method: 'GET',
-      path: '',
-    } as ResourceModel);
-  };
-
-  const removeResource = (index: number) => {
-    modalForm.resources.splice(index, 1);
   };
 
   // 初始加载

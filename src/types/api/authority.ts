@@ -34,7 +34,7 @@ export interface UserUpdateRequest {
 
 // 角色相关类型
 export interface RoleModel {
-  id: string;
+  id: number;
   name: string;
   code: string;
   description: string;
@@ -50,7 +50,7 @@ export interface RoleCreateRequest {
 }
 
 export interface RoleUpdateRequest extends Partial<RoleCreateRequest> {
-  id: string;
+  id: number;
   status?: number;
 }
 
@@ -61,7 +61,7 @@ export interface ResourceModel {
 }
 
 export interface PermissionModel {
-  id: string;
+  id: number;
   name: string;
   code: string;
   type: number;
@@ -76,6 +76,7 @@ export interface PermissionModel {
   status: number;
   createdAt?: number;
   updatedAt?: number;
+  children?: PermissionModel[];
 }
 
 export interface PermissionCreateRequest {
@@ -93,7 +94,7 @@ export interface PermissionCreateRequest {
 }
 
 export interface PermissionUpdateRequest {
-  id: string;
+  id: number;
   name: string;
   code: string;
   type: number;
@@ -152,7 +153,7 @@ export interface TenantUpdateRequest {
 
 // 权限树节点模型
 export interface PermissionTreeNode {
-  id: string;
+  id: number;
   name: string;
   code: string;
   type: number;
@@ -166,4 +167,21 @@ export interface PermissionTreeNode {
   resources: ResourceModel[];
   status: number;
   children?: PermissionTreeNode[];
+}
+
+// 添加简化版权限树节点类型
+export interface SimplePermissionTreeNode {
+  id: number;
+  name: string;
+  code: string;
+  icon?: string;
+  localize?: string;
+  parentId?: number;
+  children?: SimplePermissionTreeNode[];
+}
+
+// 添加简化版权限树响应类型
+export interface SimplePermissionTreeResponse {
+  ids: number[];
+  tree: SimplePermissionTreeNode[];
 }

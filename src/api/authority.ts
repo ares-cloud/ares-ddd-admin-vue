@@ -13,8 +13,10 @@ import type {
   TenantCreateRequest,
   TenantUpdateRequest,
   PermissionTreeNode,
+  SimplePermissionTreeResponse,
 } from '@/types/api/authority';
 import type { PageRequest, PageResult } from '@/types/api/base';
+import { SimplePermissionTreeNode } from '@/types/api/authority';
 
 const BASE_URL = '/sys';
 
@@ -79,6 +81,14 @@ export const permissionsApi = {
       method: 'GET',
     }),
 
+  getSimpleTree: () =>
+    request<SimplePermissionTreeResponse>(
+      `${BASE_URL}/permissions/simple/tree`,
+      {
+        method: 'GET',
+      }
+    ),
+
   create: (data: PermissionCreateRequest) =>
     request<PermissionModel>(`${BASE_URL}/permissions`, {
       method: 'POST',
@@ -91,7 +101,7 @@ export const permissionsApi = {
       data,
     }),
 
-  delete: (id: string) =>
+  delete: (id: number) =>
     request<void>(`${BASE_URL}/permissions/${id}`, { method: 'DELETE' }),
 
   getById: (id: string) =>
@@ -125,17 +135,17 @@ export const tenantApi = {
 
   // 获取租户权限
   getTenantPermissions: (tenantId: string) =>
-    request<PermissionTreeNode[]>(
-      `${BASE_URL}/tenant/${tenantId}/permissions`,
+    request<SimplePermissionTreeNode[]>(
+      `${BASE_URL}/tenant/permissions/${tenantId}`,
       {
         method: 'GET',
       }
     ),
 
   // 分配权限给租户
-  assignPermissions: (tenantId: string, permissionIds: string[]) =>
-    request<void>(`${BASE_URL}/tenant/${tenantId}/permissions`, {
+  assignPermissions: (data: { tenantId: string; permissionIds: any[] }) =>
+    request<void>(`${BASE_URL}/tenant/permissions`, {
       method: 'PUT',
-      data: { permissionIds },
+      data,
     }),
 };

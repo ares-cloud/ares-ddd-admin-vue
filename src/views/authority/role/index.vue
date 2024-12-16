@@ -219,8 +219,8 @@
     loading.value = true;
     try {
       const data = await roleApi.getList({
-        pageNum: pagination.current,
-        pageSize: pagination.pageSize,
+        current: pagination.current,
+        size: pagination.pageSize,
         ...formModel.value,
       });
       renderData.value = data.list;

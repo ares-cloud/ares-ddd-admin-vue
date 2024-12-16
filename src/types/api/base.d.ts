@@ -7,8 +7,8 @@ export interface ApiResponse<T> {
 
 // 分页请求参数
 export interface PageRequest {
-  pageNum: number;
-  pageSize: number;
+  current: number;
+  size: number;
 }
 
 // 分页响应数据

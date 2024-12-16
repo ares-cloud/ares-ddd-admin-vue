@@ -1,6 +1,6 @@
 <template>
   <a-date-picker
-    v-model="innerValue"
+    :model-value="innerValue?.toDate()"
     :show-time="showTime"
     :style="{ width: '100%' }"
     v-bind="$attrs"
@@ -12,6 +12,7 @@
   import { ref, watch } from 'vue';
   import dayjs from 'dayjs';
   import { parseToTimestamp } from '@/utils/date';
+  import type { Dayjs } from 'dayjs';
 
   interface Props {
     modelValue?: number;
@@ -24,7 +25,7 @@
 
   const emit = defineEmits(['update:modelValue']);
 
-  const innerValue = ref<dayjs.Dayjs>();
+  const innerValue = ref<Dayjs | undefined>();
 
   // 监听外部值变化
   watch(

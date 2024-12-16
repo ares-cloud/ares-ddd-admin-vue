@@ -82,6 +82,8 @@ export default {
     '请输入本地化信息',
   'authority.permission.searchTable.form.properties.placeholder':
     '请输入属性信息',
+  'authority.permission.form.basic': '基本信息',
+  'authority.permission.form.resources': '资源列表',
 
   // 租户管理
   'authority.tenant.searchTable.form.name': '租户名称',
@@ -102,12 +104,12 @@ export default {
   'authority.tenant.searchTable.form.description.placeholder': '请输入描述信息',
   'authority.tenant.searchTable.form.isDefault': '是否默认租户',
   'authority.tenant.searchTable.columns.adminUsername': '管理员',
-  'authority.tenant.searchTable.form.adminUser.username': '管理员用户名',
+  'authority.tenant.searchTable.form.adminUser.username': '管理��用户名',
   'authority.tenant.searchTable.form.adminUser.username.placeholder':
     '请输入管理员用户名',
   'authority.tenant.searchTable.form.adminUser.password': '管理员密码',
   'authority.tenant.searchTable.form.adminUser.password.placeholder':
-    '请输��管理员密码',
+    '请输入管理员密码',
   'authority.tenant.searchTable.form.adminUser.email': '管理员邮箱',
   'authority.tenant.searchTable.form.adminUser.email.placeholder':
     '请输入管理员邮箱',
@@ -117,6 +119,13 @@ export default {
   'authority.tenant.modal.title.detail': '租户详情',
   'authority.tenant.detail.tenant.title': '租户信息',
   'authority.tenant.detail.admin.title': '管理员信息',
+  'authority.tenant.modal.title.assignPermission': '分配权限',
+  'authority.tenant.permission.current': '已分配权限',
+  'authority.tenant.permission.available': '可用权限',
+  'authority.tenant.permission.select.required': '请选择权限',
+  'authority.tenant.permission.load.failed': '加载权限数据失败',
+  'authority.tenant.permission.assign.success': '权限分配成功',
+  'authority.tenant.permission.assign.failed': '权限分配失败',
 
   // 通用
   'authority.status.enabled': '启用',

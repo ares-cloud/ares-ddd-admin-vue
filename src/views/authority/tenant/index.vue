@@ -154,6 +154,12 @@
                 </a-button>
                 <a-button
                   type="text"
+                  @click="openAssignPermissionModal(record)"
+                >
+                  {{ t('authority.button.assign') }}
+                </a-button>
+                <a-button
+                  type="text"
                   status="danger"
                   @click="handleDelete(record)"
                 >
@@ -175,6 +181,13 @@
 
     <!-- 详情弹窗 -->
     <detail-modal v-model:visible="detailVisible" :data="detailData" />
+
+    <!-- 添加权限分配弹窗 -->
+    <assign-permission-modal
+      v-model:visible="assignPermissionVisible"
+      :tenant-id="currentTenantId"
+      @success="handleAssignSuccess"
+    />
   </div>
 </template>
 
@@ -196,6 +209,7 @@
   import { useAppStore } from '@/store';
   import EditModal from './components/edit-modal.vue';
   import DetailModal from './components/detail-modal.vue';
+  import AssignPermissionModal from './components/assign-permission-modal.vue';
 
   const instance = getCurrentInstance();
   const proxy = instance?.proxy;
@@ -213,7 +227,6 @@
   const modalVisible = ref(false);
   const detailVisible = ref(false);
   const modalTitle = ref('');
-  const formRef = ref();
 
   const defaultFormData = {
     id: '',
@@ -246,8 +259,8 @@
   const search = async () => {
     try {
       const data = await tenantApi.getList({
-        pageNum: pagination.current,
-        pageSize: pagination.pageSize,
+        current: pagination.current,
+        size: pagination.pageSize,
         ...formModel.value,
       });
       renderData.value = data.list;
@@ -319,6 +332,19 @@
     } else {
       search();
     }
+  };
+
+  const assignPermissionVisible = ref(false);
+  const currentTenantId = ref('');
+
+  const openAssignPermissionModal = (record: TenantModel) => {
+    currentTenantId.value = record.id;
+    assignPermissionVisible.value = true;
+  };
+
+  const handleAssignSuccess = () => {
+    assignPermissionVisible.value = false;
+    Message.success(t('authority.tenant.permission.assign.success'));
   };
 
   // 初始加载

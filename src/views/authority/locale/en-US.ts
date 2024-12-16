@@ -73,6 +73,8 @@ export default {
   'authority.permission.delete.confirm.title': 'Confirm Delete',
   'authority.permission.delete.confirm.content':
     'Are you sure to delete permission {name}?',
+  'authority.permission.form.basic': 'Basic Information',
+  'authority.permission.form.resources': 'Resource List',
 
   // Tenant Management
   'authority.tenant.searchTable.form.name': 'Tenant Name',
@@ -98,6 +100,14 @@ export default {
   'authority.tenant.searchTable.form.isDefault': 'Default Tenant',
   'authority.tenant.detail.tenant.title': 'Tenant Information',
   'authority.tenant.detail.admin.title': 'Admin Information',
+  'authority.tenant.modal.title.assignPermission': 'Assign Permissions',
+  'authority.tenant.permission.current': 'Current Permissions',
+  'authority.tenant.permission.available': 'Available Permissions',
+  'authority.tenant.permission.select.required': 'Please select permissions',
+  'authority.tenant.permission.load.failed': 'Failed to load permissions',
+  'authority.tenant.permission.assign.success':
+    'Permissions assigned successfully',
+  'authority.tenant.permission.assign.failed': 'Failed to assign permissions',
 
   // Common
   'authority.status.enabled': 'Enabled',
