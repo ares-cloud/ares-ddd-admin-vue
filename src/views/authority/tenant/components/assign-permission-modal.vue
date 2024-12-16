@@ -9,7 +9,12 @@
     <div class="permission-transfer">
       <div class="transfer-box">
         <div class="box-header">
-          {{ t('authority.tenant.permission.available') }}
+          <div class="header-content">
+            {{ t('authority.tenant.permission.available') }}
+            <a-button type="text" size="mini" @click="handleSelectAllAvailable">
+              {{ t('common.selectAll') }}
+            </a-button>
+          </div>
         </div>
         <div class="box-content">
           <a-tree
@@ -36,7 +41,12 @@
       </div>
       <div class="transfer-box">
         <div class="box-header">
-          {{ t('authority.tenant.permission.current') }}
+          <div class="header-content">
+            {{ t('authority.tenant.permission.current') }}
+            <a-button type="text" size="mini" @click="handleSelectAllCurrent">
+              {{ t('common.selectAll') }}
+            </a-button>
+          </div>
         </div>
         <div class="box-content">
           <a-tree
@@ -267,7 +277,17 @@
     findParent(tree, childId);
     return parentIds;
   };
+  // 全选可用权限
+  const handleSelectAllAvailable = () => {
+    availableCheckedKeys.value = getAllPermissionIds(
+      availablePermissions.value
+    );
+  };
 
+  // 全选已分配权限
+  const handleSelectAllCurrent = () => {
+    checkedKeys.value = getAllPermissionIds(currentPermissions.value);
+  };
   // 修改保存权限分配的方法
   const handleOk = async () => {
     try {
@@ -340,6 +360,12 @@
         padding: 10px;
         font-weight: 500;
         border-bottom: 1px solid var(--color-neutral-3);
+
+        .header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
       }
 
       .box-content {

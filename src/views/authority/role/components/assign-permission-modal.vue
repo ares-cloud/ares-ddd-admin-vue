@@ -9,7 +9,12 @@
     <div class="permission-transfer">
       <div class="transfer-box">
         <div class="box-header">
-          {{ t('authority.role.permission.available') }}
+          <div class="header-content">
+            {{ t('authority.role.permission.available') }}
+            <a-button type="text" size="mini" @click="handleSelectAllAvailable">
+              {{ t('common.selectAll') }}
+            </a-button>
+          </div>
         </div>
         <div class="box-content">
           <a-tree
@@ -36,7 +41,12 @@
       </div>
       <div class="transfer-box">
         <div class="box-header">
-          {{ t('authority.role.permission.current') }}
+          <div class="header-content">
+            {{ t('authority.role.permission.current') }}
+            <a-button type="text" size="mini" @click="handleSelectAllCurrent">
+              {{ t('common.selectAll') }}
+            </a-button>
+          </div>
         </div>
         <div class="box-content">
           <a-tree
@@ -78,7 +88,7 @@
   const allPermissions = ref<SimplePermissionTreeNode[]>([]);
   const currentRole = ref<RoleModel>();
 
-  // 获取所有权���ID（包括子权限）
+  // 获取所有权ID（包括子权限）
   const getAllPermissionIds = (
     permissions: SimplePermissionTreeNode[]
   ): number[] => {
@@ -169,7 +179,7 @@
       // 先构建可用权限树（所有权限）
       availablePermissions.value = JSON.parse(JSON.stringify(allPerms.tree));
 
-      // 构建当前已分配的权限树
+      // 建当已分配的权限树
       currentPermissions.value = buildPermissionTree(
         allPerms.tree,
         currentPermIds
@@ -181,7 +191,9 @@
         availablePermissions.value,
         assignedIds
       ).filter(
-        (node) => node.children?.length > 0 || !assignedIds.has(node.id)
+        (node) =>
+          (node.children && node.children.length > 0) ||
+          !assignedIds.has(node.id)
       );
     } catch (err) {
       Message.error(t('authority.role.permission.load.failed'));
@@ -200,16 +212,20 @@
       availableCheckedKeys.value
     );
 
+    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
+
     currentPermissions.value = buildPermissionTree(allPermissions.value, [
       ...getAllPermissionIds(currentPermissions.value),
       ...getAllPermissionIds(selectedPerms),
     ]);
 
-    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
-    availablePermissions.value = filterPermissions(
-      allPermissions.value,
-      selectedIds
-    );
+    availablePermissions.value = availablePermissions.value
+      .filter((node) => !selectedIds.has(node.id))
+      .map((node) => ({
+        ...node,
+        children:
+          node.children?.filter((child) => !selectedIds.has(child.id)) || [],
+      }));
 
     availableCheckedKeys.value = [];
   };
@@ -226,18 +242,37 @@
       checkedKeys.value
     );
 
+    // 获取选中的所有ID（包括父节点）
+    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
+
+    // 更新可用权限树
     availablePermissions.value = buildPermissionTree(allPermissions.value, [
       ...getAllPermissionIds(availablePermissions.value),
       ...getAllPermissionIds(selectedPerms),
     ]);
 
-    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
-    currentPermissions.value = filterPermissions(
-      currentPermissions.value,
-      selectedIds
-    );
+    // 直接从当前权限中过滤掉选中的节点
+    currentPermissions.value = currentPermissions.value
+      .filter((node) => !selectedIds.has(node.id))
+      .map((node) => ({
+        ...node,
+        children:
+          node.children?.filter((child) => !selectedIds.has(child.id)) || [],
+      }));
 
     checkedKeys.value = [];
+  };
+
+  // 全选可用权限
+  const handleSelectAllAvailable = () => {
+    availableCheckedKeys.value = getAllPermissionIds(
+      availablePermissions.value
+    );
+  };
+
+  // 全选已分配权限
+  const handleSelectAllCurrent = () => {
+    checkedKeys.value = getAllPermissionIds(currentPermissions.value);
   };
 
   // 保存权限分配
@@ -303,6 +338,12 @@
         padding: 10px;
         font-weight: 500;
         border-bottom: 1px solid var(--color-neutral-3);
+
+        .header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
       }
 
       .box-content {

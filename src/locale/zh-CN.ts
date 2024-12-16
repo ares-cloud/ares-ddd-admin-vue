@@ -31,7 +31,7 @@ export default {
   ...localeAuthority,
   // 通用操作按钮
   'common.operations': '操作',
-  'common.search': '查询',
+  'common.search': '搜索',
   'common.reset': '重置',
   'common.success.operation': '操作成功',
   'common.error.operation': '操作失败',
@@ -51,4 +51,5 @@ export default {
   'common.status.abnormal': '异常',
   'common.status.locked': '锁定',
   'common.status.deleted': '已删除',
+  'common.selectAll': '全选',
 };

@@ -28,6 +28,13 @@ export default {
   'authority.user.searchTable.form.password.placeholder': '请输入密码',
   'authority.user.searchTable.columns.invitationCode': '邀请码',
   'authority.user.searchTable.form.invitationCode.placeholder': '请输入邀请码',
+  'authority.user.modal.title.assignRole': '分配角色',
+  'authority.user.role.available': '可选角色',
+  'authority.user.role.current': '已选角色',
+  'authority.user.role.select.required': '请选择角色',
+  'authority.user.role.load.failed': '加载角色数据失败',
+  'authority.user.role.assign.success': '角色分配成功',
+  'authority.user.role.assign.failed': '角色分配失败',
 
   // 角色管理
   'authority.role.searchTable.form.name': '角色名称',
@@ -144,6 +151,8 @@ export default {
   'authority.button.delete': '删除',
   'authority.button.view': '查看',
   'authority.button.assign': '分配',
+  'authority.button.enable': '启用',
+  'authority.button.disable': '停用',
   'authority.common.expireTime.placeholder': '请选择过期时间',
   'authority.common.operation.success': '操作成功',
   'authority.common.operation.failed': '操作失败',

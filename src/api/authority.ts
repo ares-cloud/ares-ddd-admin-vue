@@ -35,9 +35,9 @@ export const userApi = {
     request<UserModel>(`${BASE_URL}/user`, { method: 'PUT', data }),
 
   updateStatus: (id: string, status: number) =>
-    request<void>(`${BASE_URL}/user/${id}/status`, {
+    request<void>(`${BASE_URL}/user/status`, {
       method: 'PUT',
-      data: { status },
+      data: { id, status },
     }),
 
   delete: (id: string) =>
@@ -66,6 +66,9 @@ export const roleApi = {
 
   getById: (id: string) =>
     request<RoleModel>(`${BASE_URL}/role/${id}`, { method: 'GET' }),
+
+  getAllEnabled: () =>
+    request<RoleModel>(`${BASE_URL}/role/enabled`, { method: 'GET' }),
 };
 
 // 权限管理接口

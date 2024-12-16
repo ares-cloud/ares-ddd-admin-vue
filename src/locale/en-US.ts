@@ -51,4 +51,5 @@ export default {
   'common.status.abnormal': 'Abnormal',
   'common.status.locked': 'Locked',
   'common.status.deleted': 'Deleted',
+  'common.selectAll': 'Select All',
 };

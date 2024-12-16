@@ -86,6 +86,12 @@
       :data="currentData"
       @success="handleSuccess"
     />
+    <!-- 角色分配弹窗 -->
+    <assign-role-modal
+      v-model:visible="assignRoleVisible"
+      :user-id="currentUserId"
+      @success="handleAssignSuccess"
+    />
   </div>
 </template>
 
@@ -102,6 +108,7 @@
   import { userApi } from '@/api/authority';
   import type { UserModel } from '@/types/api/authority';
   import EditModal from './components/edit-modal.vue';
+  import AssignRoleModal from './components/assign-role-modal.vue';
 
   const { t } = useI18n();
   const instance = getCurrentInstance();
@@ -116,6 +123,7 @@
   const renderData = ref<UserModel[]>([]);
   const editVisible = ref(false);
   const currentData = ref<UserModel>({} as UserModel);
+  const loadingId = ref('');
   const defaultFormData = {
     id: '',
     username: '',
@@ -185,6 +193,36 @@
       },
     });
   };
+
+  const assignRoleVisible = ref(false);
+  const currentUserId = ref('');
+
+  // 打开角色分配弹窗
+  const openAssignRoleModal = (record: UserModel) => {
+    currentUserId.value = record.id;
+    assignRoleVisible.value = true;
+  };
+
+  // 处理角色分配成功
+  const handleAssignSuccess = () => {
+    assignRoleVisible.value = false;
+    Message.success(t('authority.user.role.assign.success'));
+    search();
+  };
+
+  // 处理状态变更
+  const handleStatusChange = async (record: UserModel, checked: boolean) => {
+    loadingId.value = record.id;
+    try {
+      await userApi.updateStatus(record.id, checked ? 2 : 1);
+      Message.success(t('common.success.operation'));
+      await search();
+    } catch (err) {
+      Message.error(t('common.error.operation'));
+    } finally {
+      loadingId.value = '';
+    }
+  };
   const columns: TableColumnData[] = [
     {
       title: t('authority.user.searchTable.columns.userName'),
@@ -247,7 +285,29 @@
               style: { marginRight: '15px' },
               onClick: () => openEditModal(record as UserModel),
             },
-            '编辑'
+            t('authority.button.edit')
+          ),
+          h(
+            'a',
+            {
+              style: { marginRight: '15px' },
+              onClick: () => openAssignRoleModal(record as UserModel),
+            },
+            t('authority.button.assign')
+          ),
+          h(
+            'a',
+            {
+              style: {
+                marginRight: '15px',
+                color: record.status === 1 ? '#FF4D4F' : '#00B42A',
+              },
+              onClick: () =>
+                handleStatusChange(record as UserModel, record.status === 1),
+            },
+            record.status === 1
+              ? t('authority.button.disable')
+              : t('authority.button.enable')
           ),
           h(
             'a',
@@ -255,7 +315,7 @@
               style: { color: '#FF7D00' },
               onClick: () => handleDelete(record as UserModel),
             },
-            '删除'
+            t('authority.button.delete')
           ),
         ]);
       },
