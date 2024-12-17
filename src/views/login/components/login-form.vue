@@ -193,8 +193,8 @@
   }
 
   .captcha-wrapper {
-    width: 120px;
-    height: 30px;
+    width: 160px;
+    height: 40px;
     cursor: pointer;
 
     img {

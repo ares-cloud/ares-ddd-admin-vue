@@ -6,6 +6,11 @@
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
   import { openWindow, regexUrl } from '@/utils';
+  import {
+    SubMenu as ASubMenu,
+    MenuItem as AMenuItem,
+    Menu as AMenu,
+  } from '@arco-design/web-vue';
   import useMenuTree from './use-menu-tree';
 
   export default defineComponent({
@@ -30,7 +35,7 @@
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
 
-      const goto = (item: RouteRecordRaw) => {
+      const goto = async (item: RouteRecordRaw) => {
         // Open external link
         if (regexUrl.test(item.path)) {
           openWindow(item.path);
@@ -44,9 +49,22 @@
           return;
         }
         // Trigger router change
-        router.push({
-          name: item.name,
-        });
+        try {
+          // if (appStore.menuFromServer) {
+          //   await router.push({
+          //     path: item.path,
+          //   });
+          // } else {
+          //   await router.push({
+          //     name: item.name,
+          //   });
+          // }
+          await router.push({
+            name: item.name,
+          });
+        } catch (err) {
+          console.error('Navigation error:', err);
+        }
       };
       const findMenuOpenKeys = (target: string) => {
         const result: string[] = [];
@@ -99,7 +117,7 @@
                 : null;
               const node =
                 element?.children && element?.children.length !== 0 ? (
-                  <a-sub-menu
+                  <ASubMenu
                     key={element?.name}
                     v-slots={{
                       icon,
@@ -107,15 +125,15 @@
                     }}
                   >
                     {travel(element?.children)}
-                  </a-sub-menu>
+                  </ASubMenu>
                 ) : (
-                  <a-menu-item
+                  <AMenuItem
                     key={element?.name}
                     v-slots={{ icon }}
                     onClick={() => goto(element)}
                   >
                     {t(element?.meta?.locale || '')}
-                  </a-menu-item>
+                  </AMenuItem>
                 );
               nodes.push(node as never);
             });
@@ -126,7 +144,7 @@
       };
 
       return () => (
-        <a-menu
+        <AMenu
           mode={topMenu.value ? 'horizontal' : 'vertical'}
           v-model:collapsed={collapsed.value}
           v-model:open-keys={openKeys.value}
@@ -139,7 +157,7 @@
           onCollapse={setCollapse}
         >
           {renderSubMenu()}
-        </a-menu>
+        </AMenu>
       );
     },
   });
@@ -151,6 +169,7 @@
       display: flex;
       align-items: center;
     }
+
     .arco-icon {
       &:not(.arco-icon-down) {
         font-size: 18px;

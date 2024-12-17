@@ -22,4 +22,12 @@ export const regexUrl = new RegExp(
   'i'
 );
 
+export const isExternal = (path: string): boolean => {
+  return regexUrl.test(path);
+};
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.replace(/^./, (match) => match.toUpperCase());
+}
+
 export default null;

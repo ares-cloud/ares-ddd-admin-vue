@@ -25,7 +25,6 @@ export default function setupPermissionGuard(router: Router) {
         await appStore.fetchServerMenuConfig();
       }
       const serverMenuConfig = [...appStore.appAsyncMenus, ...WHITE_LIST];
-
       let exist = false;
       while (serverMenuConfig.length && !exist) {
         const element = serverMenuConfig.shift();

@@ -5,6 +5,8 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "jsxFactory": "h",  // Vue 3 使用的是 `h` 函数来渲染 JSX
+    "jsxFragmentFactory": "Fragment", // Vue 3 使用的是 `Fragment` 作为 JSX 的 fragment 工厂
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -16,7 +18,9 @@
     "skipLibCheck": true,
     "types": [
       "@types/node",
-      "vite/client"
+      "vite/client",
+      "vue/ref-macros",
+      "@arco-design/web-vue/es/type"
     ]
   },
   "include": ["src/**/*", "src/**/*.vue"],

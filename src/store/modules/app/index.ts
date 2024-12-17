@@ -6,22 +6,28 @@ import { markRaw } from 'vue';
 import defaultSettings from '@/config/settings.json';
 import userApi from '@/api/user';
 import { PermissionTreeNode } from '@/types/api/authority';
+import { capitalizeFirstLetter } from '@/utils';
 import { AppState } from './types';
 
-function convertToRoute(menu: PermissionTreeNode): RouteRecordNormalized {
+function convertToRoute(
+  menu: PermissionTreeNode,
+  parentPath = ''
+): RouteRecordNormalized {
+  const fullPath = menu.path ? menu.path.replace('/', '') : ''; // 去掉第一个斜杠
+  const name = menu.path ? capitalizeFirstLetter(menu.path) : '';
   return markRaw({
-    path: `/${menu.path}`,
-    name: menu.code,
-    // component: () => import(`@/views/${menu.component}.vue`),
+    path: fullPath,
+    name,
+    component: menu.component,
     meta: {
       title: menu.name,
       icon: menu.icon,
       locale: menu.localize,
-      requiresAuth: false,
+      requiresAuth: true,
       roles: menu.roles,
       permissions: menu.permissions,
     },
-    children: menu.children?.map(convertToRoute),
+    children: menu.children?.map((child) => convertToRoute(child, parentPath)),
   }) as unknown as RouteRecordNormalized;
 }
 
@@ -72,7 +78,7 @@ const useAppStore = defineStore('app', {
           closable: true,
         });
         const data = await userApi.getUserMenus();
-        this.serverMenu = data.map(convertToRoute);
+        this.serverMenu = data.map((menu) => convertToRoute(menu));
         notifyInstance = Notification.success({
           id: 'menuNotice',
           content: 'success',
