@@ -69,6 +69,7 @@
   import { IconLeft, IconRight } from '@arco-design/web-vue/es/icon';
   import type { SimplePermissionTreeNode } from '@/types/api/authority';
   import { permissionsApi, tenantApi } from '@/api/authority';
+  import { values } from 'lodash';
 
   const props = defineProps<{
     visible: boolean;
@@ -128,6 +129,8 @@
       // 获取租户当前权限ID列表
       const currentPerms = await tenantApi.getTenantPermissions(props.tenantId);
       const currentPermIds = currentPerms.map((item) => item.id);
+      availableCheckedKeys.value = [];
+      checkedKeys.value = [];
       buildTree(allPerms, currentPermIds);
     } catch (err) {
       Message.error(t('authority.tenant.permission.load.failed'));
@@ -158,6 +161,28 @@
     buildTree(allPermissions.value, currentIds);
     // 清空选中状态
     checkedKeys.value = [];
+  };
+  // 全选可用权限
+  const handleSelectAllAvailable = () => {
+    if (
+      !availableCheckedKeys.value.length ||
+      availableCheckedKeys.value.length === 0
+    ) {
+      availableCheckedKeys.value = allPermissionIds.value.filter(
+        (item) => !assignedIds.value.includes(item)
+      );
+    } else {
+      availableCheckedKeys.value = [];
+    }
+  };
+
+  // 全选已分配权限
+  const handleSelectAllCurrent = () => {
+    if (!checkedKeys.value.length || checkedKeys.value.length === 0) {
+      checkedKeys.value = assignedIds.value;
+    } else {
+      checkedKeys.value = [];
+    }
   };
 
   // 修改保存权限分配的方法

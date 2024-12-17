@@ -85,205 +85,124 @@
   const availablePermissions = ref<SimplePermissionTreeNode[]>([]);
   const checkedKeys = ref<number[]>([]);
   const availableCheckedKeys = ref<number[]>([]);
-  const allPermissions = ref<SimplePermissionTreeNode[]>([]);
   const currentRole = ref<RoleModel>();
+  const assignedIds = ref<number[]>([]);
+  const allPermissions = ref<SimplePermissionTreeNode[]>([]);
+  const allPermissionIds = ref<number[]>([]);
 
-  // 获取所有权ID（包括子权限）
-  const getAllPermissionIds = (
-    permissions: SimplePermissionTreeNode[]
-  ): number[] => {
-    const ids: number[] = [];
-    const traverse = (perms: SimplePermissionTreeNode[]) => {
-      perms.forEach((perm) => {
-        ids.push(perm.id);
-        if (perm.children?.length) {
-          traverse(perm.children);
-        }
-      });
-    };
-    traverse(permissions);
-    return ids;
-  };
-
-  // 过滤权限树
-  const filterPermissions = (
+  // 构建树
+  const buildTree = (
     permissions: SimplePermissionTreeNode[],
-    excludeIds: Set<number>
-  ): SimplePermissionTreeNode[] => {
-    return permissions.map((perm) => ({
-      ...perm,
-      children: perm.children?.length
-        ? perm.children
-            .filter((child) => !excludeIds.has(child.id))
-            .map((child) => ({
-              ...child,
-              children: child.children?.length
-                ? child.children.filter(
-                    (grandChild) => !excludeIds.has(grandChild.id)
-                  )
-                : [],
-            }))
-        : [],
-    }));
-  };
-
-  // 根据ID列表构建权限树
-  const buildPermissionTree = (
-    allPerms: SimplePermissionTreeNode[],
-    permissionIds: number[]
-  ): SimplePermissionTreeNode[] => {
-    const idSet = new Set(permissionIds);
-
-    const filterTree = (
-      nodes: SimplePermissionTreeNode[]
-    ): SimplePermissionTreeNode[] => {
-      return nodes
-        .map((node) => ({
-          ...node,
-          children: node.children?.length
-            ? node.children
-                .filter((child) => idSet.has(child.id))
-                .map((child) => ({
-                  ...child,
-                  children: child.children?.length
-                    ? child.children.filter((grandChild) =>
-                        idSet.has(grandChild.id)
-                      )
-                    : [],
-                }))
-            : [],
-        }))
-        .filter(
-          (node) =>
-            idSet.has(node.id) || (node.children && node.children.length > 0)
+    selectKeys: number[]
+  ) => {
+    assignedIds.value = selectKeys;
+    if (permissions.length > 0) {
+      const allIds = permissions.map((item) => item.id);
+      if (!selectKeys || selectKeys.length === 0) {
+        availablePermissions.value = permissionsApi.buildFilteredTree(
+          permissions,
+          allIds
         );
-    };
-
-    return filterTree(allPerms);
+        currentPermissions.value = [];
+      } else {
+        currentPermissions.value = permissionsApi.buildFilteredTree(
+          permissions,
+          selectKeys
+        );
+        const avIds = allIds.filter((id: number) => !selectKeys.includes(id));
+        availablePermissions.value = permissionsApi.buildFilteredTree(
+          permissions,
+          avIds
+        );
+      }
+    } else {
+      availablePermissions.value = [];
+      currentPermissions.value = [];
+    }
   };
 
-  // 加载权限数据
+  // 修改加载权限数据的方法
   const loadData = async () => {
     try {
-      // 获取角色最新详情
-      const roleDetail = await roleApi.getById(String(props.roleId));
-      currentRole.value = roleDetail;
+      // 获取所有权限列表并转换为树形结构
+      const allPerms = await permissionsApi.getAllList();
+      allPermissions.value = allPerms;
+      allPermissionIds.value = allPerms.map((item) => item.id);
 
-      // 获取所有权限树
-      const allPerms = await permissionsApi.getSimpleTree();
-      allPermissions.value = allPerms.tree;
-
-      // 使用角色详情中的权限ID
-      const currentPermIds = roleDetail.permIds || [];
-
-      // 先构建可用权限树（所有权限）
-      availablePermissions.value = JSON.parse(JSON.stringify(allPerms.tree));
-
-      // 建当已分配的权限树
-      currentPermissions.value = buildPermissionTree(
-        allPerms.tree,
-        currentPermIds
-      );
-
-      // 从可用权限中移除已分配的权限
-      const assignedIds = new Set(currentPermIds);
-      availablePermissions.value = filterPermissions(
-        availablePermissions.value,
-        assignedIds
-      ).filter(
-        (node) =>
-          (node.children && node.children.length > 0) ||
-          !assignedIds.has(node.id)
-      );
+      // 获取租户当前权限ID列表
+      const role = await roleApi.getById(props.roleId);
+      const currentPermIds = role.permIds;
+      availableCheckedKeys.value = [];
+      checkedKeys.value = [];
+      buildTree(allPerms, currentPermIds);
     } catch (err) {
-      Message.error(t('authority.role.permission.load.failed'));
+      Message.error(t('authority.tenant.permission.load.failed'));
     }
   };
 
-  // 处理添加权限
+  // 添加权限
   const handleAdd = () => {
     if (!availableCheckedKeys.value.length) {
-      Message.warning(t('authority.role.permission.select.required'));
+      Message.warning(t('authority.tenant.permission.select.required'));
       return;
     }
-
-    const selectedPerms = buildPermissionTree(
-      availablePermissions.value,
-      availableCheckedKeys.value
-    );
-
-    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
-
-    currentPermissions.value = buildPermissionTree(allPermissions.value, [
-      ...getAllPermissionIds(currentPermissions.value),
-      ...getAllPermissionIds(selectedPerms),
-    ]);
-
-    availablePermissions.value = availablePermissions.value
-      .filter((node) => !selectedIds.has(node.id))
-      .map((node) => ({
-        ...node,
-        children:
-          node.children?.filter((child) => !selectedIds.has(child.id)) || [],
-      }));
-
+    const currentIds = [...assignedIds.value, ...availableCheckedKeys.value];
+    buildTree(allPermissions.value, currentIds);
+    // 清空选中状态
     availableCheckedKeys.value = [];
   };
-
-  // 处理移除权限
+  //
+  // 移除权限
   const handleRemove = () => {
     if (!checkedKeys.value.length) {
-      Message.warning(t('authority.role.permission.select.required'));
+      Message.warning(t('authority.tenant.permission.select.required'));
       return;
     }
-
-    const selectedPerms = buildPermissionTree(
-      currentPermissions.value,
-      checkedKeys.value
+    const currentIds = assignedIds.value.filter(
+      (item) => !checkedKeys.value.includes(item)
     );
-
-    // 获取选中的所有ID（包括父节点）
-    const selectedIds = new Set(getAllPermissionIds(selectedPerms));
-
-    // 更新可用权限树
-    availablePermissions.value = buildPermissionTree(allPermissions.value, [
-      ...getAllPermissionIds(availablePermissions.value),
-      ...getAllPermissionIds(selectedPerms),
-    ]);
-
-    // 直接从当前权限中过滤掉选中的节点
-    currentPermissions.value = currentPermissions.value
-      .filter((node) => !selectedIds.has(node.id))
-      .map((node) => ({
-        ...node,
-        children:
-          node.children?.filter((child) => !selectedIds.has(child.id)) || [],
-      }));
-
+    buildTree(allPermissions.value, currentIds);
+    // 清空选中状态
     checkedKeys.value = [];
   };
-
   // 全选可用权限
   const handleSelectAllAvailable = () => {
-    availableCheckedKeys.value = getAllPermissionIds(
-      availablePermissions.value
-    );
+    if (
+      !availableCheckedKeys.value.length ||
+      availableCheckedKeys.value.length === 0
+    ) {
+      availableCheckedKeys.value = allPermissionIds.value.filter(
+        (item) => !assignedIds.value.includes(item)
+      );
+    } else {
+      availableCheckedKeys.value = [];
+    }
   };
 
   // 全选已分配权限
   const handleSelectAllCurrent = () => {
-    checkedKeys.value = getAllPermissionIds(currentPermissions.value);
+    if (!checkedKeys.value.length || checkedKeys.value.length === 0) {
+      checkedKeys.value = assignedIds.value;
+    } else {
+      checkedKeys.value = [];
+    }
   };
 
   // 保存权限分配
   const handleOk = async () => {
     try {
-      const permissionIds = getAllPermissionIds(currentPermissions.value);
+      // 获取所有已分配权限的父ID
+      const selectedParentIds = permissionsApi.getAllParentIds(
+        allPermissions.value,
+        assignedIds.value
+      );
+      // 合并选中的ID和父节点ID
+      const allIds = [...new Set([...assignedIds.value, ...selectedParentIds])];
       // 直接更新角色的权限
       await roleApi.update({
         id: props.roleId,
         ...currentRole.value,
-        permIds: permissionIds,
+        permIds: allIds,
       });
 
       Message.success(t('authority.role.permission.assign.success'));

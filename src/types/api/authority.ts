@@ -25,11 +25,12 @@ export interface UserCreateRequest {
 
 export interface UserUpdateRequest {
   id: string;
-  name: string;
-  email: string;
-  phone: string;
-  roleIds: number[];
-  status: number;
+  name?: string;
+  email?: string;
+  phone?: string;
+  localize?: string;
+  roleIds?: number[];
+  status?: number;
 }
 
 // 角色相关类型
