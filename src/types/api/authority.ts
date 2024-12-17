@@ -160,16 +160,13 @@ export interface PermissionTreeNode {
   id: number;
   name: string;
   code: string;
-  type: number;
+  path: string;
+  component: string; // 组件路径，如: 'dashboard/workplace'
   icon?: string;
-  path?: string;
-  parentId?: number;
-  sequence?: number;
-  description?: string;
   localize?: string;
-  properties?: string;
-  resources: ResourceModel[];
-  status: number;
+  roles?: string[];
+  permissions?: string[];
+  parentId?: number;
   children?: PermissionTreeNode[];
 }
 
@@ -184,7 +181,7 @@ export interface SimplePermissionTreeNode {
   children?: SimplePermissionTreeNode[];
 }
 
-// 添加简化版权���树响应类型
+// 添加简化版权树响应类型
 export interface SimplePermissionTreeResponse {
   ids: number[];
   tree: SimplePermissionTreeNode[];

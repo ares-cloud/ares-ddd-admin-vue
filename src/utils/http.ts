@@ -1,7 +1,8 @@
-import axios from 'axios';
-import type { AxiosResponse, AxiosError } from 'axios';
+import type { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { Message } from '@arco-design/web-vue';
-import type { ApiResponse } from '@/types/api/base';
+import { getToken } from '@/utils/auth';
+import emitter from '@/events/event-bus';
 
 const { VITE_API_BASE_URL, VITE_API_VERSION } = import.meta.env;
 
@@ -10,21 +11,34 @@ const http = axios.create({
   timeout: 5000,
 });
 
+http.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    const token = getToken();
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token.accessToken}`;
+    }
+    return config;
+  },
+  (error: any) => {
+    return Promise.reject(error);
+  }
+);
+
 http.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse<any>>) => {
+  (response: AxiosResponse) => {
     const res = response.data;
-    if (res.code === 401) {
-      Message.error(res.message || '身份认证过期, 请重新登录');
-      setTimeout(() => {
-        localStorage.clear();
-        window.location.reload();
-      }, 2000);
-      return Promise.reject(new Error(res.message || '身份认证过期'));
+    if (res.code !== 200) {
+      Message.error(res.message || '请求失败');
+      return Promise.reject(new Error(res.message || '请求失败'));
     }
     return res;
   },
-  (error: AxiosError) => {
-    Message.error(error.message || '请求失败');
+  async (error: any) => {
+    if (error.response?.status === 401) {
+      emitter.emit('auth:token-expired');
+    } else {
+      Message.error(error.message || '请求失败');
+    }
     return Promise.reject(error);
   }
 );

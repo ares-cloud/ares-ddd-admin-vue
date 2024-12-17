@@ -1,27 +1,19 @@
-import axios from 'axios';
-import type { RouteRecordNormalized } from 'vue-router';
-import { UserState } from '@/store/modules/user/types';
+import request from '@/utils/request';
+import type { PermissionTreeNode } from '@/types/api/authority';
+import { UserInfo } from '@/types/api/user';
 
-export interface LoginData {
-  username: string;
-  password: string;
-}
+const BASE_URL = '/sys/user';
 
-export interface LoginRes {
-  token: string;
-}
-export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
-}
+export default {
+  // 获取用户信息
+  getUserInfo: (): Promise<UserInfo> =>
+    request(`${BASE_URL}/info`, {
+      method: 'GET',
+    }),
 
-export function logout() {
-  return axios.post<LoginRes>('/api/user/logout');
-}
-
-export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
-}
-
-export function getMenuList() {
-  return axios.post<RouteRecordNormalized[]>('/api/user/menu');
-}
+  // 获取用户菜单树
+  getUserMenus: (): Promise<PermissionTreeNode[]> =>
+    request(`${BASE_URL}/menus`, {
+      method: 'GET',
+    }),
+};

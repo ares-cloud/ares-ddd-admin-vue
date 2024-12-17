@@ -1,19 +1,29 @@
+interface TokenInfo {
+  access_token: string;
+  refresh_token: string;
+}
+
 const TOKEN_KEY = 'token';
 
-const isLogin = () => {
-  return !!localStorage.getItem(TOKEN_KEY);
-};
+export function getToken(): TokenInfo | null {
+  const token = localStorage.getItem(TOKEN_KEY);
+  return token ? JSON.parse(token) : null;
+}
 
-const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
-};
+export function setToken(accessToken: string, refreshToken: string): void {
+  localStorage.setItem(
+    TOKEN_KEY,
+    JSON.stringify({
+      accessToken,
+      refreshToken,
+    })
+  );
+}
 
-const setToken = (token: string) => {
-  localStorage.setItem(TOKEN_KEY, token);
-};
+export function isLogin(): boolean {
+  return getToken() !== null;
+}
 
-const clearToken = () => {
+export function clearToken(): void {
   localStorage.removeItem(TOKEN_KEY);
-};
-
-export { isLogin, getToken, setToken, clearToken };
+}

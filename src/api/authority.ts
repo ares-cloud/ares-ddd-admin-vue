@@ -22,133 +22,169 @@ const BASE_URL = '/sys';
 
 // 用户管理接口
 export const userApi = {
-  getList: (params: PageRequest & Partial<UserModel>) =>
-    request<PageResult<UserModel>>(`${BASE_URL}/user`, {
+  getList: (
+    params: PageRequest & Partial<UserModel>
+  ): Promise<PageResult<UserModel>> =>
+    request(`${BASE_URL}/user`, {
       method: 'GET',
       params,
     }),
 
-  create: (data: UserCreateRequest) =>
-    request<UserModel>(`${BASE_URL}/user`, { method: 'POST', data }),
-
-  update: (data: UserUpdateRequest) =>
-    request<UserModel>(`${BASE_URL}/user`, { method: 'PUT', data }),
-
-  updateStatus: (id: string, status: number) =>
-    request<void>(`${BASE_URL}/user/status`, {
-      method: 'PUT',
-      data: { id, status },
+  create: (data: UserCreateRequest): Promise<UserModel> =>
+    request(`${BASE_URL}/user`, {
+      method: 'POST',
+      body: data,
     }),
 
-  delete: (id: string) =>
-    request<void>(`${BASE_URL}/user/${id}`, { method: 'DELETE' }),
+  update: (data: UserUpdateRequest): Promise<UserModel> =>
+    request(`${BASE_URL}/user`, {
+      method: 'PUT',
+      body: data,
+    }),
 
-  getById: (id: string) =>
-    request<UserModel>(`${BASE_URL}/user/${id}`, { method: 'GET' }),
+  updateStatus: (id: string, status: number): Promise<void> =>
+    request(`${BASE_URL}/user/status`, {
+      method: 'PUT',
+      body: { id, status },
+    }),
+
+  delete: (id: string): Promise<void> =>
+    request(`${BASE_URL}/user/${id}`, {
+      method: 'DELETE',
+    }),
+
+  getById: (id: string): Promise<UserModel> =>
+    request(`${BASE_URL}/user/${id}`, {
+      method: 'GET',
+    }),
 };
 
 // 角色管理接口
 export const roleApi = {
-  getList: (params: PageRequest & Partial<RoleModel>) =>
-    request<PageResult<RoleModel>>(`${BASE_URL}/role`, {
+  getList: (
+    params: PageRequest & Partial<RoleModel>
+  ): Promise<PageResult<RoleModel>> =>
+    request(`${BASE_URL}/role`, {
       method: 'GET',
       params,
     }),
 
-  create: (data: RoleCreateRequest) =>
-    request<RoleModel>(`${BASE_URL}/role`, { method: 'POST', data }),
+  create: (data: RoleCreateRequest): Promise<RoleModel> =>
+    request(`${BASE_URL}/role`, {
+      method: 'POST',
+      body: data,
+    }),
 
-  update: (data: RoleUpdateRequest) =>
-    request<RoleModel>(`${BASE_URL}/role`, { method: 'PUT', data }),
+  update: (data: RoleUpdateRequest): Promise<RoleModel> =>
+    request(`${BASE_URL}/role`, {
+      method: 'PUT',
+      body: data,
+    }),
 
-  delete: (id: number) =>
-    request<void>(`${BASE_URL}/role/${id}`, { method: 'DELETE' }),
+  delete: (id: number): Promise<void> =>
+    request(`${BASE_URL}/role/${id}`, {
+      method: 'DELETE',
+    }),
 
-  getById: (id: string) =>
-    request<RoleModel>(`${BASE_URL}/role/${id}`, { method: 'GET' }),
+  getById: (id: string): Promise<RoleModel> =>
+    request(`${BASE_URL}/role/${id}`, {
+      method: 'GET',
+    }),
 
-  getAllEnabled: () =>
-    request<RoleModel>(`${BASE_URL}/role/enabled`, { method: 'GET' }),
+  getAllEnabled: (): Promise<RoleModel> =>
+    request(`${BASE_URL}/role/enabled`, {
+      method: 'GET',
+    }),
 };
 
 // 权限管理接口
 export const permissionsApi = {
-  getList: (params: PageRequest & Partial<PermissionModel>) =>
-    request<PageResult<PermissionModel>>(`${BASE_URL}/permissions`, {
+  getList: (
+    params: PageRequest & Partial<PermissionModel>
+  ): Promise<PageResult<PermissionModel>> =>
+    request(`${BASE_URL}/permissions`, {
       method: 'GET',
       params,
     }),
 
-  getTree: () =>
-    request<PermissionTreeNode[]>(`${BASE_URL}/permissions/tree`, {
+  getTree: (): Promise<PermissionTreeNode[]> =>
+    request(`${BASE_URL}/permissions/tree`, {
       method: 'GET',
     }),
 
-  getSimpleTree: () =>
-    request<SimplePermissionTreeResponse>(
-      `${BASE_URL}/permissions/simple/tree`,
-      {
-        method: 'GET',
-      }
-    ),
+  getSimpleTree: (): Promise<SimplePermissionTreeResponse> =>
+    request(`${BASE_URL}/permissions/simple/tree`, {
+      method: 'GET',
+    }),
 
-  create: (data: PermissionCreateRequest) =>
-    request<PermissionModel>(`${BASE_URL}/permissions`, {
+  create: (data: PermissionCreateRequest): Promise<PermissionModel> =>
+    request(`${BASE_URL}/permissions`, {
       method: 'POST',
-      data,
+      body: data,
     }),
 
-  update: (data: PermissionUpdateRequest) =>
-    request<PermissionModel>(`${BASE_URL}/permissions`, {
+  update: (data: PermissionUpdateRequest): Promise<PermissionModel> =>
+    request(`${BASE_URL}/permissions`, {
       method: 'PUT',
-      data,
+      body: data,
     }),
 
-  delete: (id: number) =>
-    request<void>(`${BASE_URL}/permissions/${id}`, { method: 'DELETE' }),
+  delete: (id: number): Promise<void> =>
+    request(`${BASE_URL}/permissions/${id}`, {
+      method: 'DELETE',
+    }),
 
-  getById: (id: string) =>
-    request<PermissionModel>(`${BASE_URL}/permissions/${id}`, {
+  getById: (id: string): Promise<PermissionModel> =>
+    request(`${BASE_URL}/permissions/${id}`, {
       method: 'GET',
     }),
 };
 
 // 租户管理接口
 export const tenantApi = {
-  getList: (params: PageRequest & Partial<TenantModel>) =>
-    request<PageResult<TenantModel>>(`${BASE_URL}/tenant`, {
+  getList: (
+    params: PageRequest & Partial<TenantModel>
+  ): Promise<PageResult<TenantModel>> =>
+    request(`${BASE_URL}/tenant`, {
       method: 'GET',
       params,
     }),
 
-  create: (data: TenantCreateRequest) =>
-    request<TenantModel>(`${BASE_URL}/tenant`, { method: 'POST', data }),
-
-  update: (data: TenantUpdateRequest) =>
-    request<TenantModel>(`${BASE_URL}/tenant`, {
-      method: 'PUT',
-      data,
+  create: (data: TenantCreateRequest): Promise<TenantModel> =>
+    request(`${BASE_URL}/tenant`, {
+      method: 'POST',
+      body: data,
     }),
 
-  delete: (id: string) =>
-    request<void>(`${BASE_URL}/tenant/${id}`, { method: 'DELETE' }),
-
-  getById: (id: string) =>
-    request<TenantModel>(`${BASE_URL}/tenant/${id}`, { method: 'GET' }),
-
-  // 获取租户权限
-  getTenantPermissions: (tenantId: string) =>
-    request<SimplePermissionTreeNode[]>(
-      `${BASE_URL}/tenant/permissions/${tenantId}`,
-      {
-        method: 'GET',
-      }
-    ),
-
-  // 分配权限给租户
-  assignPermissions: (data: { tenantId: string; permissionIds: any[] }) =>
-    request<void>(`${BASE_URL}/tenant/permissions`, {
+  update: (data: TenantUpdateRequest): Promise<TenantModel> =>
+    request(`${BASE_URL}/tenant`, {
       method: 'PUT',
-      data,
+      body: data,
+    }),
+
+  delete: (id: string): Promise<void> =>
+    request(`${BASE_URL}/tenant/${id}`, {
+      method: 'DELETE',
+    }),
+
+  getById: (id: string): Promise<TenantModel> =>
+    request(`${BASE_URL}/tenant/${id}`, {
+      method: 'GET',
+    }),
+
+  getTenantPermissions: (
+    tenantId: string
+  ): Promise<SimplePermissionTreeNode[]> =>
+    request(`${BASE_URL}/tenant/permissions/${tenantId}`, {
+      method: 'GET',
+    }),
+
+  assignPermissions: (data: {
+    tenantId: string;
+    permissionIds: number[];
+  }): Promise<void> =>
+    request(`${BASE_URL}/tenant/permissions`, {
+      method: 'PUT',
+      body: data,
     }),
 };
