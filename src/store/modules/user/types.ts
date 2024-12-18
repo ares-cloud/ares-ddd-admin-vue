@@ -16,4 +16,10 @@ export interface UserState {
   accountId?: string;
   certification?: number;
   role: RoleType;
+  // 自定义用户属性
+  id: string;
+  username: string;
+  roles: string[];
+  permissions: string[];
+  homePage: string;
 }

@@ -43,7 +43,7 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
+            <a-button v-permission="['010402']" type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
@@ -62,7 +62,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="openCreateModal">
+            <a-button
+              v-permission="['010401']"
+              type="primary"
+              @click="openCreateModal"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -108,11 +112,9 @@
     IconSearch,
   } from '@arco-design/web-vue/es/icon';
   import { roleApi } from '@/api/authority';
-  import type {
-    RoleCreateRequest,
-    RoleModel,
-    RoleUpdateRequest,
-  } from '@/types/api/authority';
+  import type { RoleModel } from '@/types/api/authority';
+  import { formatTimestamp } from '@/filters/date';
+  import Permission from '@/components/check-permission/index.vue';
   import EditModal from './components/edit-modal.vue';
   import AssignPermissionModal from './components/assign-permission-modal.vue';
 
@@ -245,14 +247,14 @@
       title: t('common.table.columns.createdAt'),
       dataIndex: 'createdAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.createdAt));
+        return h('span', {}, formatTimestamp(record.createdAt));
       },
     },
     {
       title: t('common.table.columns.updatedAt'),
       dataIndex: 'updatedAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.updatedAt));
+        return h('span', {}, formatTimestamp(record.updatedAt));
       },
     },
     {
@@ -261,28 +263,50 @@
       render: ({ record }) => {
         return h('div', [
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010403'] },
             {
-              style: { marginRight: '15px' },
-              onClick: () => openEditModal(record as RoleModel),
-            },
-            t('authority.button.edit')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () => openEditModal(record as RoleModel),
+                  },
+                  t('authority.button.edit')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010306'] },
             {
-              style: { marginRight: '15px' },
-              onClick: () => openAssignPermissionModal(record as RoleModel),
-            },
-            t('authority.button.assign')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () =>
+                      openAssignPermissionModal(record as RoleModel),
+                  },
+                  t('authority.button.assign')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010304'] },
             {
-              style: { color: '#FF7D00' },
-              onClick: () => handleDelete(record as RoleModel),
-            },
-            t('authority.button.delete')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { color: '#FF7D00' },
+                    onClick: () => handleDelete(record as RoleModel),
+                  },
+                  t('authority.button.delete')
+                ),
+            }
           ),
         ]);
       },

@@ -66,7 +66,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="openCreateModal">
+            <a-button
+              v-permission="['010201']"
+              type="primary"
+              @click="openCreateModal"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -108,6 +112,8 @@
   } from '@arco-design/web-vue/es/icon';
   import { permissionsApi } from '@/api/authority';
   import type { PermissionModel, ResourceModel } from '@/types/api/authority';
+  import Permission from '@/components/check-permission/index.vue';
+  import { formatTimestamp } from '@/filters/date';
   import EditModal from './components/edit-modal.vue';
 
   const { t } = useI18n();
@@ -124,7 +130,7 @@
   const modalVisible = ref(false);
   const modalTitle = ref('');
   const defaultFormData = {
-    id: '',
+    id: 0,
     name: '',
     code: '',
     type: 1,
@@ -289,14 +295,14 @@
       title: t('common.table.columns.createdAt'),
       dataIndex: 'createdAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.createdAt));
+        return h('span', {}, formatTimestamp(record.createdAt));
       },
     },
     {
       title: t('common.table.columns.updatedAt'),
       dataIndex: 'updatedAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.updatedAt));
+        return h('span', {}, formatTimestamp(record.updatedAt));
       },
     },
     {
@@ -305,20 +311,34 @@
       render: ({ record }) => {
         return h('div', [
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010203'] },
             {
-              style: { marginRight: '15px' },
-              onClick: () => openEditModal(record as PermissionModel),
-            },
-            t('authority.button.edit')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () => openEditModal(record as PermissionModel),
+                  },
+                  t('authority.button.edit')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010204'] },
             {
-              style: { color: '#FF7D00' },
-              onClick: () => handleDelete(record as PermissionModel),
-            },
-            t('authority.button.delete')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { color: '#FF7D00' },
+                    onClick: () => handleDelete(record as PermissionModel),
+                  },
+                  t('authority.button.delete')
+                ),
+            }
           ),
         ]);
       },

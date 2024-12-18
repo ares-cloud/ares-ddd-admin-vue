@@ -7,4 +7,5 @@ export interface UserInfo {
   phone?: string;
   roles: string[];
   permissions: string[];
+  homePage: string;
 }

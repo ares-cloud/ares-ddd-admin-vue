@@ -62,7 +62,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="openCreateModal">
+            <a-button
+              v-permission="['010301']"
+              type="primary"
+              @click="openCreateModal"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -107,6 +111,8 @@
   } from '@arco-design/web-vue/es/icon';
   import { userApi } from '@/api/authority';
   import type { UserModel } from '@/types/api/authority';
+  import Permission from '@/components/check-permission/index.vue';
+  import { formatTimestamp } from '@/filters/date';
   import EditModal from './components/edit-modal.vue';
   import AssignRoleModal from './components/assign-role-modal.vue';
 
@@ -264,14 +270,14 @@
       title: t('common.table.columns.createdAt'),
       dataIndex: 'createdAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.createdAt));
+        return h('span', {}, formatTimestamp(record.createdAt));
       },
     },
     {
       title: t('common.table.columns.updatedAt'),
       dataIndex: 'updatedAt',
       render: ({ record }) => {
-        return h('span', {}, proxy?.$filters.formatTimestamp(record.updatedAt));
+        return h('span', {}, formatTimestamp(record.updatedAt));
       },
     },
     {
@@ -280,42 +286,74 @@
       render: ({ record }) => {
         return h('div', [
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010303'] },
             {
-              style: { marginRight: '15px' },
-              onClick: () => openEditModal(record as UserModel),
-            },
-            t('authority.button.edit')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () => openEditModal(record as UserModel),
+                  },
+                  t('authority.button.edit')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010306'] },
             {
-              style: { marginRight: '15px' },
-              onClick: () => openAssignRoleModal(record as UserModel),
-            },
-            t('authority.button.assign')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () => openAssignRoleModal(record as UserModel),
+                  },
+                  t('authority.button.assign')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010305'] },
             {
-              style: {
-                marginRight: '15px',
-                color: record.status === 1 ? '#FF4D4F' : '#00B42A',
-              },
-              onClick: () =>
-                handleStatusChange(record as UserModel, record.status === 1),
-            },
-            record.status === 1
-              ? t('authority.button.disable')
-              : t('authority.button.enable')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: {
+                      marginRight: '15px',
+                      color: record.status === 1 ? '#FF4D4F' : '#00B42A',
+                    },
+                    onClick: () =>
+                      handleStatusChange(
+                        record as UserModel,
+                        record.status === 1
+                      ),
+                  },
+                  record.status === 1
+                    ? t('authority.button.disable')
+                    : t('authority.button.enable')
+                ),
+            }
           ),
           h(
-            'a',
+            Permission,
+            { requiredPermissions: ['010304'] },
             {
-              style: { color: '#FF7D00' },
-              onClick: () => handleDelete(record as UserModel),
-            },
-            t('authority.button.delete')
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { color: '#FF7D00' },
+                    onClick: () => handleDelete(record as UserModel),
+                    directives: [{ name: 'permission', value: ['010304'] }], // 添加权限指令
+                  },
+                  t('authority.button.delete')
+                ),
+            }
           ),
         ]);
       },

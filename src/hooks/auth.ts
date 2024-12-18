@@ -24,13 +24,15 @@ export default function useAuth() {
       return false;
     }
   };
-  // 处理登出
+  // 处理登录
   const login = async (data: LoginData) => {
     await userStore.login(data);
+    // 登录后立马获取用户信息
+    await userStore.info();
     Message.success(t('login.form.login.success'));
     const { redirect, ...othersQuery } = router.currentRoute.value.query;
     await router.push({
-      name: (redirect as string) || 'Workplace',
+      name: (redirect as string) || userStore.userInfo.homePage,
       query: {
         ...othersQuery,
       },
@@ -38,7 +40,7 @@ export default function useAuth() {
   };
 
   // 处理登出
-  const handleLogout = async () => {
+  const logout = async () => {
     resetUserStore();
     clearToken();
     await router.push({ name: 'login' });
@@ -48,17 +50,22 @@ export default function useAuth() {
   const handleTokenExpired = async () => {
     const tokenInfo = getToken();
     if (!tokenInfo) {
-      await handleLogout();
+      await logout();
       return;
     }
 
     const success = await handleRefreshToken(tokenInfo.refresh_token);
     if (!success) {
       Message.error(t('login.error.expired'));
-      await handleLogout();
+      await logout();
     }
   };
 
+  const checkPermission = (requiredPermissions: string[]): boolean => {
+    return requiredPermissions.some((permission) =>
+      userStore.permissions.includes(permission)
+    );
+  };
   onMounted(() => {
     emitter.on('auth:token-expired', handleTokenExpired);
   });
@@ -70,6 +77,7 @@ export default function useAuth() {
   return {
     loading,
     login,
-    handleLogout,
+    logout,
+    checkPermission,
   };
 }

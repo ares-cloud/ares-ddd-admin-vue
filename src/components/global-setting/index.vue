@@ -50,11 +50,11 @@
     },
     { name: 'settings.footer', key: 'footer', defaultVal: appStore.footer },
     { name: 'settings.tabBar', key: 'tabBar', defaultVal: appStore.tabBar },
-    {
-      name: 'settings.menuFromServer',
-      key: 'menuFromServer',
-      defaultVal: appStore.menuFromServer,
-    },
+    // {
+    //   name: 'settings.menuFromServer',
+    //   key: 'menuFromServer',
+    //   defaultVal: appStore.menuFromServer,
+    // },
     {
       name: 'settings.menuWidth',
       key: 'menuWidth',

@@ -62,7 +62,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="openCreateModal">
+            <a-button
+              v-permission="['010101']"
+              type="primary"
+              @click="openCreateModal"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -96,7 +100,7 @@
             data-index="expireTime"
           >
             <template #cell="{ record }">
-              {{ proxy?.$filters.formatTimestamp(record.expireTime) }}
+              {{ formatTimestamp(record.expireTime) }}
             </template>
           </a-table-column>
           <a-table-column
@@ -132,7 +136,7 @@
             data-index="createdAt"
           >
             <template #cell="{ record }">
-              {{ proxy?.$filters.formatTimestamp(record.createdAt) }}
+              {{ formatTimestamp(record.createdAt) }}
             </template>
           </a-table-column>
           <a-table-column
@@ -140,25 +144,35 @@
             data-index="updatedAt"
           >
             <template #cell="{ record }">
-              {{ proxy?.$filters.formatTimestamp(record.updatedAt) }}
+              {{ formatTimestamp(record.updatedAt) }}
             </template>
           </a-table-column>
           <a-table-column :title="t('common.operations')">
             <template #cell="{ record }">
               <a-space>
-                <a-button type="text" @click="openDetailModal(record)">
+                <a-button
+                  v-permission="['010103']"
+                  type="text"
+                  @click="openDetailModal(record)"
+                >
                   {{ t('authority.button.view') }}
                 </a-button>
-                <a-button type="text" @click="openEditModal(record)">
+                <a-button
+                  v-permission="['010104']"
+                  type="text"
+                  @click="openEditModal(record)"
+                >
                   {{ t('authority.button.edit') }}
                 </a-button>
                 <a-button
+                  v-permission="['010105']"
                   type="text"
                   @click="openAssignPermissionModal(record)"
                 >
                   {{ t('authority.button.assign') }}
                 </a-button>
                 <a-button
+                  v-permission="['010106']"
                   type="text"
                   status="danger"
                   @click="handleDelete(record)"
@@ -192,23 +206,21 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, computed, getCurrentInstance } from 'vue';
+  import { computed, getCurrentInstance, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import {
-    IconSearch,
-    IconRefresh,
     IconPlus,
+    IconRefresh,
+    IconSearch,
   } from '@arco-design/web-vue/es/icon';
   import { tenantApi } from '@/api/authority';
-  import type {
-    TenantModel,
-    TenantCreateRequest,
-    TenantUpdateRequest,
-  } from '@/types/api/authority';
+  import type { TenantModel } from '@/types/api/authority';
   import { useAppStore } from '@/store';
+  import { formatTimestamp } from '@/filters/date';
   import EditModal from './components/edit-modal.vue';
   import DetailModal from './components/detail-modal.vue';
+
   import AssignPermissionModal from './components/assign-permission-modal.vue';
 
   const instance = getCurrentInstance();

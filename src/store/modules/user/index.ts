@@ -25,6 +25,11 @@ const useUserStore = defineStore('user', {
     accountId: undefined,
     certification: undefined,
     role: '',
+    id: '',
+    username: '',
+    roles: [],
+    permissions: [],
+    homePage: '',
   }),
 
   getters: {
