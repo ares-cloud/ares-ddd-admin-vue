@@ -1,13 +1,19 @@
-import { CaptchaResult, LoginData, LoginResult } from '@/types/api/auth';
+import {
+  CaptchaReq,
+  CaptchaResult,
+  LoginData,
+  LoginResult,
+} from '@/types/api/auth';
 import request from '@/utils/request';
 
 const BASE_URL = '/auth';
 
 export default {
   // 获取图形验证码
-  getCaptcha: (): Promise<CaptchaResult> =>
+  getCaptcha: (params: CaptchaReq): Promise<CaptchaResult> =>
     request(`${BASE_URL}/captcha`, {
       method: 'GET',
+      params,
     }),
 
   // 用户登录

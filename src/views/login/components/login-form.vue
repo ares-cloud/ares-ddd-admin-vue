@@ -112,7 +112,7 @@
 
   const getCaptcha = async () => {
     try {
-      const res = await authApi.getCaptcha();
+      const res = await authApi.getCaptcha({ width: 120, height: 32 });
       captcha.id = res.key;
       captcha.image = res.image;
       form.captchaKey = res.key;
@@ -193,8 +193,8 @@
   }
 
   .captcha-wrapper {
-    width: 160px;
-    height: 40px;
+    width: 120px;
+    height: 30px;
     cursor: pointer;
 
     img {
