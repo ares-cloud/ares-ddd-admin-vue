@@ -7,9 +7,11 @@ import { useAuthStore } from '@/hooks/store';
 import { getToken, setToken, clearToken } from '@/utils/auth';
 import emitter from '@/events/event-bus';
 import { LoginData } from '@/types/api/auth';
+import { useAppStore } from '@/store';
 
 export default function useAuth() {
   const router = useRouter();
+  const appStore = useAppStore();
   const { userStore, resetUserStore } = useAuthStore();
   const loading = ref(false);
   const { t } = useI18n();
@@ -30,6 +32,8 @@ export default function useAuth() {
     // 登录后立马获取用户信息
     await userStore.info();
     Message.success(t('login.form.login.success'));
+    // 重新加载菜单
+    await appStore.fetchServerMenuConfig();
     const { redirect, ...othersQuery } = router.currentRoute.value.query;
     await router.push({
       name: (redirect as string) || userStore.userInfo.homePage,

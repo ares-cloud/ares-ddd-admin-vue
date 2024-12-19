@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store';
+import { useAppStore, useUserStore } from '@/store';
 
 // eslint-disable-next-line import/prefer-default-export
 export function useAuthStore() {

@@ -69,13 +69,20 @@
         <div class="login-form-password-actions">
           <a-checkbox
             v-model="rememberPassword"
+            :disabled="loading"
             @change="setRememberPassword as any"
           >
             {{ t('login.form.rememberPassword') }}
           </a-checkbox>
         </div>
-        <a-button type="primary" html-type="submit" long :loading="loading">
-          {{ t('login.form.login') }}
+        <a-button
+          type="primary"
+          html-type="submit"
+          long
+          :loading="loading"
+          :disabled="loading"
+        >
+          {{ loading ? t('login.form.logging') : t('login.form.login') }}
         </a-button>
       </a-space>
     </a-form>
@@ -133,17 +140,27 @@
   };
 
   const handleSubmit = async () => {
+    if (loading.value) return; // 防止重复提交
+
     try {
       await formRef.value?.validate();
     } catch (err) {
-      return; // 如果表单验证失败，直接返回
+      return;
     }
+
     try {
       setLoading(true);
+      // 添加适当的延迟以展示动画效果
+      await new Promise((resolve) => {
+        setTimeout(resolve, 300);
+      });
       await auth.login(form);
     } catch (err: any) {
       refreshCaptcha();
-      Message.error(t('login.form.login.error'));
+      Message.error({
+        content: t('login.form.login.error'),
+        duration: 2000,
+      });
     } finally {
       setLoading(false);
     }
@@ -190,16 +207,50 @@
     &-register-btn {
       color: var(--color-text-3) !important;
     }
+
+    transform-origin: center;
+
+    // 添加新的动画样式
+    transition: all 0.3s ease-in-out;
+
+    &.login-animation {
+      animation: loginPulse 1.5s ease-in-out infinite;
+    }
+  }
+  // 添加输入框的动画效果
+  .a-form-item {
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateX(5px);
+    }
   }
 
+  // 验证码图片hover效果
   .captcha-wrapper {
     width: 120px;
     height: 30px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 0 10px rgb(var(--primary-6) 0.2);
+      transform: scale(1.05);
+    }
 
     img {
       width: 100%;
       height: 100%;
+    }
+  }
+
+  // 按钮动画效果
+  .a-button {
+    transition: all 0.3s ease-in-out;
+
+    &:not(:disabled):hover {
+      box-shadow: 0 4px 12px rgb(var(--primary-6) 0.2);
+      transform: translateY(-2px);
     }
   }
 </style>
