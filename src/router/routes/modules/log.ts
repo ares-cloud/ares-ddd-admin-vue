@@ -32,6 +32,16 @@ const LOG: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'operationLogList',
+      name: 'OperationLogList',
+      component: () => import('@/views/log/operation/index.vue'),
+      meta: {
+        locale: 'menu.log.operation',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 
