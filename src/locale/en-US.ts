@@ -5,6 +5,7 @@ import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 
 // 自定义页面
 import localeAuthority from '@/views/authority/locale/en-US';
+import localeLog from '@/views/log/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -29,6 +30,7 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeAuthority,
+  ...localeLog,
   // Common operations
   'common.operations': 'Operations',
   'common.search': 'Search',

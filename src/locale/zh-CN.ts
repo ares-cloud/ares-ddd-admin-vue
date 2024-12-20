@@ -1,5 +1,6 @@
 import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeLogin from '@/views/login/locale/zh-CN';
+import localeLog from '@/views/log/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
@@ -29,6 +30,7 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeAuthority,
+  ...localeLog,
   // 通用操作按钮
   'common.operations': '操作',
   'common.search': '搜索',
