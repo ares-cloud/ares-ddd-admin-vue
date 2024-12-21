@@ -15,7 +15,7 @@ export function setToken(accessToken: string, refreshToken: string): void {
     TOKEN_KEY,
     JSON.stringify({
       accessToken,
-      refreshToken,
+      refreshToken
     })
   );
 }

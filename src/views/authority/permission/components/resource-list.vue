@@ -1,14 +1,7 @@
 <template>
-  <a-form-item
-    field="resources"
-    :label="t('authority.permission.searchTable.columns.resources')"
-  >
+  <a-form-item field="resources" :label="t('authority.permission.searchTable.columns.resources')">
     <div class="resource-list">
-      <div
-        v-for="(resource, index) in modelValue"
-        :key="index"
-        class="resource-item"
-      >
+      <div v-for="(resource, index) in modelValue" :key="index" class="resource-item">
         <a-select
           v-model="resource.method"
           style="width: 120px"
@@ -41,44 +34,44 @@
 </template>
 
 <script lang="ts" setup>
-  import { useI18n } from 'vue-i18n';
-  import { IconDelete, IconPlus } from '@arco-design/web-vue/es/icon';
-  import type { ResourceModel } from '@/types/api/authority';
+import { useI18n } from 'vue-i18n';
+import { IconDelete, IconPlus } from '@arco-design/web-vue/es/icon';
+import type { ResourceModel } from '@/types/api/authority';
 
-  const props = defineProps<{
-    modelValue: ResourceModel[];
-  }>();
+const props = defineProps<{
+  modelValue: ResourceModel[];
+}>();
 
-  const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue']);
 
-  const { t } = useI18n();
+const { t } = useI18n();
 
-  const handleAdd = () => {
-    const resources = [...props.modelValue];
-    resources.push({
-      method: 'GET',
-      path: '',
-    });
-    emit('update:modelValue', resources);
-  };
+const handleAdd = () => {
+  const resources = [...props.modelValue];
+  resources.push({
+    method: 'GET',
+    path: ''
+  });
+  emit('update:modelValue', resources);
+};
 
-  const handleRemove = (index: number) => {
-    const resources = [...props.modelValue];
-    resources.splice(index, 1);
-    emit('update:modelValue', resources);
-  };
+const handleRemove = (index: number) => {
+  const resources = [...props.modelValue];
+  resources.splice(index, 1);
+  emit('update:modelValue', resources);
+};
 </script>
 
 <style scoped lang="less">
-  .resource-list {
-    .resource-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    //
-    //.resource-add {
-    //  margin-top: 8px;
-    //}
+.resource-list {
+  .resource-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
   }
+  //
+  //.resource-add {
+  //  margin-top: 8px;
+  //}
+}
 </style>

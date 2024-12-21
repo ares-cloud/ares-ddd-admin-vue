@@ -9,7 +9,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     locale: 'menu.dashboard',
     requiresAuth: true,
     icon: 'icon-dashboard',
-    order: 0,
+    order: 0
   },
   children: [
     {
@@ -19,10 +19,20 @@ const DASHBOARD: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.dashboard.workplace',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
-  ],
+    {
+      path: 'systemMonitor',
+      name: 'SystemMonitor',
+      component: () => import('@/views/dashboard/monitor/index.vue'),
+      meta: {
+        locale: 'menu.monitor.system',
+        requiresAuth: true,
+        roles: ['*']
+      }
+    }
+  ]
 };
 
 export default DASHBOARD;

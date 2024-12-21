@@ -26,7 +26,7 @@ app.use(globalComponents);
 app.use(directive);
 
 app.config.globalProperties.$filters = {
-  formatTimestamp,
+  formatTimestamp
 };
 
 app.mount('#app');

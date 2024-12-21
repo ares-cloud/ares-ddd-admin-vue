@@ -29,13 +29,13 @@ const useUserStore = defineStore('user', {
     username: '',
     roles: [],
     permissions: [],
-    homePage: '',
+    homePage: ''
   }),
 
   getters: {
     userInfo(state: UserState): UserState {
       return { ...state };
-    },
+    }
   },
 
   actions: {
@@ -87,8 +87,8 @@ const useUserStore = defineStore('user', {
       } finally {
         this.logoutCallBack();
       }
-    },
-  },
+    }
+  }
 });
 
 export default useUserStore;

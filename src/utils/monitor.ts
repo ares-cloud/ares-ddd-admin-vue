@@ -14,7 +14,7 @@ export default function handleError(Vue: App, baseUrl: string) {
     axios.post(`${baseUrl}/report-error`, {
       err,
       instance,
-      info,
+      info
       // location: window.location.href,
       // message: err.message,
       // stack: err.stack,

@@ -9,10 +9,7 @@ import { PermissionTreeNode } from '@/types/api/authority';
 import { capitalizeFirstLetter } from '@/utils';
 import { AppState } from './types';
 
-function convertToRoute(
-  menu: PermissionTreeNode,
-  parentPath = ''
-): RouteRecordNormalized {
+function convertToRoute(menu: PermissionTreeNode, parentPath = ''): RouteRecordNormalized {
   const fullPath = menu.path ? menu.path.replace('/', '') : ''; // 去掉第一个斜杠
   const name = menu.path ? capitalizeFirstLetter(menu.path) : '';
   return markRaw({
@@ -25,9 +22,9 @@ function convertToRoute(
       locale: menu.localize,
       requiresAuth: true,
       roles: menu.roles,
-      permissions: menu.permissions,
+      permissions: menu.permissions
     },
-    children: menu.children?.map((child) => convertToRoute(child, parentPath)),
+    children: menu.children?.map((child) => convertToRoute(child, parentPath))
   }) as unknown as RouteRecordNormalized;
 }
 
@@ -43,7 +40,7 @@ const useAppStore = defineStore('app', {
     },
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu as unknown as RouteRecordNormalized[];
-    },
+    }
   },
 
   actions: {
@@ -75,28 +72,28 @@ const useAppStore = defineStore('app', {
         notifyInstance = Notification.info({
           id: 'menuNotice',
           content: 'loading',
-          closable: true,
+          closable: true
         });
         const data = await userApi.getUserMenus();
         this.serverMenu = data.map((menu) => convertToRoute(menu));
         notifyInstance = Notification.success({
           id: 'menuNotice',
           content: 'success',
-          closable: true,
+          closable: true
         });
       } catch (error) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         notifyInstance = Notification.error({
           id: 'menuNotice',
           content: 'error',
-          closable: true,
+          closable: true
         });
       }
     },
     clearServerMenu() {
       this.serverMenu = [];
-    },
-  },
+    }
+  }
 });
 
 export default useAppStore;

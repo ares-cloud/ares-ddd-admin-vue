@@ -1,8 +1,5 @@
 import Mock from 'mockjs';
-import setupMock, {
-  successResponseWrap,
-  failResponseWrap,
-} from '@/utils/setup-mock';
+import setupMock, { successResponseWrap, failResponseWrap } from '@/utils/setup-mock';
 
 import { MockParams } from '@/types/mock';
 import { isLogin } from '@/utils/auth';
@@ -32,7 +29,7 @@ setupMock({
           registrationDate: '2013-05-10 12:10:00',
           accountId: '15012312300',
           certification: 1,
-          role,
+          role
         });
       }
       return failResponseWrap(null, '未登录', 50008);
@@ -50,13 +47,13 @@ setupMock({
       if (username === 'admin' && password === 'admin') {
         window.localStorage.setItem('userRole', 'admin');
         return successResponseWrap({
-          token: '12345',
+          token: '12345'
         });
       }
       if (username === 'user' && password === 'user') {
         window.localStorage.setItem('userRole', 'user');
         return successResponseWrap({
-          token: '54321',
+          token: '54321'
         });
       }
       return failResponseWrap(null, '账号或者密码错误', 50000);
@@ -77,7 +74,7 @@ setupMock({
             locale: 'menu.server.dashboard',
             requiresAuth: true,
             icon: 'icon-dashboard',
-            order: 1,
+            order: 1
           },
           children: [
             {
@@ -85,21 +82,21 @@ setupMock({
               name: 'Workplace',
               meta: {
                 locale: 'menu.server.workplace',
-                requiresAuth: true,
-              },
+                requiresAuth: true
+              }
             },
             {
               path: 'https://arco.design',
               name: 'arcoWebsite',
               meta: {
                 locale: 'menu.arcoWebsite',
-                requiresAuth: true,
-              },
-            },
-          ],
-        },
+                requiresAuth: true
+              }
+            }
+          ]
+        }
       ];
       return successResponseWrap(menuList);
     });
-  },
+  }
 });

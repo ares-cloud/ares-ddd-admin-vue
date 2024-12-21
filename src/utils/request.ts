@@ -43,13 +43,13 @@ export const request = async (url: string, option?: HttpOption) => {
         result = await $http.post(url, file ? formData : payload, {
           headers: file
             ? { 'Content-Type': 'multipart/form-data' }
-            : { 'Content-Type': 'application/json' },
+            : { 'Content-Type': 'application/json' }
         });
         break;
 
       case 'PUT':
         result = await $http.put(url, payload, {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' }
         });
         break;
 

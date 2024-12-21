@@ -35,9 +35,7 @@ export default function useMenuTree() {
         }
 
         // route filter hideInMenu true
-        element.children = element.children.filter(
-          (x) => x.meta?.hideInMenu !== true
-        );
+        element.children = element.children.filter((x) => x.meta?.hideInMenu !== true);
 
         // Associated child node
         const subItem = travel(element.children, layer + 1);
@@ -64,6 +62,6 @@ export default function useMenuTree() {
   });
 
   return {
-    menuTree,
+    menuTree
   };
 }

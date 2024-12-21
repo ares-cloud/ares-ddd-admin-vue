@@ -38,8 +38,8 @@ export default function useAuth() {
     await router.push({
       name: (redirect as string) || userStore.userInfo.homePage,
       query: {
-        ...othersQuery,
-      },
+        ...othersQuery
+      }
     });
   };
 
@@ -66,9 +66,7 @@ export default function useAuth() {
   };
 
   const checkPermission = (requiredPermissions: string[]): boolean => {
-    return requiredPermissions.some((permission) =>
-      userStore.permissions.includes(permission)
-    );
+    return requiredPermissions.some((permission) => userStore.permissions.includes(permission));
   };
   onMounted(() => {
     emitter.on('auth:token-expired', handleTokenExpired);
@@ -82,6 +80,6 @@ export default function useAuth() {
     loading,
     login,
     logout,
-    checkPermission,
+    checkPermission
   };
 }

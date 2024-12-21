@@ -1,6 +1,6 @@
 import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/login/locale/en-US';
-
+import localeMatcher from '@/views/dashboard/monitor/locale/en-US';
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 
 // 自定义页面
@@ -29,6 +29,7 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeMatcher,
   ...localeAuthority,
   ...localeLog,
   // Common operations
@@ -54,4 +55,5 @@ export default {
   'common.status.locked': 'Locked',
   'common.status.deleted': 'Deleted',
   'common.selectAll': 'Select All',
+  'menu.monitor.system': 'System Monitor'
 };

@@ -13,5 +13,5 @@ export default {
   'login.form.login.success': 'Login successful',
   'login.form.login.error': 'Login failed',
   'login.form.rememberPassword': 'Remember password',
-  'login.error.expired': 'Login expired, please login again',
+  'login.error.expired': 'Login expired, please login again'
 };

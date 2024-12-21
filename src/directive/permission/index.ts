@@ -24,5 +24,5 @@ export default {
   },
   updated(el: HTMLElement, binding: DirectiveBinding) {
     checkPermission(el, binding);
-  },
+  }
 };

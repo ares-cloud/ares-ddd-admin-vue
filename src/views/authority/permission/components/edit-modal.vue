@@ -1,11 +1,5 @@
 <template>
-  <a-modal
-    :visible="visible"
-    :title="title"
-    :width="800"
-    @ok="handleOk"
-    @cancel="handleCancel"
-  >
+  <a-modal :visible="visible" :title="title" :width="800" @ok="handleOk" @cancel="handleCancel">
     <a-form
       ref="formRef"
       :model="form"
@@ -26,9 +20,7 @@
           >
             <a-input
               v-model="form.name"
-              :placeholder="
-                t('authority.permission.searchTable.form.name.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.name.placeholder')"
             />
           </a-form-item>
           <a-form-item
@@ -38,9 +30,7 @@
           >
             <a-input
               v-model="form.code"
-              :placeholder="
-                t('authority.permission.searchTable.form.code.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.code.placeholder')"
             />
           </a-form-item>
           <a-form-item
@@ -49,37 +39,21 @@
             :rules="[{ required: true }]"
           >
             <a-select v-model="form.type">
-              <a-option :value="1">{{
-                t('authority.permission.type.menu')
-              }}</a-option>
-              <a-option :value="2">{{
-                t('authority.permission.type.button')
-              }}</a-option>
-              <a-option :value="3">{{
-                t('authority.permission.type.api')
-              }}</a-option>
+              <a-option :value="1">{{ t('authority.permission.type.menu') }}</a-option>
+              <a-option :value="2">{{ t('authority.permission.type.button') }}</a-option>
+              <a-option :value="3">{{ t('authority.permission.type.api') }}</a-option>
             </a-select>
           </a-form-item>
-          <a-form-item
-            field="icon"
-            :label="t('authority.permission.searchTable.columns.icon')"
-          >
+          <a-form-item field="icon" :label="t('authority.permission.searchTable.columns.icon')">
             <a-input
               v-model="form.icon"
-              :placeholder="
-                t('authority.permission.searchTable.form.icon.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.icon.placeholder')"
             />
           </a-form-item>
-          <a-form-item
-            field="path"
-            :label="t('authority.permission.searchTable.columns.path')"
-          >
+          <a-form-item field="path" :label="t('authority.permission.searchTable.columns.path')">
             <a-input
               v-model="form.path"
-              :placeholder="
-                t('authority.permission.searchTable.form.path.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.path.placeholder')"
             />
           </a-form-item>
         </a-col>
@@ -91,9 +65,7 @@
           >
             <permission-tree-select
               v-model="form.parentId"
-              :placeholder="
-                t('authority.permission.searchTable.form.parentId.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.parentId.placeholder')"
               :check-strictly="true"
             />
           </a-form-item>
@@ -103,20 +75,11 @@
           >
             <a-input-number
               v-model="form.sequence"
-              :placeholder="
-                t('authority.permission.searchTable.form.sequence.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.sequence.placeholder')"
             />
           </a-form-item>
-          <a-form-item
-            field="status"
-            :label="t('authority.permission.searchTable.columns.status')"
-          >
-            <a-switch
-              v-model="form.status"
-              :checked-value="1"
-              :unchecked-value="2"
-            />
+          <a-form-item field="status" :label="t('authority.permission.searchTable.columns.status')">
+            <a-switch v-model="form.status" :checked-value="1" :unchecked-value="2" />
           </a-form-item>
           <a-form-item
             field="localize"
@@ -124,9 +87,7 @@
           >
             <a-input
               v-model="form.localize"
-              :placeholder="
-                t('authority.permission.searchTable.form.localize.placeholder')
-              "
+              :placeholder="t('authority.permission.searchTable.form.localize.placeholder')"
             />
           </a-form-item>
         </a-col>
@@ -141,11 +102,7 @@
           >
             <a-textarea
               v-model="form.description"
-              :placeholder="
-                t(
-                  'authority.permission.searchTable.form.description.placeholder'
-                )
-              "
+              :placeholder="t('authority.permission.searchTable.form.description.placeholder')"
             />
           </a-form-item>
         </a-col>
@@ -160,93 +117,93 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, computed, watch } from 'vue';
-  import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
-  import type { PermissionModel } from '@/types/api/authority';
-  import { permissionsApi } from '@/api/authority';
-  import PermissionTreeSelect from '@/components/permission-tree-select/index.vue';
-  import ResourceList from './resource-list.vue';
+import { ref, reactive, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { Message } from '@arco-design/web-vue';
+import type { PermissionModel } from '@/types/api/authority';
+import { permissionsApi } from '@/api/authority';
+import PermissionTreeSelect from '@/components/permission-tree-select/index.vue';
+import ResourceList from './resource-list.vue';
 
-  const props = defineProps<{
-    visible: boolean;
-    data: PermissionModel;
-  }>();
+const props = defineProps<{
+  visible: boolean;
+  data: PermissionModel;
+}>();
 
-  const emit = defineEmits(['update:visible', 'success']);
+const emit = defineEmits(['update:visible', 'success']);
 
-  const { t } = useI18n();
-  const formRef = ref();
-  const form = reactive<PermissionModel>({
-    ...props.data,
-    createdAt: 0,
-    updatedAt: 0,
-  });
+const { t } = useI18n();
+const formRef = ref();
+const form = reactive<PermissionModel>({
+  ...props.data,
+  createdAt: 0,
+  updatedAt: 0
+});
 
-  const title = computed(() =>
-    form.id
-      ? t('authority.permission.modal.title.edit')
-      : t('authority.permission.modal.title.create')
-  );
+const title = computed(() =>
+  form.id
+    ? t('authority.permission.modal.title.edit')
+    : t('authority.permission.modal.title.create')
+);
 
-  const rules = {
-    name: [
-      {
-        required: true,
-        message: t('authority.permission.searchTable.form.name.placeholder'),
-      },
-    ],
-    code: [
-      {
-        required: true,
-        message: t('authority.permission.searchTable.form.code.placeholder'),
-      },
-    ],
-    type: [
-      {
-        required: true,
-        message: t('authority.permission.modal.type.placeholder'),
-      },
-    ],
-  };
-
-  const handleOk = async () => {
-    const result = await formRef.value?.validate();
-    if (!result) {
-      try {
-        const submitData = {
-          ...form,
-          status: form.status ? 1 : 0,
-        };
-        if (form.id) {
-          await permissionsApi.update(submitData);
-        } else {
-          await permissionsApi.create(submitData);
-        }
-        emit('update:visible', false);
-        Message.success(t('common.success.operation'));
-        emit('success', !form.id);
-      } catch (err) {
-        Message.error(t('authority.common.operation.failed'));
-      }
+const rules = {
+  name: [
+    {
+      required: true,
+      message: t('authority.permission.searchTable.form.name.placeholder')
     }
-  };
+  ],
+  code: [
+    {
+      required: true,
+      message: t('authority.permission.searchTable.form.code.placeholder')
+    }
+  ],
+  type: [
+    {
+      required: true,
+      message: t('authority.permission.modal.type.placeholder')
+    }
+  ]
+};
 
-  const handleCancel = () => {
-    emit('update:visible', false);
-  };
+const handleOk = async () => {
+  const result = await formRef.value?.validate();
+  if (!result) {
+    try {
+      const submitData = {
+        ...form,
+        status: form.status ? 1 : 0
+      };
+      if (form.id) {
+        await permissionsApi.update(submitData);
+      } else {
+        await permissionsApi.create(submitData);
+      }
+      emit('update:visible', false);
+      Message.success(t('common.success.operation'));
+      emit('success', !form.id);
+    } catch (err) {
+      Message.error(t('authority.common.operation.failed'));
+    }
+  }
+};
 
-  watch(
-    () => props.data,
-    (val) => {
-      Object.assign(form, val);
-    },
-    { deep: true }
-  );
+const handleCancel = () => {
+  emit('update:visible', false);
+};
+
+watch(
+  () => props.data,
+  (val) => {
+    Object.assign(form, val);
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="less">
-  .resource-wrapper {
-    padding-left: 24px; // 向左对齐，与表单项对齐
-  }
+.resource-wrapper {
+  padding-left: 24px; // 向左对齐，与表单项对齐
+}
 </style>

@@ -39,5 +39,5 @@ export default {
 
   'log.status.success': 'Success',
   'log.status.fail': 'Failed',
-  'log.fetch.error': 'Failed to fetch log list',
+  'log.fetch.error': 'Failed to fetch log list'
 };

@@ -95,10 +95,8 @@ export default {
   'authority.permission.searchTable.form.parentId.placeholder': '请输入父级ID',
   'authority.permission.searchTable.form.sequence.placeholder': '请输入排序值',
   'authority.permission.searchTable.form.description.placeholder': '请输入描述',
-  'authority.permission.searchTable.form.localize.placeholder':
-    '请输入本地化信息',
-  'authority.permission.searchTable.form.properties.placeholder':
-    '请输入属性信息',
+  'authority.permission.searchTable.form.localize.placeholder': '请输入本地化信息',
+  'authority.permission.searchTable.form.properties.placeholder': '请输入属性信息',
   'authority.permission.form.basic': '基本信息',
   'authority.permission.form.resources': '资源列表',
 
@@ -122,17 +120,13 @@ export default {
   'authority.tenant.searchTable.form.isDefault': '是否默认租户',
   'authority.tenant.searchTable.columns.adminUsername': '管理员',
   'authority.tenant.searchTable.form.adminUser.username': '管理员用户名',
-  'authority.tenant.searchTable.form.adminUser.username.placeholder':
-    '请输入管理员用户名',
+  'authority.tenant.searchTable.form.adminUser.username.placeholder': '请输入管理员用户名',
   'authority.tenant.searchTable.form.adminUser.password': '管理员密码',
-  'authority.tenant.searchTable.form.adminUser.password.placeholder':
-    '请输入管理员密码',
+  'authority.tenant.searchTable.form.adminUser.password.placeholder': '请输入管理员密码',
   'authority.tenant.searchTable.form.adminUser.email': '管理员邮箱',
-  'authority.tenant.searchTable.form.adminUser.email.placeholder':
-    '请输入管理员邮箱',
+  'authority.tenant.searchTable.form.adminUser.email.placeholder': '请输入管理员邮箱',
   'authority.tenant.searchTable.form.adminUser.phone': '管理员手机号',
-  'authority.tenant.searchTable.form.adminUser.phone.placeholder':
-    '请输入管理员手机号',
+  'authority.tenant.searchTable.form.adminUser.phone.placeholder': '请输入管理员手机号',
   'authority.tenant.modal.title.detail': '租户详情',
   'authority.tenant.detail.tenant.title': '租户信息',
   'authority.tenant.detail.admin.title': '管理员信息',
@@ -157,5 +151,5 @@ export default {
   'authority.common.operation.success': '操作成功',
   'authority.common.operation.failed': '操作失败',
   'authority.common.delete.failed': '删除失败',
-  'authority.common.search.failed': '查询失败',
+  'authority.common.search.failed': '查询失败'
 };

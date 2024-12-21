@@ -8,7 +8,7 @@ const { VITE_API_BASE_URL, VITE_API_VERSION } = import.meta.env;
 
 const http = axios.create({
   baseURL: `${VITE_API_BASE_URL}/${VITE_API_VERSION}`,
-  timeout: 5000,
+  timeout: 5000
 });
 
 http.interceptors.request.use(

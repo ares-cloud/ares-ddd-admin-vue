@@ -1,12 +1,10 @@
-import axios from 'axios';
 import type {
   LogQueryParams,
   LogQueryResult,
   OperationLogQueryParams,
-  OperationLogQueryResult,
+  OperationLogQueryResult
 } from '@/types/api/log';
-import type { PageResult } from '@/types/api/base';
-import type { UserModel } from '@/types/api/authority';
+// eslint-disable-next-line import/no-named-as-default
 import request from '@/utils/request';
 
 export const logApi = {
@@ -14,24 +12,22 @@ export const logApi = {
   getAdminLogList: (params: LogQueryParams): Promise<LogQueryResult> =>
     request(`sys/login-log/admin`, {
       method: 'GET',
-      params,
+      params
     }),
 
   // 获取用户端日志列表
   getAppLogList: (params: LogQueryParams): Promise<LogQueryResult> =>
     request(`sys/login-log/app`, {
       method: 'GET',
-      params,
+      params
     }),
 
   // 获取操作日志列表
-  getOperationLogList: (
-    params: OperationLogQueryParams
-  ): Promise<OperationLogQueryResult> =>
+  getOperationLogList: (params: OperationLogQueryParams): Promise<OperationLogQueryResult> =>
     request(`/oplog/list`, {
       method: 'GET',
-      params,
-    }),
+      params
+    })
 };
 
 export default logApi;

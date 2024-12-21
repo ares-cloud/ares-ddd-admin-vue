@@ -39,5 +39,5 @@ export default {
 
   'log.status.success': '成功',
   'log.status.fail': '失败',
-  'log.fetch.error': '获取日志列表失败',
+  'log.fetch.error': '获取日志列表失败'
 };

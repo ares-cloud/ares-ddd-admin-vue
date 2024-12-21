@@ -5,7 +5,7 @@ export const DATE_FORMAT = {
   DATE_TIME: 'YYYY-MM-DD HH:mm:ss',
   TIME: 'HH:mm:ss',
   MONTH: 'YYYY-MM',
-  YEAR: 'YYYY',
+  YEAR: 'YYYY'
 } as const;
 
 export type DateFormat = keyof typeof DATE_FORMAT;
@@ -31,10 +31,7 @@ export const parseToTimestamp = (
 /**
  * 时间戳(秒)转字符串
  */
-export const timestampToDate = (
-  timestamp?: number,
-  format: DateFormat = 'DATE_TIME'
-): string => {
+export const timestampToDate = (timestamp?: number, format: DateFormat = 'DATE_TIME'): string => {
   if (!timestamp) return '-';
   return dayjs(timestamp * 1000).format(DATE_FORMAT[format]);
 };

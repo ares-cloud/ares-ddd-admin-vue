@@ -3,20 +3,23 @@ const path = require('path');
 
 module.exports = {
   root: true,
+  cache: true,
   parser: 'vue-eslint-parser',
   parserOptions: {
-    // Parser that checks the content of the <script> tag
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
     ecmaVersion: 2020,
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
+    project: null,
+    tsconfigRootDir: __dirname,
+    extraFileExtensions: ['.vue']
   },
   env: {
-    'browser': true,
-    'node': true,
-    'vue/setup-compiler-macros': true,
+    browser: true,
+    node: true,
+    'vue/setup-compiler-macros': true
   },
   plugins: ['@typescript-eslint'],
   extends: [
@@ -26,14 +29,14 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:vue/vue3-recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   settings: {
     'import/resolver': {
       typescript: {
-        project: path.resolve(__dirname, './tsconfig.json'),
-      },
-    },
+        alwaysTryTypes: true
+      }
+    }
   },
   rules: {
     'prettier/prettier': 1,
@@ -59,12 +62,22 @@ module.exports = {
         js: 'never',
         jsx: 'never',
         ts: 'never',
-        tsx: 'never',
-      },
+        tsx: 'never'
+      }
     ],
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-param-reassign': 0,
     'prefer-regex-literals': 0,
     'import/no-extraneous-dependencies': 0,
-  },
+    '@typescript-eslint/no-non-null-assertion': 'off', // 禁用非空断言规则
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'vue/no-v-html': 'off',
+    'vue/require-explicit-emits': 'off',
+    'vue/no-multiple-template-root': 'off',
+    'import/no-unresolved': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    'no-warning-comments': 'off',
+    'max-warnings': 'off'
+  }
 };

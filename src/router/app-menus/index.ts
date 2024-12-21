@@ -9,7 +9,7 @@ const appClientMenus = mixinRoutes.map((el) => {
     path,
     meta,
     redirect,
-    children,
+    children
   };
 });
 

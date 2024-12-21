@@ -7,8 +7,7 @@ export default {
 
   // User Management
   'authority.user.searchTable.form.userName': 'Username',
-  'authority.user.searchTable.form.userName.placeholder':
-    'Please enter username',
+  'authority.user.searchTable.form.userName.placeholder': 'Please enter username',
   'authority.user.searchTable.form.email': 'Email',
   'authority.user.searchTable.form.email.placeholder': 'Please enter email',
   'authority.user.searchTable.form.role': 'Role',
@@ -22,23 +21,18 @@ export default {
   'authority.user.searchTable.columns.name': 'Name',
   'authority.user.searchTable.columns.phone': 'Phone',
   'authority.user.searchTable.columns.password': 'Password',
-  'authority.user.searchTable.form.password.placeholder':
-    'Please enter password',
+  'authority.user.searchTable.form.password.placeholder': 'Please enter password',
   'authority.user.searchTable.columns.invitationCode': 'Invitation Code',
-  'authority.user.searchTable.form.invitationCode.placeholder':
-    'Please enter invitation code',
+  'authority.user.searchTable.form.invitationCode.placeholder': 'Please enter invitation code',
   'authority.user.modal.title.create': 'Create User',
   'authority.user.modal.title.edit': 'Edit User',
 
   // Role Management
   'authority.role.searchTable.form.roleName': 'Role Name',
-  'authority.role.searchTable.form.roleName.placeholder':
-    'Please enter role name',
+  'authority.role.searchTable.form.roleName.placeholder': 'Please enter role name',
   'authority.role.searchTable.form.roleCode': 'Role Code',
-  'authority.role.searchTable.form.roleCode.placeholder':
-    'Please enter role code',
-  'authority.role.searchTable.form.description.placeholder':
-    'Please enter role description',
+  'authority.role.searchTable.form.roleCode.placeholder': 'Please enter role code',
+  'authority.role.searchTable.form.description.placeholder': 'Please enter role description',
   'authority.role.searchTable.operation.create': 'Create Role',
   'authority.role.searchTable.columns.roleName': 'Role Name',
   'authority.role.searchTable.columns.roleCode': 'Role Code',
@@ -51,18 +45,15 @@ export default {
   'authority.role.searchTable.columns.localize': 'Localization Key',
   'authority.role.searchTable.form.name.placeholder': 'Please enter role name',
   'authority.role.searchTable.form.code.placeholder': 'Please enter role code',
-  'authority.role.searchTable.form.localize.placeholder':
-    'Please enter localization key',
+  'authority.role.searchTable.form.localize.placeholder': 'Please enter localization key',
   'authority.role.modal.title.create': 'Create Role',
   'authority.role.modal.title.assignPermission': 'Assign Permissions',
-  'authority.role.delete.confirm.content':
-    'Are you sure you want to delete role {name}?',
+  'authority.role.delete.confirm.content': 'Are you sure you want to delete role {name}?',
   'authority.role.permission.available': 'Available Permissions',
   'authority.role.permission.current': 'Current Permissions',
   'authority.role.permission.select.required': 'Please select permissions',
   'authority.role.permission.load.failed': 'Failed to load permissions',
-  'authority.role.permission.assign.success':
-    'Permissions assigned successfully',
+  'authority.role.permission.assign.success': 'Permissions assigned successfully',
   'authority.role.permission.assign.failed': 'Failed to assign permissions',
 
   // Permission Management
@@ -84,21 +75,17 @@ export default {
   'authority.permission.type.api': 'API',
   'authority.permission.modal.title.create': 'Create Permission',
   'authority.permission.modal.title.edit': 'Edit Permission',
-  'authority.permission.modal.type.placeholder':
-    'Please select permission type',
+  'authority.permission.modal.type.placeholder': 'Please select permission type',
   'authority.permission.delete.confirm.title': 'Confirm Delete',
-  'authority.permission.delete.confirm.content':
-    'Are you sure to delete permission {name}?',
+  'authority.permission.delete.confirm.content': 'Are you sure to delete permission {name}?',
   'authority.permission.form.basic': 'Basic Information',
   'authority.permission.form.resources': 'Resource List',
 
   // Tenant Management
   'authority.tenant.searchTable.form.name': 'Tenant Name',
-  'authority.tenant.searchTable.form.name.placeholder':
-    'Please enter tenant name',
+  'authority.tenant.searchTable.form.name.placeholder': 'Please enter tenant name',
   'authority.tenant.searchTable.form.code': 'Tenant Code',
-  'authority.tenant.searchTable.form.code.placeholder':
-    'Please enter tenant code',
+  'authority.tenant.searchTable.form.code.placeholder': 'Please enter tenant code',
   'authority.tenant.searchTable.operation.create': 'Create Tenant',
   'authority.tenant.searchTable.columns.name': 'Tenant Name',
   'authority.tenant.searchTable.columns.code': 'Tenant Code',
@@ -107,12 +94,10 @@ export default {
   'authority.tenant.modal.title.create': 'Create Tenant',
   'authority.tenant.modal.title.edit': 'Edit Tenant',
   'authority.tenant.delete.confirm.title': 'Confirm Delete',
-  'authority.tenant.delete.confirm.content':
-    'Are you sure to delete tenant {name}?',
+  'authority.tenant.delete.confirm.content': 'Are you sure to delete tenant {name}?',
   'authority.tenant.searchTable.columns.description': 'Description',
   'authority.tenant.searchTable.columns.isDefault': 'Default',
-  'authority.tenant.searchTable.form.description.placeholder':
-    'Please enter description',
+  'authority.tenant.searchTable.form.description.placeholder': 'Please enter description',
   'authority.tenant.searchTable.form.isDefault': 'Default Tenant',
   'authority.tenant.detail.tenant.title': 'Tenant Information',
   'authority.tenant.detail.admin.title': 'Admin Information',
@@ -121,8 +106,7 @@ export default {
   'authority.tenant.permission.available': 'Available Permissions',
   'authority.tenant.permission.select.required': 'Please select permissions',
   'authority.tenant.permission.load.failed': 'Failed to load permissions',
-  'authority.tenant.permission.assign.success':
-    'Permissions assigned successfully',
+  'authority.tenant.permission.assign.success': 'Permissions assigned successfully',
   'authority.tenant.permission.assign.failed': 'Failed to assign permissions',
 
   // Common
@@ -136,5 +120,5 @@ export default {
   'authority.common.operation.success': 'Operation successful',
   'authority.common.operation.failed': 'Operation failed',
   'authority.common.delete.failed': 'Delete failed',
-  'authority.common.search.failed': 'Search failed',
+  'authority.common.search.failed': 'Search failed'
 };

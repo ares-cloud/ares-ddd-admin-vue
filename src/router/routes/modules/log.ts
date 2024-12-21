@@ -9,7 +9,7 @@ const LOG: AppRouteRecordRaw = {
     locale: 'menu.log',
     requiresAuth: true,
     icon: 'icon-file',
-    order: 6,
+    order: 6
   },
   children: [
     {
@@ -19,8 +19,8 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.log.admin',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
     {
       path: 'appLogList',
@@ -29,8 +29,8 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.log.app',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
     {
       path: 'operationLogList',
@@ -39,10 +39,10 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.log.operation',
         requiresAuth: true,
-        roles: ['*'],
-      },
-    },
-  ],
+        roles: ['*']
+      }
+    }
+  ]
 };
 
 export default LOG;

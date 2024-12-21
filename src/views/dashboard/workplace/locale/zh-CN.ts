@@ -33,5 +33,5 @@ export default {
   'workplace.popularContent.image': '图片',
   'workplace.popularContent.video': '视频',
   'workplace.categoriesPercent': '内容类型占比',
-  'workplace.pecs': '个',
+  'workplace.pecs': '个'
 };

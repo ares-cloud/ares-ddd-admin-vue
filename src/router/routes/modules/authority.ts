@@ -9,7 +9,7 @@ const AUTHORITY: AppRouteRecordRaw = {
     locale: 'menu.authority',
     requiresAuth: true,
     icon: 'icon-settings',
-    order: 7,
+    order: 7
   },
   children: [
     {
@@ -19,8 +19,8 @@ const AUTHORITY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.authority.user',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
     {
       path: 'role',
@@ -29,8 +29,8 @@ const AUTHORITY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.authority.role',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
     {
       path: 'permission',
@@ -39,8 +39,8 @@ const AUTHORITY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.authority.permission',
         requiresAuth: true,
-        roles: ['*'],
-      },
+        roles: ['*']
+      }
     },
     {
       path: 'tenant',
@@ -49,10 +49,10 @@ const AUTHORITY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.authority.tenant',
         requiresAuth: true,
-        roles: ['*'],
-      },
-    },
-  ],
+        roles: ['*']
+      }
+    }
+  ]
 };
 
 export default AUTHORITY;
