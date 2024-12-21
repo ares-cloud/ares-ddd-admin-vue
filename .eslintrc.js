@@ -3,7 +3,6 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  cache: true,
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -23,7 +22,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   extends: [
-    // Airbnb JavaScript Style Guide https://github.com/airbnb/javascript
     'airbnb-base',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
@@ -40,17 +38,14 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 1,
-    // Vue: Recommended rules to be closed or modify
     'vue/require-default-prop': 0,
     'vue/singleline-html-element-content-newline': 0,
     'vue/max-attributes-per-line': 0,
-    // Vue: Add extra rules
     'vue/custom-event-name-casing': [2, 'camelCase'],
     'vue/no-v-text': 1,
     'vue/padding-line-between-blocks': 1,
     'vue/require-direct-export': 1,
     'vue/multi-word-component-names': 0,
-    // Allow @ts-ignore comment
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-unused-vars': 1,
     '@typescript-eslint/no-empty-function': 1,
@@ -69,15 +64,11 @@ module.exports = {
     'no-param-reassign': 0,
     'prefer-regex-literals': 0,
     'import/no-extraneous-dependencies': 0,
-    '@typescript-eslint/no-non-null-assertion': 'off', // 禁用非空断言规则
+    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/no-v-html': 'off',
     'vue/require-explicit-emits': 'off',
     'vue/no-multiple-template-root': 'off',
-    'import/no-unresolved': 'off',
-    '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/no-misused-promises': 'off',
-    'no-warning-comments': 'off',
-    'max-warnings': 'off'
+    'import/no-unresolved': 'off'
   }
 };

@@ -13,23 +13,23 @@
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint-staged": "npx lint-staged",
     "prepare": "husky install",
-    "lint": "eslint --cache --max-warnings=0 \"src/**/*.{vue,ts,tsx}\""
+    "lint": "eslint \"src/**/*.{vue,ts,tsx}\" --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,vue}": [
       "prettier --write",
-      "eslint --fix --quiet --max-old-space-size=8192"
+      "node --max-old-space-size=8192 ./node_modules/.bin/eslint --fix --quiet"
     ],
     "**/*.{css,less,scss,vue}": [
       "prettier --write",
-      "stylelint --fix --allow-empty-input --quiet --max-warnings=0"
+      "node --max-old-space-size=8192 ./node_modules/.bin/stylelint --fix --allow-empty-input --quiet"
     ]
   },
   "dependencies": {
     "@arco-design/web-vue": "^2.44.7",
     "@vueuse/core": "^9.3.0",
     "arco-design-pro-vue": "^2.7.3",
-    "axios": "^0.24.0",
+    "axios": "1.7.4",
     "dayjs": "^1.11.5",
     "echarts": "^5.4.3",
     "lodash": "^4.17.21",
