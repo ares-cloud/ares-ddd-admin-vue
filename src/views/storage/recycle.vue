@@ -30,7 +30,7 @@
       </template>
 
       <!-- 搜索表单 -->
-      <a-row>
+      <a-row class="mb-4">
         <a-col :flex="1">
           <a-form
             :model="searchForm"
@@ -202,9 +202,16 @@ const rowSelection = {
 const loadFileList = async () => {
   setLoading(true);
   try {
-    // const { list, total } = await storageApi.getRecycleList(searchForm);
-    // fileList.value = list;
-    // pagination.total = total;
+    const res = await storageApi.getRecycleList({
+      current: searchForm.current,
+      size: searchForm.pageSize,
+      name: searchForm.name,
+      type: searchForm.type,
+      startTime: searchForm.startTime,
+      endTime: searchForm.endTime
+    });
+    fileList.value = res.list;
+    pagination.total = res.total;
   } catch (err) {
     Message.error(t('storage.recycle.loadError'));
   } finally {
@@ -314,5 +321,9 @@ loadFileList();
 
 .general-card {
   min-height: calc(100vh - 160px);
+}
+
+.mb-4 {
+  margin-bottom: 24px;
 }
 </style>

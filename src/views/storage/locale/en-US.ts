@@ -56,5 +56,14 @@ export default {
   'storage.file.batchDeleteConfirmTitle': 'Confirm Batch Delete',
   'storage.file.batchDeleteConfirmContent': 'Are you sure you want to delete the selected files? This action cannot be undone.',
   'storage.file.batchDeleteSuccess': 'Batch delete successful',
-  'storage.file.batchDeleteError': 'Failed to batch delete'
+  'storage.file.batchDeleteError': 'Failed to batch delete',
+
+  'storage.file.recycleConfirmTitle': 'Confirm Move to Recycle Bin',
+  'storage.file.recycleConfirmContent': 'Are you sure you want to move this file to recycle bin?',
+  'storage.file.recycleSuccess': 'Moved to recycle bin',
+  'storage.file.recycleError': 'Failed to move to recycle bin',
+  'storage.file.batchRecycleConfirmTitle': 'Confirm Batch Move to Recycle Bin',
+  'storage.file.batchRecycleConfirmContent': 'Are you sure you want to move selected files to recycle bin?',
+  'storage.file.batchRecycleSuccess': 'Successfully moved to recycle bin',
+  'storage.file.batchRecycleError': 'Failed to move to recycle bin'
 };

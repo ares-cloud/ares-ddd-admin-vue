@@ -53,7 +53,7 @@ export default {
   'storage.recycle.restoreError': '恢复失败',
   'storage.recycle.batchRestoreSuccess': '批量恢复成功',
   'storage.recycle.batchRestoreError': '批量恢复失败',
-  'storage.recycle.deleteConfirmTitle': '确认��除',
+  'storage.recycle.deleteConfirmTitle': '确认删除',
   'storage.recycle.deleteConfirmContent': '删除后将无法恢复，是否继续？',
   'storage.recycle.deleteSuccess': '删除成功',
   'storage.recycle.deleteError': '删除失败',
@@ -79,10 +79,19 @@ export default {
   'storage.file.previewing': '正在加载预览...',
 
   'storage.file.deleteConfirmTitle': '确认删除',
-  'storage.file.deleteConfirmContent': '确定要删除该文件吗���删除后将无法恢复。',
+  'storage.file.deleteConfirmContent': '确定要删除该文件吗？删除后将无法恢复。',
 
   'storage.file.batchDeleteConfirmTitle': '确认批量删除',
   'storage.file.batchDeleteConfirmContent': '确定要删除选中的文件吗？删除后将无法恢复。',
   'storage.file.batchDeleteSuccess': '批量删除成功',
-  'storage.file.batchDeleteError': '批量删除失败'
+  'storage.file.batchDeleteError': '批量删除失败',
+
+  'storage.file.recycleConfirmTitle': '确认移入回收站',
+  'storage.file.recycleConfirmContent': '确定要将该文件移入回收站吗？',
+  'storage.file.recycleSuccess': '已移入回收站',
+  'storage.file.recycleError': '移入回收站失败',
+  'storage.file.batchRecycleConfirmTitle': '确认批量移入回收站',
+  'storage.file.batchRecycleConfirmContent': '确定要将选中的文件移入回收站吗？',
+  'storage.file.batchRecycleSuccess': '批量移入回收站成功',
+  'storage.file.batchRecycleError': '批量移入回收站失败'
 };

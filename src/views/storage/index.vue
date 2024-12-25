@@ -366,6 +366,7 @@ import {
 import type { FileDto, FolderDto, FolderLevel, FolderTreeDto } from '@/types/api/storage';
 import storageApi from '@/api/storage';
 import useLoading from '@/hooks/loading';
+import { permissionsApi } from "@/api/authority";
 // 文件操作相关
 // 添加上传组件的引用
 const uploadRef = ref();
@@ -692,7 +693,7 @@ const handlePreview = async (file: FileDto) => {
   try {
     previewFile.value = file;
 
-    // 显示加载状态
+    // 显示加载��态
     const loadingInstance = Message.loading({
       content: t('storage.file.previewing'),
       duration: 0
@@ -762,39 +763,38 @@ const handleDownload = async (file: FileDto) => {
 
 // 删除文件
 const handleDelete = async (file: FileDto) => {
-  const result = await Modal.confirm({
-    title: t('storage.file.deleteConfirmTitle'),
-    content: t('storage.file.deleteConfirmContent'),
-    maskClosable: false
+  Modal.confirm({
+    title: t('storage.file.recycleConfirmTitle'),
+    content: t('storage.file.recycleConfirmContent'),
+    onOk: async () => {
+      try {
+        await storageApi.recycleFile(file.id);
+        Message.success(t('storage.file.recycleSuccess'));
+        loadFileList();
+      } catch (err) {
+        Message.error(t('storage.file.recycleError'));
+      }
+    }
   });
-
-  if (!result) return;
-
-  try {
-    await storageApi.deleteFile(file.id);
-    Message.success(t('storage.file.deleteSuccess'));
-    loadFileList();
-  } catch (err) {
-    Message.error(t('storage.file.deleteError'));
-  }
 };
 
 // 批量删除文件
 const handleBatchDelete = async () => {
-  Modal.confirm({
-    title: t('storage.file.batchDeleteConfirmTitle'),
-    content: t('storage.file.batchDeleteConfirmContent'),
-    onOk: async () => {
-      try {
-        const deletePromises = selectedFileIds.value.map((id) => storageApi.deleteFile(id));
-        await Promise.all(deletePromises);
-        Message.success(t('storage.file.batchDeleteSuccess'));
-        loadFileList();
-      } catch (err) {
-        Message.error(t('storage.file.batchDeleteError'));
-      }
-    }
+  const result = await Modal.confirm({
+    title: t('storage.file.batchRecycleConfirmTitle'),
+    content: t('storage.file.batchRecycleConfirmContent'),
+    maskClosable: false
   });
+
+  if (!result) return;
+  try {
+    const recyclePromises = selectedFileIds.value.map((id) => storageApi.recycleFile(id));
+    await Promise.all(recyclePromises);
+    Message.success(t('storage.file.batchRecycleSuccess'));
+    loadFileList();
+  } catch (err) {
+    Message.error(t('storage.file.batchRecycleError'));
+  }
 };
 
 // 修改文件夹路径导航相关方法
@@ -1001,7 +1001,7 @@ const getIconColor = (type: string) => {
     return '#EB2F96'; // 音频文件使用粉色
   }
   if (['.zip', '.rar', '.7z'].includes(type)) {
-    return '#FA8C16'; // 压缩包使用��色
+    return '#FA8C16'; // 压缩包使用黄色
   }
   return '#8C8C8C'; // 默认使用灰色
 };

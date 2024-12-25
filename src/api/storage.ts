@@ -111,7 +111,7 @@ export default {
     }),
 
   // 回收站相关接口
-  getRecycleList: (params: StorageQueryParams): Promise<FileDto[]> =>
+  getRecycleList: (params: StorageQueryParams): Promise<GetFileListRes> =>
     request(`${BASE_URL}/recycle`, {
       method: 'GET',
       params
