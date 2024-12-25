@@ -79,13 +79,16 @@ export default {
   border-radius: 4px;
   overflow: auto;
 }
+
 :deep(.panel-border) {
   margin-bottom: 0;
   border-bottom: 1px solid rgb(var(--gray-2));
 }
+
 .moduler-wrap {
   border-radius: 4px;
   background-color: var(--color-bg-2);
+
   :deep(.text) {
     font-size: 12px;
     text-align: center;
@@ -102,11 +105,13 @@ export default {
         margin-bottom: 0;
       }
     }
+
     &:hover {
       .icon {
         color: rgb(var(--arcoblue-6));
         background-color: #e8f3ff;
       }
+
       .text {
         color: rgb(var(--arcoblue-6));
       }
@@ -134,6 +139,7 @@ export default {
   .container {
     display: block;
   }
+
   .right-side {
     // display: none;
     width: 100%;

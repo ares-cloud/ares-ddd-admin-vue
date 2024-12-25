@@ -56,6 +56,7 @@ const list = [
   width: 100%;
   height: 24px;
   margin-bottom: 4px;
+
   .item-content {
     flex: 1;
     overflow: hidden;

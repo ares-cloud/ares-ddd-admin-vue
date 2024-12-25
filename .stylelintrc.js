@@ -4,7 +4,7 @@ module.exports = {
     'stylelint-config-recommended-vue',
     'stylelint-config-prettier'
   ],
-  customSyntax: 'postcss-html',
+  customSyntax: 'postcss-less',
   rules: {
     'no-descending-specificity': null,
     'selector-pseudo-class-no-unknown': [
@@ -27,8 +27,10 @@ module.exports = {
     ],
     'no-empty-source': null,
     'color-function-notation': null,
-    'alpha-value-notation': null,
-    'media-query-no-invalid': null,
-    'selector-anb-no-unmatchable': null
+    // 'alpha-value-notation': null,
+    // 'media-query-no-invalid': null,
+    // 'selector-anb-no-unmatchable': null,
+    'declaration-block-no-duplicate-properties': true,
+    'color-no-invalid-hex': true
   }
 };

@@ -7,6 +7,7 @@ import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
 // 自定义页面
 import localeAuthority from '@/views/authority/locale/zh-CN';
+import localeStorage from '@/views/storage/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -33,6 +34,7 @@ export default {
   ...localeMatcher,
   ...localeAuthority,
   ...localeLog,
+  ...localeStorage,
   // 通用操作按钮
   'common.operations': '操作',
   'common.search': '搜索',

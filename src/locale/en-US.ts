@@ -6,6 +6,7 @@ import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 // 自定义页面
 import localeAuthority from '@/views/authority/locale/en-US';
 import localeLog from '@/views/log/locale/en-US';
+import localeStorage from '@/views/storage/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -55,5 +56,6 @@ export default {
   'common.status.locked': 'Locked',
   'common.status.deleted': 'Deleted',
   'common.selectAll': 'Select All',
-  'menu.monitor.system': 'System Monitor'
+  'menu.monitor.system': 'System Monitor',
+  ...localeStorage
 };
