@@ -8,14 +8,15 @@ import {
   BatchOperationCommand,
   CreateFolderCommand,
   ShareFileCommand,
-  RenameFolderCommand
+  RenameFolderCommand,
+  GetFileListRes
 } from '@/types/api/storage';
 
 const BASE_URL = '/storage';
 
 export default {
   // 文件相关接口
-  getFileList: (params: StorageQueryParams): Promise<FileDto[]> =>
+  getFileList: (params: StorageQueryParams): Promise<GetFileListRes> =>
     request(`${BASE_URL}/files`, {
       method: 'GET',
       params
@@ -33,11 +34,20 @@ export default {
       method: 'DELETE'
     }),
 
-  downloadFile: (id: string): Promise<Blob> =>
-    request(`${BASE_URL}/files/${id}/download`, {
+  downloadFile: (id: string): Promise<Blob> => {
+    const token = localStorage.getItem('token');
+    return fetch(`/api/storage/files/${id}/download`, {
       method: 'GET',
-      responseType: 'blob'
-    }),
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+      return response.blob();
+    });
+  },
 
   previewFile: (id: string): Promise<string> =>
     request(`${BASE_URL}/files/${id}/preview`, {
@@ -54,8 +64,8 @@ export default {
       method: 'POST'
     }),
 
-  shareFile: (id: string, body: ShareFileCommand): Promise<FileShareDto> =>
-    request(`${BASE_URL}/files/${id}/share`, {
+  shareFile: (body: ShareFileCommand): Promise<FileShareDto> =>
+    request(`${BASE_URL}/files/share`, {
       method: 'POST',
       body
     }),
@@ -112,5 +122,35 @@ export default {
     request(`${BASE_URL}/share/${code}`, {
       method: 'GET',
       params: { password }
-    })
+    }),
+
+  // 获取下级文件夹
+  getSubFolders: (parentId: string): Promise<FolderDto[]> =>
+    request(`${BASE_URL}/folders/sub/${parentId}`, {
+      method: 'GET'
+    }),
+
+  // 获取一级文件夹
+  getRootFolders: (): Promise<FolderDto[]> =>
+    request(`${BASE_URL}/folders/root`, {
+      method: 'GET'
+    }),
+
+  // 添加批量下载方法
+  batchDownloadFiles: (ids: string[]): Promise<Blob> => {
+    const token = localStorage.getItem('token');
+    return fetch(`/api/storage/files/batch/download`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ ids })
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+      return response.blob();
+    });
+  }
 };

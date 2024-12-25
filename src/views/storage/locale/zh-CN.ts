@@ -53,7 +53,7 @@ export default {
   'storage.recycle.restoreError': '恢复失败',
   'storage.recycle.batchRestoreSuccess': '批量恢复成功',
   'storage.recycle.batchRestoreError': '批量恢复失败',
-  'storage.recycle.deleteConfirmTitle': '确认删除',
+  'storage.recycle.deleteConfirmTitle': '确认��除',
   'storage.recycle.deleteConfirmContent': '删除后将无法恢复，是否继续？',
   'storage.recycle.deleteSuccess': '删除成功',
   'storage.recycle.deleteError': '删除失败',
@@ -69,5 +69,20 @@ export default {
   'storage.file.search': '搜索',
   'storage.file.reset': '重置',
   'storage.folder.createSuccess': '创建文件夹成功',
-  'storage.folder.createError': '创建文件夹失败'
+  'storage.folder.createError': '创建文件夹失败',
+  'storage.folder.root': '根目录',
+  'storage.file.downloading': '正在下载文件...',
+  'storage.file.downloadSuccess': '下载成功',
+  'storage.file.downloadError': '下载失败',
+  'storage.file.uploading': '正在上传文件...',
+  'storage.file.batchDownload': '批量下载',
+  'storage.file.previewing': '正在加载预览...',
+
+  'storage.file.deleteConfirmTitle': '确认删除',
+  'storage.file.deleteConfirmContent': '确定要删除该文件吗���删除后将无法恢复。',
+
+  'storage.file.batchDeleteConfirmTitle': '确认批量删除',
+  'storage.file.batchDeleteConfirmContent': '确定要删除选中的文件吗？删除后将无法恢复。',
+  'storage.file.batchDeleteSuccess': '批量删除成功',
+  'storage.file.batchDeleteError': '批量删除失败'
 };

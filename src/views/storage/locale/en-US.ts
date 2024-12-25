@@ -19,6 +19,7 @@ export default {
   'storage.folder.loadError': 'Failed to load folders',
   'storage.folder.createSuccess': 'Create folder successfully',
   'storage.folder.createError': 'Failed to create folder',
+  'storage.folder.root': 'Root',
 
   'storage.file.upload': 'Upload',
   'storage.file.batchDelete': 'Batch Delete',
@@ -34,6 +35,15 @@ export default {
   'storage.file.deleteSuccess': 'Delete successfully',
   'storage.file.deleteError': 'Failed to delete',
   'storage.file.loadError': 'Failed to load file list',
+  'storage.file.downloading': 'Downloading...',
+  'storage.file.downloadSuccess': 'Download successful',
+  'storage.file.downloadError': 'Download failed',
+  'storage.file.uploading': 'Uploading...',
+  'storage.file.batchDownload': 'Batch Download',
+  'storage.file.previewing': 'Loading preview...',
+  'storage.file.deleteConfirmTitle': 'Confirm Delete',
+  'storage.file.deleteConfirmContent':
+    'Are you sure you want to delete this file? This action cannot be undone.',
 
   'storage.share.title': 'Share File',
   'storage.share.password': 'Access Password',
@@ -41,5 +51,10 @@ export default {
   'storage.share.expireTime': 'Expire Time',
   'storage.share.expireTimePlaceholder': 'Please select expire time (optional)',
   'storage.share.success': 'Share successfully',
-  'storage.share.error': 'Failed to share'
+  'storage.share.error': 'Failed to share',
+
+  'storage.file.batchDeleteConfirmTitle': 'Confirm Batch Delete',
+  'storage.file.batchDeleteConfirmContent': 'Are you sure you want to delete the selected files? This action cannot be undone.',
+  'storage.file.batchDeleteSuccess': 'Batch delete successful',
+  'storage.file.batchDeleteError': 'Failed to batch delete'
 };

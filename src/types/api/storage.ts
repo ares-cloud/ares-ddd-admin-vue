@@ -27,10 +27,11 @@ export interface FolderTreeDto {
   id: string;
   name: string;
   parentId: string;
-  path: string;
-  createdBy: string;
-  createdAt: number;
-  children: FolderTreeDto[];
+  createdAt: string;
+  updatedAt: string;
+  path?: string;
+  createdBy?: string;
+  children?: FolderTreeDto[];
 }
 
 // 文件分享DTO
@@ -40,7 +41,10 @@ export interface FileShareDto {
   expireTime?: string;
   url: string;
 }
-
+export interface GetFileListRes {
+  total: number;
+  list: FileDto[];
+}
 // 查询参数
 export interface StorageQueryParams {
   current: number;
@@ -71,6 +75,14 @@ export interface RenameFolderCommand {
 
 // 分享文件命令
 export interface ShareFileCommand {
+  fileId?: string;
   password?: string;
-  expireTime?: string;
+  expireTime?: number;
+}
+
+// 定义文件夹层级结构
+export interface FolderLevel {
+  id: string;
+  name: string;
+  parentId: string;
 }
