@@ -780,21 +780,21 @@ const handleDelete = async (file: FileDto) => {
 
 // 批量删除文件
 const handleBatchDelete = async () => {
-  const result = await Modal.confirm({
+  Modal.confirm({
     title: t('storage.file.batchRecycleConfirmTitle'),
     content: t('storage.file.batchRecycleConfirmContent'),
-    maskClosable: false
+    maskClosable: false,
+    onOk: async () => {
+      try {
+        const recyclePromises = selectedFileIds.value.map((id) => storageApi.recycleFile(id));
+        await Promise.all(recyclePromises);
+        Message.success(t('storage.file.batchRecycleSuccess'));
+        loadFileList();
+      } catch (err) {
+        Message.error(t('storage.file.batchRecycleError'));
+      }
+    }
   });
-
-  if (!result) return;
-  try {
-    const recyclePromises = selectedFileIds.value.map((id) => storageApi.recycleFile(id));
-    await Promise.all(recyclePromises);
-    Message.success(t('storage.file.batchRecycleSuccess'));
-    loadFileList();
-  } catch (err) {
-    Message.error(t('storage.file.batchRecycleError'));
-  }
 };
 
 // 修改文件夹路径导航相关方法
