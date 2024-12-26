@@ -36,7 +36,7 @@
             :model="searchForm"
             :label-col-props="{ span: 6 }"
             :wrapper-col-props="{ span: 18 }"
-            label-align="left"
+            label-align="right"
           >
             <a-row :gutter="16">
               <a-col :span="8">

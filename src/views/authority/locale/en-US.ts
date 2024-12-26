@@ -4,6 +4,7 @@ export default {
   'menu.authority.role': 'Role Management',
   'menu.authority.permission': 'Permission Management',
   'menu.authority.tenant': 'Tenant Management',
+  'menu.authority.department': 'Department',
 
   // User Management
   'authority.user.searchTable.form.userName': 'Username',
@@ -33,7 +34,7 @@ export default {
   'authority.role.searchTable.form.roleCode': 'Role Code',
   'authority.role.searchTable.form.roleCode.placeholder': 'Please enter role code',
   'authority.role.searchTable.form.description.placeholder': 'Please enter role description',
-  'authority.role.searchTable.operation.create': 'Create Role',
+  'authority.role.searchTable.operation.create': 'Add',
   'authority.role.searchTable.columns.roleName': 'Role Name',
   'authority.role.searchTable.columns.roleCode': 'Role Code',
   'authority.role.searchTable.columns.description': 'Description',
@@ -120,5 +121,56 @@ export default {
   'authority.common.operation.success': 'Operation successful',
   'authority.common.operation.failed': 'Operation failed',
   'authority.common.delete.failed': 'Delete failed',
-  'authority.common.search.failed': 'Search failed'
+  'authority.common.search.failed': 'Search failed',
+
+  // Department Management
+  'department.title': 'Department Management',
+  'department.search.name': 'Department Name',
+  'department.search.code': 'Department Code',
+  'department.search.status': 'Status',
+  'department.search.placeholder.name': 'Please enter department name',
+  'department.search.placeholder.code': 'Please enter department code',
+
+  'department.columns.name': 'Name',
+  'department.columns.code': 'Code',
+  'department.columns.sort': 'Sort',
+  'department.columns.leader': 'Leader',
+  'department.columns.phone': 'Phone',
+  'department.columns.email': 'Email',
+  'department.columns.status': 'Status',
+  'department.columns.createdAt': 'Created Time',
+  'department.columns.operations': 'Operations',
+
+  'department.form.title.create': 'Create Department',
+  'department.form.title.edit': 'Edit Department',
+  'department.form.label.parentId': 'Parent Department',
+  'department.form.label.name': 'Name',
+  'department.form.label.code': 'Code',
+  'department.form.label.sort': 'Sort',
+  'department.form.label.leader': 'Leader',
+  'department.form.label.phone': 'Phone',
+  'department.form.label.email': 'Email',
+  'department.form.label.status': 'Status',
+  'department.form.label.description': 'Description',
+
+  'department.form.placeholder.parentId': 'Please select parent department',
+  'department.form.placeholder.name': 'Please enter department name',
+  'department.form.placeholder.code': 'Please enter department code',
+  'department.form.placeholder.sort': 'Please enter sort number',
+  'department.form.placeholder.leader': 'Please enter leader name',
+  'department.form.placeholder.phone': 'Please enter phone number',
+  'department.form.placeholder.email': 'Please enter email',
+  'department.form.placeholder.description': 'Please enter description',
+
+  'department.operation.create.success': 'Create department successfully',
+  'department.operation.create.error': 'Failed to create department',
+  'department.operation.update.success': 'Update department successfully',
+  'department.operation.update.error': 'Failed to update department',
+  'department.operation.delete.success': 'Delete department successfully',
+  'department.operation.delete.error': 'Failed to delete department',
+  'department.operation.delete.confirm.title': 'Confirm Delete',
+  'department.operation.delete.confirm.content':
+    'Are you sure to delete this department? This action cannot be undone',
+  'department.operation.move.success': 'Move department successfully',
+  'department.operation.move.error': 'Failed to move department'
 };

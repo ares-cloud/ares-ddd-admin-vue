@@ -3,13 +3,13 @@ import { AppRouteRecordRaw } from '../types';
 
 const AUTHORITY: AppRouteRecordRaw = {
   path: '/authority',
-  name: 'authority',
+  name: 'Authority',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.authority',
     requiresAuth: true,
-    icon: 'icon-settings',
-    order: 7
+    icon: 'icon-user',
+    order: 3
   },
   children: [
     {
@@ -48,6 +48,16 @@ const AUTHORITY: AppRouteRecordRaw = {
       component: () => import('@/views/authority/tenant/index.vue'),
       meta: {
         locale: 'menu.authority.tenant',
+        requiresAuth: true,
+        roles: ['*']
+      }
+    },
+    {
+      path: 'department',
+      name: 'Department',
+      component: () => import('@/views/authority/department/index.vue'),
+      meta: {
+        locale: 'menu.authority.department',
         requiresAuth: true,
         roles: ['*']
       }

@@ -366,7 +366,7 @@ import {
 import type { FileDto, FolderDto, FolderLevel, FolderTreeDto } from '@/types/api/storage';
 import storageApi from '@/api/storage';
 import useLoading from '@/hooks/loading';
-import { permissionsApi } from "@/api/authority";
+import { permissionsApi } from '@/api/authority';
 // 文件操作相关
 // 添加上传组件的引用
 const uploadRef = ref();
@@ -693,7 +693,7 @@ const handlePreview = async (file: FileDto) => {
   try {
     previewFile.value = file;
 
-    // 显示加载��态
+    // 显示加载状态
     const loadingInstance = Message.loading({
       content: t('storage.file.previewing'),
       duration: 0
@@ -890,7 +890,7 @@ const getFileIcon = (type: string) => {
   return fileTypeIcons[type as keyof typeof fileTypeIcons] || fileTypeIcons.default;
 };
 
-// 处理树形模式下的文件夹选择
+// 处理树形模式下��文件夹选择
 const handleSelectFolder = (
   selectedKeys: (string | number)[],
   data: {
@@ -1037,7 +1037,7 @@ const handleShareModalOk = async () => {
       ? Math.floor(new Date(shareForm.expireTime).getTime() / 1000)
       : 0;
 
-    const res = await storageApi.shareFile( {
+    const res = await storageApi.shareFile({
       fileId: currentShareFile.value.id,
       password: shareForm.password,
       expireTime
