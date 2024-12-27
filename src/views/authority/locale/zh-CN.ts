@@ -4,7 +4,7 @@ export default {
   'menu.authority.role': '角色管理',
   'menu.authority.permission': '权限管理',
   'menu.authority.tenant': '租户管理',
-  'menu.authority.department': '部门管理',
+  'menu.authority.department': '组织机构',
 
   // 用户管理
   'authority.user.searchTable.form.userName': '用户名',
@@ -200,7 +200,7 @@ export default {
   'department.operation.delete.success': '删除部门成功',
   'department.operation.delete.error': '删除部门失败',
   'department.operation.delete.confirm.title': '确认删除',
-  'department.operation.delete.confirm.content': '确��要删除该部门吗？删除后不可恢复',
+  'department.operation.delete.confirm.content': '确定要删除该部门吗？删除后不可恢复',
   'department.operation.move.success': '移动部门成功',
   'department.operation.move.error': '移动部门失败',
 
@@ -227,7 +227,7 @@ export default {
   'authority.role.form.deptIds.required': '请选择数据权限部门',
   'authority.role.type.change.confirm': '切换角色类型将清空已设置的数据权限，是否继续？',
   'authority.role.type.change.title': '确认切换',
-  'authority.role.dataScope.remove.confirm': '确认移除该角色的数据��限配置吗？',
+  'authority.role.dataScope.remove.confirm': '确认移除该角色数据权限配置吗？',
   'authority.role.dataScope.remove.title': '确认移除',
   'authority.role.dataScope.remove.success': '移除数据权限成功',
   'authority.role.dataScope.remove.error': '移除数据权限失败',
@@ -243,33 +243,34 @@ export default {
 
   // 角色类型相关
   'authority.role.type.title': '角色类型',
-  'authority.role.type.resource': '资源角色',
-  'authority.role.type.data': '数据权限角色',
-  'authority.role.type.change.title': '确认切换',
-  'authority.role.type.change.confirm': '切换角色类型将清空已设置的数据权限，是否继续？',
 
-  // 数据权限相关
-  'authority.role.form.dataScope': '数据权限范围',
-  'authority.role.form.dataScope.placeholder': '请选择数据权限范围',
-  'authority.role.form.dataScope.required': '请选择数据权限范围',
-  'authority.role.dataScope.all': '全部数据',
-  'authority.role.dataScope.dept': '本部门数据',
-  'authority.role.dataScope.deptTree': '本部门及下级数据',
-  'authority.role.dataScope.self': '仅本人数据',
-  'authority.role.dataScope.custom': '自定义部门数据',
-
-  // 部门选择
-  'authority.role.form.deptIds': '数据权限部门',
-  'authority.role.form.deptIds.placeholder': '请选择数据权限部门',
-  'authority.role.form.deptIds.required': '请选择数据权限部门',
-
-  // 角色分配相关
+  // 角色分配相���
   'authority.user.role.section.resource': '资源角色分配',
   'authority.user.role.section.data': '数据权限角色分配',
-  'authority.user.role.available': '可选角色',
-  'authority.user.role.current': '已选角色',
-  'authority.user.role.select.required': '请选择角色',
-  'authority.user.role.assign.success': '角色分配成功',
-  'authority.user.role.assign.failed': '角色分配失败',
-  'authority.user.role.load.failed': '加载角色数据失败'
+
+  // 部门管理相关
+  'department.form.label.adminId': '部门管理员',
+  'department.form.placeholder.adminId': '请选择部门管理员',
+  'department.users.load.failed': '加载部门用户失败',
+  'department.admin.set.success': '设置管理员成功',
+  'department.admin.set.failed': '设置管理员失败',
+
+  // 部门用户管理相关
+  'department.users.modal.title': '部门用户管理',
+  'department.users.available': '可选用户',
+  'department.users.current': '已选用户',
+  'department.users.select.required': '请选择用户',
+  'department.users.assign.success': '用户分配成功',
+  'department.users.assign.failed': '用户分配失败',
+  'department.button.assignUsers': '分配用户',
+
+  // 部门树相关
+  'department.tree.title': '组织架构',
+  'department.subDepts.title': '下级部门',
+  'department.button.create': '新建部门',
+  'department.button.createSub': '新建子部门',
+  'department.form.title.createSub': '新建子部门',
+  'department.tree.load.failed': '加载组织架构失败',
+  'department.subDepts.load.failed': '加载下级部门失败',
+  'department.subDepts.count': '共 {count} 个'
 };

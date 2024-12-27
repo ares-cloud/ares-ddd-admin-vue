@@ -93,11 +93,7 @@ export const roleApi = {
       method: 'GET'
     }),
   // 分配数据权限
-  assignDataPermission(data: {
-    roleId: number;
-    scope: number;
-    deptIds?: string[];
-  }): Promise<void> {
+  assignDataPermission(data: { roleId: number; scope: number; deptIds?: string[] }): Promise<void> {
     return request('/data-permission/assign', {
       method: 'POST',
       body: data

@@ -14,7 +14,10 @@ export interface DepartmentDto {
   updatedAt: string;
   children?: DepartmentDto[];
 }
-
+export interface DepartmentListRes {
+  total: number;
+  list: DepartmentDto[];
+}
 // 创建部门命令
 export interface CreateDepartmentCommand {
   parentId: string;
@@ -44,4 +47,7 @@ export interface DepartmentQueryParams {
   name?: string;
   code?: string;
   status?: number;
+  parentId?: string;
+  current?: number;
+  size?: number;
 }

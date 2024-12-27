@@ -99,6 +99,23 @@
           allow-clear
         />
       </a-form-item>
+
+      <a-form-item field="adminId" :label="t('department.form.label.adminId')">
+        <a-select
+          v-model="form.adminId"
+          :loading="loadingUsers"
+          :placeholder="t('department.form.placeholder.adminId')"
+          allow-clear
+          @change="handleAdminChange"
+        >
+          <a-option
+            v-for="user in departmentUsers"
+            :key="user.id"
+            :value="user.id"
+            :label="user.name || user.username"
+          />
+        </a-select>
+      </a-form-item>
     </a-form>
   </a-modal>
 </template>
@@ -106,8 +123,10 @@
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Message } from '@arco-design/web-vue';
 import type { FormInstance } from '@arco-design/web-vue';
-import { DepartmentDto } from '@/types/api/department';
+import type { DepartmentDto } from '@/types/api/department';
+import type { UserModel } from '@/types/api/authority';
 import { departmentApi } from '@/api/department';
 
 const { t } = useI18n();
@@ -131,6 +150,8 @@ const emit = defineEmits(['update:visible', 'submit']);
 
 const formRef = ref<FormInstance>();
 const departmentTree = ref<DepartmentDto[]>([]);
+const loadingUsers = ref(false);
+const departmentUsers = ref<UserModel[]>([]);
 
 // 表单数据
 const form = reactive<Partial<DepartmentDto>>({
@@ -144,15 +165,6 @@ const form = reactive<Partial<DepartmentDto>>({
   status: 1,
   description: ''
 });
-
-// 监听表单数据变化
-watch(
-  () => props.formData,
-  (val) => {
-    Object.assign(form, val);
-  },
-  { deep: true }
-);
 
 // 加载部门树
 const loadDepartmentTree = async () => {
@@ -180,9 +192,58 @@ const handleOk = async () => {
   try {
     await formRef.value.validate();
     emit('submit', { ...form });
-    emit('update:visible', false);
+
+    // 如果设置了管理员，调用设置管理员接口
+    if (form.id && form.adminId) {
+      try {
+        await departmentApi.setAdmin({
+          deptId: form.id,
+          adminId: form.adminId
+        });
+        Message.success(t('department.admin.set.success'));
+      } catch (err) {
+        Message.error(t('department.admin.set.failed'));
+      }
+    }
   } catch (err) {
     // 验证失败
+  }
+};
+
+// 加载部门用户
+const loadDepartmentUsers = async (deptId: string) => {
+  if (!deptId) return;
+  loadingUsers.value = true;
+  try {
+    const users = await departmentApi.getDepartmentUsers(deptId);
+    departmentUsers.value = users;
+  } catch (err) {
+    Message.error(t('department.users.load.failed'));
+  } finally {
+    loadingUsers.value = false;
+  }
+};
+
+// 监听表单数据变化
+watch(
+  () => props.formData,
+  (val) => {
+    Object.assign(form, val);
+    if (val.id) {
+      loadDepartmentUsers(val.id);
+    }
+  },
+  { deep: true, immediate: true }
+);
+
+// 处理管理员变更
+const handleAdminChange = async (value: string) => {
+  if (!value) return;
+  const admin = departmentUsers.value.find((user) => user.id === value);
+  if (admin) {
+    form.leader = admin.name || admin.username;
+    form.phone = admin.phone || '';
+    form.email = admin.email || '';
   }
 };
 

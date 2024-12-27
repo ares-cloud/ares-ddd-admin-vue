@@ -160,22 +160,22 @@ const loadData = async () => {
 
     // 获取所有可用角色
     const allEnabledRoles = await roleApi.getAllEnabled();
-    
+
     // 当前用户已分配的角色ID集合
     const currentRoleIds = new Set(userDetail.roleIds || []);
-    
+
     // 按角色类型分类
     currentResourceRoles.value = allEnabledRoles.filter(
-      role => role.type === 1 && currentRoleIds.has(role.id)
+      (role) => role.type === 1 && currentRoleIds.has(role.id)
     );
     availableResourceRoles.value = allEnabledRoles.filter(
-      role => role.type === 1 && !currentRoleIds.has(role.id)
+      (role) => role.type === 1 && !currentRoleIds.has(role.id)
     );
     currentDataRoles.value = allEnabledRoles.filter(
-      role => role.type === 2 && currentRoleIds.has(role.id)
+      (role) => role.type === 2 && currentRoleIds.has(role.id)
     );
     availableDataRoles.value = allEnabledRoles.filter(
-      role => role.type === 2 && !currentRoleIds.has(role.id)
+      (role) => role.type === 2 && !currentRoleIds.has(role.id)
     );
   } catch (err) {
     Message.error(t('authority.user.role.load.failed'));
@@ -189,13 +189,13 @@ const handleAddResourceRole = () => {
     return;
   }
 
-  const selectedRoles = availableResourceRoles.value.filter(role =>
+  const selectedRoles = availableResourceRoles.value.filter((role) =>
     availableResourceRoleKeys.value.includes(role.id)
   );
 
   currentResourceRoles.value = [...currentResourceRoles.value, ...selectedRoles];
   availableResourceRoles.value = availableResourceRoles.value.filter(
-    role => !availableResourceRoleKeys.value.includes(role.id)
+    (role) => !availableResourceRoleKeys.value.includes(role.id)
   );
 
   availableResourceRoleKeys.value = [];
@@ -208,13 +208,13 @@ const handleRemoveResourceRole = () => {
     return;
   }
 
-  const selectedRoles = currentResourceRoles.value.filter(role =>
+  const selectedRoles = currentResourceRoles.value.filter((role) =>
     currentResourceRoleKeys.value.includes(role.id)
   );
 
   availableResourceRoles.value = [...availableResourceRoles.value, ...selectedRoles];
   currentResourceRoles.value = currentResourceRoles.value.filter(
-    role => !currentResourceRoleKeys.value.includes(role.id)
+    (role) => !currentResourceRoleKeys.value.includes(role.id)
   );
 
   currentResourceRoleKeys.value = [];
@@ -227,13 +227,13 @@ const handleAddDataRole = () => {
     return;
   }
 
-  const selectedRoles = availableDataRoles.value.filter(role =>
+  const selectedRoles = availableDataRoles.value.filter((role) =>
     availableDataRoleKeys.value.includes(role.id)
   );
 
   currentDataRoles.value = [...currentDataRoles.value, ...selectedRoles];
   availableDataRoles.value = availableDataRoles.value.filter(
-    role => !availableDataRoleKeys.value.includes(role.id)
+    (role) => !availableDataRoleKeys.value.includes(role.id)
   );
 
   availableDataRoleKeys.value = [];
@@ -246,13 +246,13 @@ const handleRemoveDataRole = () => {
     return;
   }
 
-  const selectedRoles = currentDataRoles.value.filter(role =>
+  const selectedRoles = currentDataRoles.value.filter((role) =>
     currentDataRoleKeys.value.includes(role.id)
   );
 
   availableDataRoles.value = [...availableDataRoles.value, ...selectedRoles];
   currentDataRoles.value = currentDataRoles.value.filter(
-    role => !currentDataRoleKeys.value.includes(role.id)
+    (role) => !currentDataRoleKeys.value.includes(role.id)
   );
 
   currentDataRoleKeys.value = [];
@@ -262,10 +262,10 @@ const handleRemoveDataRole = () => {
 const handleOk = async () => {
   try {
     const roleIds = [
-      ...currentResourceRoles.value.map(role => role.id),
-      ...currentDataRoles.value.map(role => role.id)
+      ...currentResourceRoles.value.map((role) => role.id),
+      ...currentDataRoles.value.map((role) => role.id)
     ];
-    
+
     await userApi.update({
       id: props.userId,
       ...currentUser.value,

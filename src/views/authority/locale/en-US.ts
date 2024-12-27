@@ -179,7 +179,8 @@ export default {
   'authority.role.type.resource': 'Resource Role',
   'authority.role.type.data': 'Data Permission Role',
   'authority.role.type.change.title': 'Confirm Switch',
-  'authority.role.type.change.confirm': 'Switching role type will clear data permission settings, continue?',
+  'authority.role.type.change.confirm':
+    'Switching role type will clear data permission settings, continue?',
 
   // Data Permission Related
   'authority.role.form.dataScope': 'Data Permission Scope',
@@ -213,5 +214,30 @@ export default {
   'authority.role.form.type.placeholder': 'Please select role type',
 
   // Data Permission Related
-  'authority.role.dataPermission.get.error': 'Failed to get data permission configuration'
+  'authority.role.dataPermission.get.error': 'Failed to get data permission configuration',
+
+  // Department Management
+  'department.form.label.adminId': 'Department Admin',
+  'department.form.placeholder.adminId': 'Please select department admin',
+  'department.users.load.failed': 'Failed to load department users',
+  'department.admin.set.success': 'Set admin successfully',
+  'department.admin.set.failed': 'Failed to set admin',
+
+  // Department User Management
+  'department.users.modal.title': 'Department User Management',
+  'department.users.available': 'Available Users',
+  'department.users.current': 'Current Users',
+  'department.users.select.required': 'Please select users',
+  'department.users.assign.success': 'User assignment successful',
+  'department.users.assign.failed': 'Failed to assign users',
+  'department.button.assignUsers': 'Assign Users',
+
+  // Department Tree
+  'department.tree.title': 'Organization',
+  'department.tree.load.failed': 'Failed to load organization structure',
+  'department.button.create': 'Create',
+  'department.users.title': 'Department Users',
+
+  // Department SubDepts
+  'department.subDepts.count': 'Total {count}'
 };

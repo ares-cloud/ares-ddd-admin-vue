@@ -168,7 +168,9 @@ watch(
 // 加载部门树
 const loadDeptTree = async () => {
   try {
-    deptTree.value = await departmentApi.getDepartmentTree();
+    const data = await departmentApi.getDepartmentTree();
+    console.log(data);
+    deptTree.value = data;
   } catch (err) {
     // handle error
   }
