@@ -27,6 +27,18 @@
                   />
                 </a-form-item>
               </a-col>
+              <a-col :span="8">
+                <a-form-item field="type" :label="t('authority.role.form.type')">
+                  <a-select
+                    v-model="formModel.type"
+                    :placeholder="t('authority.role.form.type.placeholder')"
+                    allow-clear
+                  >
+                    <a-option :value="1">{{ t('authority.role.type.resource') }}</a-option>
+                    <a-option :value="2">{{ t('authority.role.type.data') }}</a-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
             </a-row>
           </a-form>
         </a-col>
@@ -72,7 +84,12 @@
     </a-card>
 
     <!-- 创建/编辑角色的弹窗 -->
-    <edit-modal v-model:visible="modalVisible" :data="modalForm" @success="handleSuccess" />
+    <edit-modal
+      v-model:visible="modalVisible"
+      :title="modalTitle"
+      :data="modalForm"
+      @submit="handleSubmit"
+    />
 
     <!-- 权限分配弹窗 -->
     <assign-permission-modal
@@ -84,7 +101,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, h, reactive, ref } from 'vue';
+import { computed, getCurrentInstance, h, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Message, Modal } from '@arco-design/web-vue';
 import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -96,13 +113,12 @@ import Permission from '@/components/check-permission/index.vue';
 import EditModal from './components/edit-modal.vue';
 import AssignPermissionModal from './components/assign-permission-modal.vue';
 
-const instance = getCurrentInstance();
-const proxy = instance?.proxy;
 const { t } = useI18n();
 
 const formModel = ref({
   name: '',
-  code: ''
+  code: '',
+  type: undefined as number | undefined
 });
 
 const loading = ref(false);
@@ -115,10 +131,11 @@ const defaultFormData = {
   description: '',
   status: 1,
   localize: '',
-  permIds: [] as number[]
+  permIds: [] as number[],
+  type: 1
 };
 
-const modalForm = reactive<RoleModel>({ ...defaultFormData });
+const modalForm = ref<RoleModel>({ ...defaultFormData });
 
 const pagination = reactive({
   current: 1,
@@ -140,26 +157,75 @@ const search = async () => {
     renderData.value = data.list;
     pagination.total = data.total;
   } catch (err) {
-    console.error(err);
+    Message.error(t('authority.common.search.failed'));
   } finally {
     loading.value = false;
   }
 };
 
+// 处理移除数据权限
+const handleRemoveDataPermission = (record: RoleModel) => {
+  Modal.confirm({
+    title: t('authority.role.dataScope.remove.title'),
+    content: t('authority.role.dataScope.remove.confirm'),
+    onOk: async () => {
+      try {
+        await roleApi.removeDataPermission({ roleId: record.id });
+        Message.success(t('authority.role.dataScope.remove.success'));
+        search(); // 刷新列表
+      } catch (err) {
+        Message.error(t('authority.role.dataScope.remove.error'));
+      }
+    }
+  });
+};
+
+// 弹窗标题
+const modalTitle = computed(() => {
+  return modalForm.value.id
+    ? t('authority.role.modal.title.edit')
+    : t('authority.role.modal.title.create');
+});
+
+// 打开创建弹窗
 const openCreateModal = () => {
-  Object.assign(modalForm, defaultFormData);
+  modalForm.value = { ...defaultFormData };
   modalVisible.value = true;
 };
 
+// 打开编辑弹窗
 const openEditModal = (record: RoleModel) => {
-  modalForm.id = record.id;
-  modalForm.name = record.name;
-  modalForm.code = record.code;
-  modalForm.description = record.description;
-  modalForm.status = record.status;
-  modalForm.localize = record.localize;
-  modalForm.permIds = record.permIds;
+  modalForm.value = { ...record };
   modalVisible.value = true;
+};
+
+// 处理表单提交
+const handleSubmit = async (formData: RoleModel) => {
+  try {
+    if (formData.id) {
+      // 编辑
+      await roleApi.update(formData);
+      Message.success(t('authority.common.operation.success'));
+    } else {
+      // 新增
+      await roleApi.create(formData);
+      Message.success(t('authority.common.operation.success'));
+    }
+    modalVisible.value = false;
+
+    // 如果是数据权限角色，需要调用分配数据权限接口
+    if (formData.type === 2) {
+      await roleApi.assignDataPermission({
+        roleId: formData.id,
+        scope: formData.dataScope!,
+        deptIds: formData.dataScope === 5 ? formData.deptIds : undefined
+      });
+    }
+
+    search(); // 刷新列表
+  } catch (err) {
+    Message.error(t('authority.common.operation.failed'));
+  }
 };
 
 const handleDelete = async (record: RoleModel) => {
@@ -174,7 +240,7 @@ const handleDelete = async (record: RoleModel) => {
         Message.success(t('common.success.operation'));
         search();
       } catch (err) {
-        console.error(err);
+        Message.error(t('authority.common.delete.failed'));
       }
     }
   });
@@ -195,7 +261,7 @@ const handleAssignSuccess = () => {
   Message.success(t('authority.role.permission.assign.success'));
 };
 
-const columns: TableColumnData[] = [
+const columns = computed<TableColumnData[]>(() => [
   {
     title: t('authority.role.searchTable.columns.name'),
     dataIndex: 'name'
@@ -236,8 +302,11 @@ const columns: TableColumnData[] = [
   {
     title: t('common.operations'),
     dataIndex: 'operations',
+    width: 200,
+    fixed: 'right',
     render: ({ record }) => {
       return h('div', [
+        // 编辑按钮
         h(
           Permission,
           { requiredPermissions: ['010403'] },
@@ -253,21 +322,42 @@ const columns: TableColumnData[] = [
               )
           }
         ),
-        h(
-          Permission,
-          { requiredPermissions: ['010306'] },
-          {
-            default: () =>
-              h(
-                'a',
-                {
-                  style: { marginRight: '15px' },
-                  onClick: () => openAssignPermissionModal(record as RoleModel)
-                },
-                t('authority.button.assign')
-              )
-          }
-        ),
+        // 分配按钮 - 只对资源类型角色显示
+        record.type === 1 &&
+          h(
+            Permission,
+            { requiredPermissions: ['010306'] },
+            {
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px' },
+                    onClick: () => openAssignPermissionModal(record as RoleModel)
+                  },
+                  t('authority.button.assign')
+                )
+            }
+          ),
+        // 移除数据权限按钮 - 只对已配置数据权限的数据权限角色显示
+        record.type === 2 &&
+          record.dataScope &&
+          h(
+            Permission,
+            { requiredPermissions: ['010306'] },
+            {
+              default: () =>
+                h(
+                  'a',
+                  {
+                    style: { marginRight: '15px', color: '#FF7D00' },
+                    onClick: () => handleRemoveDataPermission(record as RoleModel)
+                  },
+                  t('authority.role.button.removeDataPermission')
+                )
+            }
+          ),
+        // 删除按钮
         h(
           Permission,
           { requiredPermissions: ['010304'] },
@@ -286,12 +376,13 @@ const columns: TableColumnData[] = [
       ]);
     }
   }
-];
+]);
 
 const reset = () => {
   formModel.value = {
     name: '',
-    code: ''
+    code: '',
+    type: undefined
   };
   search();
 };
@@ -299,14 +390,6 @@ const reset = () => {
 const onPageChange = (current: number) => {
   pagination.current = current;
   search();
-};
-
-const handleSuccess = (needReset?: boolean) => {
-  if (needReset) {
-    reset();
-  } else {
-    search();
-  }
 };
 
 // 初始加载

@@ -127,7 +127,6 @@ import { departmentApi } from '@/api/department';
 import { IconPlus } from '@arco-design/web-vue/es/icon';
 import DepartmentForm from './components/department-form.vue';
 
-
 const { t } = useI18n();
 const { loading, setLoading } = useLoading();
 const visible = ref(false);

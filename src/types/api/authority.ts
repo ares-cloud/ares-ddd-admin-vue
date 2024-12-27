@@ -44,6 +44,9 @@ export interface RoleModel {
   permIds: number[];
   createdAt?: number;
   updatedAt?: number;
+  type: number;
+  dataScope?: number;
+  deptIds?: string[];
 }
 
 export interface RoleCreateRequest {

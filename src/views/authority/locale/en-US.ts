@@ -172,5 +172,46 @@ export default {
   'department.operation.delete.confirm.content':
     'Are you sure to delete this department? This action cannot be undone',
   'department.operation.move.success': 'Move department successfully',
-  'department.operation.move.error': 'Failed to move department'
+  'department.operation.move.error': 'Failed to move department',
+
+  // Role Types
+  'authority.role.type.resource': 'Resource Role',
+  'authority.role.type.data': 'Data Permission Role',
+  'authority.role.form.type': 'Role Type',
+
+  // Data Permission Scope
+  'authority.role.form.dataScope': 'Data Permission Scope',
+  'authority.role.form.dataScope.placeholder': 'Please select data permission scope',
+  'authority.role.dataScope.all': 'All Data',
+  'authority.role.dataScope.dept': 'Department Data',
+  'authority.role.dataScope.deptTree': 'Department and Subordinate Data',
+  'authority.role.dataScope.self': 'Self Data Only',
+  'authority.role.dataScope.custom': 'Custom Department Data',
+
+  // Department Selection
+  'authority.role.form.deptIds': 'Permission Departments',
+  'authority.role.form.deptIds.placeholder': 'Please select permission departments',
+
+  // Data Permission Related
+  'authority.role.form.dataScope.required': 'Please select data permission scope',
+  'authority.role.form.deptIds.required': 'Please select permission departments',
+  'authority.role.type.change.confirm':
+    'Switching role type will clear data permission settings, continue?',
+  'authority.role.type.change.title': 'Confirm Switch',
+  'authority.role.dataScope.remove.confirm':
+    'Are you sure to remove data permission configuration for this role?',
+  'authority.role.dataScope.remove.title': 'Confirm Remove',
+  'authority.role.dataScope.remove.success': 'Remove data permission successfully',
+  'authority.role.dataScope.remove.error': 'Failed to remove data permission',
+  'authority.role.dataScope.assign.success': 'Assign data permission successfully',
+  'authority.role.dataScope.assign.error': 'Failed to assign data permission',
+
+  // Button text
+  'authority.role.button.removeDataPermission': 'Remove Data Permission',
+
+  // Role Type Placeholder
+  'authority.role.form.type.placeholder': 'Please select role type',
+
+  // Data Permission Related
+  'authority.role.dataPermission.get.error': 'Failed to get data permission configuration'
 };

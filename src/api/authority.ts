@@ -91,7 +91,35 @@ export const roleApi = {
   getAllEnabled: (): Promise<RoleModel[]> =>
     request(`${BASE_URL}/role/enabled`, {
       method: 'GET'
-    })
+    }),
+  // 分配数据权限
+  assignDataPermission(data: {
+    roleId: number;
+    scope: number;
+    deptIds?: string[];
+  }): Promise<void> {
+    return request('/data-permission/assign', {
+      method: 'POST',
+      body: data
+    });
+  },
+
+  // 移除数据权限
+  removeDataPermission(data: { roleId: number }): Promise<void> {
+    return request('/data-permission/remove', {
+      method: 'POST',
+      body: data
+    });
+  },
+  // 获取角色的数据权限
+  getDataPermission(roleId: number): Promise<{
+    scope: number;
+    deptIds?: string[];
+  }> {
+    return request(`/data-permission/${roleId}`, {
+      method: 'GET'
+    });
+  }
 };
 
 // 权限管理接口
