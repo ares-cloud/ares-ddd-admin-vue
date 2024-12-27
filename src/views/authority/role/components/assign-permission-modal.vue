@@ -67,7 +67,10 @@ import { useI18n } from 'vue-i18n';
 import type { TreeNodeData } from '@arco-design/web-vue';
 import { Message } from '@arco-design/web-vue';
 import { IconLeft, IconRight } from '@arco-design/web-vue/es/icon';
-import type { RoleModel, SimplePermissionTreeNode } from '@/types/api/authority';
+import type {
+  RoleModel,
+  SimplePermissionTreeNode,
+} from '@/types/api/authority';
 import { permissionsApi, roleApi } from '@/api/authority';
 
 const props = defineProps<{
@@ -88,17 +91,29 @@ const allPermissions = ref<SimplePermissionTreeNode[]>([]);
 const allPermissionIds = ref<number[]>([]);
 
 // 构建树
-const buildTree = (permissions: SimplePermissionTreeNode[], selectKeys: number[]) => {
+const buildTree = (
+  permissions: SimplePermissionTreeNode[],
+  selectKeys: number[]
+) => {
   assignedIds.value = selectKeys;
   if (permissions.length > 0) {
     const allIds = permissions.map((item) => item.id);
     if (!selectKeys || selectKeys.length === 0) {
-      availablePermissions.value = permissionsApi.buildFilteredTree(permissions, allIds);
+      availablePermissions.value = permissionsApi.buildFilteredTree(
+        permissions,
+        allIds
+      );
       currentPermissions.value = [];
     } else {
-      currentPermissions.value = permissionsApi.buildFilteredTree(permissions, selectKeys);
+      currentPermissions.value = permissionsApi.buildFilteredTree(
+        permissions,
+        selectKeys
+      );
       const avIds = allIds.filter((id: number) => !selectKeys.includes(id));
-      availablePermissions.value = permissionsApi.buildFilteredTree(permissions, avIds);
+      availablePermissions.value = permissionsApi.buildFilteredTree(
+        permissions,
+        avIds
+      );
     }
   } else {
     availablePermissions.value = [];
@@ -143,14 +158,19 @@ const handleRemove = () => {
     Message.warning(t('authority.tenant.permission.select.required'));
     return;
   }
-  const currentIds = assignedIds.value.filter((item) => !checkedKeys.value.includes(item));
+  const currentIds = assignedIds.value.filter(
+    (item) => !checkedKeys.value.includes(item)
+  );
   buildTree(allPermissions.value, currentIds);
   // 清空选中状态
   checkedKeys.value = [];
 };
 // 全选可用权限
 const handleSelectAllAvailable = () => {
-  if (!availableCheckedKeys.value.length || availableCheckedKeys.value.length === 0) {
+  if (
+    !availableCheckedKeys.value.length ||
+    availableCheckedKeys.value.length === 0
+  ) {
     availableCheckedKeys.value = allPermissionIds.value.filter(
       (item) => !assignedIds.value.includes(item)
     );
@@ -182,7 +202,7 @@ const handleOk = async () => {
     await roleApi.update({
       id: props.roleId,
       ...currentRole.value,
-      permIds: allIds
+      permIds: allIds,
     });
 
     Message.success(t('authority.role.permission.assign.success'));
@@ -197,11 +217,13 @@ const handleCancel = () => {
   emit('update:visible', false);
 };
 
-const convertToTreeData = (permissions: SimplePermissionTreeNode[]): TreeNodeData[] => {
+const convertToTreeData = (
+  permissions: SimplePermissionTreeNode[]
+): TreeNodeData[] => {
   return permissions.map((perm) => ({
     key: perm.id,
     title: perm.name,
-    children: perm.children ? convertToTreeData(perm.children) : undefined
+    children: perm.children ? convertToTreeData(perm.children) : undefined,
   }));
 };
 
