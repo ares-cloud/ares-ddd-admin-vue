@@ -175,13 +175,16 @@ export default {
   'department.operation.move.error': 'Failed to move department',
 
   // Role Types
+  'authority.role.type.title': 'Role Type',
   'authority.role.type.resource': 'Resource Role',
   'authority.role.type.data': 'Data Permission Role',
-  'authority.role.form.type': 'Role Type',
+  'authority.role.type.change.title': 'Confirm Switch',
+  'authority.role.type.change.confirm': 'Switching role type will clear data permission settings, continue?',
 
-  // Data Permission Scope
+  // Data Permission Related
   'authority.role.form.dataScope': 'Data Permission Scope',
   'authority.role.form.dataScope.placeholder': 'Please select data permission scope',
+  'authority.role.form.dataScope.required': 'Please select data permission scope',
   'authority.role.dataScope.all': 'All Data',
   'authority.role.dataScope.dept': 'Department Data',
   'authority.role.dataScope.deptTree': 'Department and Subordinate Data',
@@ -191,20 +194,17 @@ export default {
   // Department Selection
   'authority.role.form.deptIds': 'Permission Departments',
   'authority.role.form.deptIds.placeholder': 'Please select permission departments',
-
-  // Data Permission Related
-  'authority.role.form.dataScope.required': 'Please select data permission scope',
   'authority.role.form.deptIds.required': 'Please select permission departments',
-  'authority.role.type.change.confirm':
-    'Switching role type will clear data permission settings, continue?',
-  'authority.role.type.change.title': 'Confirm Switch',
-  'authority.role.dataScope.remove.confirm':
-    'Are you sure to remove data permission configuration for this role?',
-  'authority.role.dataScope.remove.title': 'Confirm Remove',
-  'authority.role.dataScope.remove.success': 'Remove data permission successfully',
-  'authority.role.dataScope.remove.error': 'Failed to remove data permission',
-  'authority.role.dataScope.assign.success': 'Assign data permission successfully',
-  'authority.role.dataScope.assign.error': 'Failed to assign data permission',
+
+  // Role Assignment Related
+  'authority.user.role.section.resource': 'Resource Role Assignment',
+  'authority.user.role.section.data': 'Data Permission Role Assignment',
+  'authority.user.role.available': 'Available Roles',
+  'authority.user.role.current': 'Current Roles',
+  'authority.user.role.select.required': 'Please select roles',
+  'authority.user.role.assign.success': 'Role assignment successful',
+  'authority.user.role.assign.failed': 'Role assignment failed',
+  'authority.user.role.load.failed': 'Failed to load role data',
 
   // Button text
   'authority.role.button.removeDataPermission': 'Remove Data Permission',

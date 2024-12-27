@@ -176,7 +176,7 @@ export default {
   'department.form.title.edit': '编辑部门',
   'department.form.label.parentId': '上级部门',
   'department.form.label.name': '部门名称',
-  'department.form.label.code': '部门编���',
+  'department.form.label.code': '部门编码',
   'department.form.label.sort': '显示排序',
   'department.form.label.leader': '负责人',
   'department.form.label.phone': '联系电话',
@@ -200,7 +200,7 @@ export default {
   'department.operation.delete.success': '删除部门成功',
   'department.operation.delete.error': '删除部门失败',
   'department.operation.delete.confirm.title': '确认删除',
-  'department.operation.delete.confirm.content': '确定要删除该部门吗？删除后不可恢复',
+  'department.operation.delete.confirm.content': '确��要删除该部门吗？删除后不可恢复',
   'department.operation.move.success': '移动部门成功',
   'department.operation.move.error': '移动部门失败',
 
@@ -227,7 +227,7 @@ export default {
   'authority.role.form.deptIds.required': '请选择数据权限部门',
   'authority.role.type.change.confirm': '切换角色类型将清空已设置的数据权限，是否继续？',
   'authority.role.type.change.title': '确认切换',
-  'authority.role.dataScope.remove.confirm': '确认移除该角色的数据权限配置吗？',
+  'authority.role.dataScope.remove.confirm': '确认移除该角色的数据��限配置吗？',
   'authority.role.dataScope.remove.title': '确认移除',
   'authority.role.dataScope.remove.success': '移除数据权限成功',
   'authority.role.dataScope.remove.error': '移除数据权限失败',
@@ -239,5 +239,37 @@ export default {
   'authority.role.form.type.placeholder': '请选择角色类型',
 
   // 数据权限相关
-  'authority.role.dataPermission.get.error': '获取数据权限配置失败'
+  'authority.role.dataPermission.get.error': '获取数据权限配置失败',
+
+  // 角色类型相关
+  'authority.role.type.title': '角色类型',
+  'authority.role.type.resource': '资源角色',
+  'authority.role.type.data': '数据权限角色',
+  'authority.role.type.change.title': '确认切换',
+  'authority.role.type.change.confirm': '切换角色类型将清空已设置的数据权限，是否继续？',
+
+  // 数据权限相关
+  'authority.role.form.dataScope': '数据权限范围',
+  'authority.role.form.dataScope.placeholder': '请选择数据权限范围',
+  'authority.role.form.dataScope.required': '请选择数据权限范围',
+  'authority.role.dataScope.all': '全部数据',
+  'authority.role.dataScope.dept': '本部门数据',
+  'authority.role.dataScope.deptTree': '本部门及下级数据',
+  'authority.role.dataScope.self': '仅本人数据',
+  'authority.role.dataScope.custom': '自定义部门数据',
+
+  // 部门选择
+  'authority.role.form.deptIds': '数据权限部门',
+  'authority.role.form.deptIds.placeholder': '请选择数据权限部门',
+  'authority.role.form.deptIds.required': '请选择数据权限部门',
+
+  // 角色分配相关
+  'authority.user.role.section.resource': '资源角色分配',
+  'authority.user.role.section.data': '数据权限角色分配',
+  'authority.user.role.available': '可选角色',
+  'authority.user.role.current': '已选角色',
+  'authority.user.role.select.required': '请选择角色',
+  'authority.user.role.assign.success': '角色分配成功',
+  'authority.user.role.assign.failed': '角色分配失败',
+  'authority.user.role.load.failed': '加载角色数据失败'
 };
