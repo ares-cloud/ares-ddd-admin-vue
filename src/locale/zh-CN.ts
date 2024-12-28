@@ -58,5 +58,7 @@ export default {
   'common.status.locked': '锁定',
   'common.status.deleted': '已删除',
   'common.selectAll': '全选',
-  'menu.monitor.system': '系统监控'
+  'menu.monitor.system': '系统监控',
+  'menu.datav': '可视化编辑器',
+  'menu.datav.editor': '编辑器'
 };

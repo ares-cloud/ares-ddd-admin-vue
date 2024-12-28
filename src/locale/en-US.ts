@@ -57,5 +57,7 @@ export default {
   'common.status.deleted': 'Deleted',
   'common.selectAll': 'Select All',
   'menu.monitor.system': 'System Monitor',
-  ...localeStorage
+  ...localeStorage,
+  'menu.datav': 'Visual Editor',
+  'menu.datav.editor': 'Editor'
 };

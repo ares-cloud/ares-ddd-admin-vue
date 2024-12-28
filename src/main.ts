@@ -1,6 +1,16 @@
 import { createApp } from 'vue';
 import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
+import VChart from 'vue-echarts';
+import { use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { LineChart, BarChart, PieChart } from 'echarts/charts';
+import {
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent
+} from 'echarts/components';
 import globalComponents from '@/components';
 import { formatTimestamp } from '@/filters/date';
 import router from './router';
@@ -14,7 +24,22 @@ import App from './App.vue';
 // https://arco.design/docs/designlab/use-theme-package
 import '@/assets/style/global.less';
 
+// 手动引入 ECharts 模块
+use([
+  CanvasRenderer,
+  LineChart,
+  BarChart,
+  PieChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent
+]);
+
 const app = createApp(App);
+
+// 全局注册 VChart 组件
+app.component('VChart', VChart);
 
 app.use(ArcoVue, {});
 app.use(ArcoVueIcon);
