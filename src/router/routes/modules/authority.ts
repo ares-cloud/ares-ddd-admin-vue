@@ -61,6 +61,17 @@ const AUTHORITY: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['*']
       }
+    },
+    {
+      path: 'organization',
+      name: 'Organization',
+      component: () => import('@/views/authority/organization/index.vue'),
+      meta: {
+        locale: 'menu.authority.organization',
+        requiresAuth: true,
+        roles: ['*'],
+        hideInMenu: false
+      }
     }
   ]
 };

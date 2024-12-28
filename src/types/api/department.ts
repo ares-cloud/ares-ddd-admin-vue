@@ -51,3 +51,11 @@ export interface DepartmentQueryParams {
   current?: number;
   size?: number;
 }
+
+// 添加人员调动命令类型
+export interface TransferUserCommand {
+  userId: string;
+  fromDeptId: string;
+  toDeptId: string;
+  description?: string;
+}

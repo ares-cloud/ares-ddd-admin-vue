@@ -209,7 +209,7 @@ export default {
   'authority.role.type.data': '数据权限角色',
   'authority.role.form.type': '角色类型',
 
-  // 数据权限范围
+  // 数据权���范围
   'authority.role.form.dataScope': '数据权限范围',
   'authority.role.form.dataScope.placeholder': '请选择数据权限范围',
   'authority.role.dataScope.all': '全部数据',
@@ -232,7 +232,7 @@ export default {
   'authority.role.dataScope.remove.success': '移除数据权限成功',
   'authority.role.dataScope.remove.error': '移除数据权限失败',
   'authority.role.dataScope.assign.success': '分配数据权限成功',
-  'authority.role.dataScope.assign.error': '分配数据权限失败',
+  'authority.role.dataScope.assign.error': '分配数据权限��败',
 
   // 按钮文案
   'authority.role.button.removeDataPermission': '移除数据权限',
@@ -244,7 +244,7 @@ export default {
   // 角色类型相关
   'authority.role.type.title': '角色类型',
 
-  // 角色分配相���
+  // 角色分配相关
   'authority.user.role.section.resource': '资源角色分配',
   'authority.user.role.section.data': '数据权限角色分配',
 
@@ -272,5 +272,99 @@ export default {
   'department.form.title.createSub': '新建子部门',
   'department.tree.load.failed': '加载组织架构失败',
   'department.subDepts.load.failed': '加载下级部门失败',
-  'department.subDepts.count': '共 {count} 个'
+  'department.subDepts.count': '共 {count} 个',
+
+  // 组织人员管理
+  'menu.authority.organization': '组织人员',
+  'organization.tree.title': '组织架构',
+  'organization.users.title': '部门人员',
+  'organization.users.count': '共 {count} 人',
+  'organization.users.assign.title': '分配人员',
+  'organization.users.assign.select.required': '请选择要分配的人员',
+  'organization.users.search.username': '用户名',
+  'organization.users.search.username.placeholder': '请输入用户名',
+  'organization.users.search.name': '姓名',
+  'organization.users.search.name.placeholder': '请输入姓名',
+  'organization.users.button.search': '查询',
+  'organization.users.button.reset': '重置',
+  'organization.button.assignUsers': '添加人员',
+  'organization.button.moveUsers': '调动人员',
+  'organization.button.removeUser': '移除',
+  'organization.users.load.failed': '加载部门人员失败',
+  'organization.tree.load.failed': '加载组织架构失败',
+  'organization.users.select.required': '请选择要调动的人员',
+  'organization.users.remove.confirm.title': '确认移除',
+  'organization.users.remove.confirm.content': '确定要移除 {name} 吗？',
+  'organization.users.remove.success': '移除成功',
+  'organization.users.remove.failed': '移除失败',
+  'organization.users.move.title': '人员调动',
+  'organization.users.move.targetDept': '目标部门',
+  'organization.users.move.targetDept.required': '请选择目标部门',
+  'organization.users.move.targetDept.placeholder': '请选择目标部门',
+  'organization.users.move.description': '调动说明',
+  'organization.users.move.description.placeholder': '请输入调动说明(选填)',
+  'organization.users.move.success': '调动成功',
+  'organization.users.move.failed': '调动失败',
+
+  // 用户管理相关
+  'authority.user.delete.confirm.title': '确认删除',
+  'authority.user.delete.confirm.content': '确定要删除用户 {name} 吗？',
+  'authority.user.form.name': '姓名',
+  'authority.user.form.phone': '手机号',
+  'authority.user.form.status': '状态',
+  'authority.user.form.status.enabled': '启用',
+  'authority.user.form.status.disabled': '禁用',
+  'authority.user.form.roles': '角色',
+  'authority.user.form.roles.placeholder': '请选择角色',
+  'authority.user.form.create.success': '创建用户成功',
+  'authority.user.form.create.error': '创建用户失败',
+  'authority.user.form.update.success': '更新用户成功',
+  'authority.user.form.update.error': '更新用户失败',
+
+  // 权限管理相关
+  'authority.permission.form.method': '请求方法',
+  'authority.permission.form.method.GET': 'GET',
+  'authority.permission.form.method.POST': 'POST',
+  'authority.permission.form.method.PUT': 'PUT',
+  'authority.permission.form.method.DELETE': 'DELETE',
+  'authority.permission.form.path.label': '资源路径',
+  'authority.permission.form.add.resource': '添加资源',
+  'authority.permission.form.remove.resource': '移除资源',
+  'authority.permission.form.resource.method.required': '请选择请求方法',
+  'authority.permission.form.resource.path.required': '请输入资源路径',
+
+  // 租户管理相关
+  'authority.tenant.form.admin.info': '管理员信息',
+  'authority.tenant.form.admin.username': '管理员用户名',
+  'authority.tenant.form.admin.password': '管理员密码',
+  'authority.tenant.form.admin.name': '管理员姓名',
+  'authority.tenant.form.admin.email': '管理员邮箱',
+  'authority.tenant.form.admin.phone': '管理员手机号',
+  'authority.tenant.form.basic.info': '基本信息',
+  'authority.tenant.form.expire.time': '过期时间',
+  'authority.tenant.form.expire.time.placeholder': '请选择过期时间',
+  'authority.tenant.form.create.success': '创建租户成功',
+  'authority.tenant.form.create.error': '创建租户失败',
+  'authority.tenant.form.update.success': '更新租户成功',
+  'authority.tenant.form.update.error': '更新租户失败',
+
+  // 状态变更相关
+  'authority.status.change.confirm.title': '确认状态变更',
+  'authority.status.change.confirm.enable': '确定要启用吗？',
+  'authority.status.change.confirm.disable': '确定要停用吗？',
+  'authority.status.change.success': '状态变更成功',
+  'authority.status.change.error': '状态变更失败',
+
+  // 表单验证相关
+  'authority.form.required': '{field}不能为空',
+  'authority.form.email.invalid': '请输入有效的邮箱地址',
+  'authority.form.phone.invalid': '请输入有效的手机号码',
+  'authority.form.password.length': '密码长度必须在6-20个字符之间',
+
+  // 操作提示相关
+  'authority.operation.loading': '正在处理...',
+  'authority.operation.success': '操作成功',
+  'authority.operation.error': '操作失败，请重试',
+  'authority.operation.confirm': '确认操作',
+  'authority.operation.cancel': '取消操作'
 };

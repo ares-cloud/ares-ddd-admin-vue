@@ -203,10 +203,10 @@ const loadSubDepartments = async () => {
 const handleSelectDept = async (
   selectedKeys: (string | number)[],
   data: {
-    selected?: boolean;
-    selectedNodes: DepartmentTreeNode[];
-    node?: TreeNodeData;
-    e?: Event;
+    selected?: boolean | undefined;
+    selectedNodes: TreeNodeData[];
+    node?: TreeNodeData | undefined;
+    e?: Event | undefined;
   }
 ) => {
   // 如果是取消选中，清空当前选中的部门和列表数据

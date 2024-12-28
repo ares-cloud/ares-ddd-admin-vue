@@ -32,7 +32,17 @@ export interface UserUpdateRequest {
   roleIds?: number[];
   status?: number;
 }
+export interface GetUsersQuery {
+  current?: number;
+  size?: number;
+  username?: string;
+  name?: string;
+}
 
+export interface GetUsersListRes {
+  total: number;
+  list: UserModel[];
+}
 // 角色相关类型
 export interface RoleModel {
   id: number;

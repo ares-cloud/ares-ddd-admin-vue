@@ -239,5 +239,94 @@ export default {
   'department.users.title': 'Department Users',
 
   // Department SubDepts
-  'department.subDepts.count': 'Total {count}'
+  'department.subDepts.count': 'Total {count}',
+
+  // Organization Management
+  'menu.authority.organization': 'Organization',
+  'organization.tree.title': 'Organization Structure',
+  'organization.users.title': 'Department Users',
+  'organization.users.count': 'Total {count}',
+  'organization.users.assign.title': 'Assign Users',
+  'organization.users.assign.select.required': 'Please select users to assign',
+  'organization.users.search.username': 'Username',
+  'organization.users.search.username.placeholder': 'Please enter username',
+  'organization.users.search.name': 'Name',
+  'organization.users.search.name.placeholder': 'Please enter name',
+  'organization.users.button.search': 'Search',
+  'organization.users.button.reset': 'Reset',
+  'organization.button.assignUsers': 'Add Users',
+  'organization.button.moveUsers': 'Move Users',
+  'organization.button.removeUser': 'Remove',
+
+  // User Management Related
+  'authority.user.delete.confirm.title': 'Confirm Delete',
+  'authority.user.delete.confirm.content': 'Are you sure to delete user {name}?',
+  'authority.user.form.name': 'Name',
+  'authority.user.form.phone': 'Phone',
+  'authority.user.form.status': 'Status',
+  'authority.user.form.status.enabled': 'Enabled',
+  'authority.user.form.status.disabled': 'Disabled',
+  'authority.user.form.roles': 'Roles',
+  'authority.user.form.roles.placeholder': 'Please select roles',
+  'authority.user.form.create.success': 'Create user successfully',
+  'authority.user.form.create.error': 'Failed to create user',
+  'authority.user.form.update.success': 'Update user successfully',
+  'authority.user.form.update.error': 'Failed to update user',
+
+  // Permission Management Related
+  'authority.permission.form.method': 'Request Method',
+  'authority.permission.form.method.GET': 'GET',
+  'authority.permission.form.method.POST': 'POST',
+  'authority.permission.form.method.PUT': 'PUT',
+  'authority.permission.form.method.DELETE': 'DELETE',
+  'authority.permission.form.path.label': 'Resource Path',
+  'authority.permission.form.add.resource': 'Add Resource',
+  'authority.permission.form.remove.resource': 'Remove Resource',
+  'authority.permission.form.resource.method.required': 'Please select request method',
+  'authority.permission.form.resource.path.required': 'Please enter resource path',
+
+  // Tenant Management Related
+  'authority.tenant.form.admin.info': 'Admin Information',
+  'authority.tenant.form.admin.username': 'Admin Username',
+  'authority.tenant.form.admin.password': 'Admin Password',
+  'authority.tenant.form.admin.name': 'Admin Name',
+  'authority.tenant.form.admin.email': 'Admin Email',
+  'authority.tenant.form.admin.phone': 'Admin Phone',
+  'authority.tenant.form.basic.info': 'Basic Information',
+  'authority.tenant.form.expire.time': 'Expire Time',
+  'authority.tenant.form.expire.time.placeholder': 'Please select expire time',
+  'authority.tenant.form.create.success': 'Create tenant successfully',
+  'authority.tenant.form.create.error': 'Failed to create tenant',
+  'authority.tenant.form.update.success': 'Update tenant successfully',
+  'authority.tenant.form.update.error': 'Failed to update tenant',
+
+  // Status Change Related
+  'authority.status.change.confirm.title': 'Confirm Status Change',
+  'authority.status.change.confirm.enable': 'Are you sure to enable?',
+  'authority.status.change.confirm.disable': 'Are you sure to disable?',
+  'authority.status.change.success': 'Status changed successfully',
+  'authority.status.change.error': 'Failed to change status',
+
+  // Form Validation Related
+  'authority.form.required': '{field} is required',
+  'authority.form.email.invalid': 'Please enter a valid email address',
+  'authority.form.phone.invalid': 'Please enter a valid phone number',
+  'authority.form.password.length': 'Password must be between 6-20 characters',
+
+  // Operation Tips Related
+  'authority.operation.loading': 'Processing...',
+  'authority.operation.success': 'Operation successful',
+  'authority.operation.error': 'Operation failed, please try again',
+  'authority.operation.confirm': 'Confirm Operation',
+  'authority.operation.cancel': 'Cancel Operation',
+
+  // Organization Management Related
+  'organization.users.move.title': 'Move Users',
+  'organization.users.move.targetDept': 'Target Department',
+  'organization.users.move.targetDept.required': 'Please select target department',
+  'organization.users.move.targetDept.placeholder': 'Please select target department',
+  'organization.users.move.description': 'Move Description',
+  'organization.users.move.description.placeholder': 'Please enter move description (optional)',
+  'organization.users.move.success': 'Move successful',
+  'organization.users.move.failed': 'Failed to move'
 };

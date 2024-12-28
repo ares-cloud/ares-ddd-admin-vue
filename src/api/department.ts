@@ -1,13 +1,14 @@
 import request from '@/utils/request';
 import {
-  DepartmentDto,
   CreateDepartmentCommand,
-  UpdateDepartmentCommand,
-  MoveDepartmentCommand,
+  DepartmentDto,
+  DepartmentListRes,
   DepartmentQueryParams,
-  DepartmentListRes
+  MoveDepartmentCommand,
+  UpdateDepartmentCommand,
+  TransferUserCommand
 } from '@/types/api/department';
-import type { UserModel } from '@/types/api/authority';
+import { GetUsersListRes, GetUsersQuery } from '@/types/api/authority';
 
 const BASE_URL = '/sys/dept';
 
@@ -68,13 +69,19 @@ export const departmentApi = {
   },
 
   // 获取部门用户列表
-  getDepartmentUsers(deptId: string): Promise<UserModel[]> {
-    return request(`${BASE_URL}/${deptId}/users`);
+  getDepartmentUsers(deptId: string, params: GetUsersQuery): Promise<GetUsersListRes> {
+    return request(`${BASE_URL}/${deptId}/users`, {
+      method: 'GET',
+      params
+    });
   },
 
   // 获取未分配部门的用户列表
-  getUnassignedUsers(): Promise<UserModel[]> {
-    return request(`${BASE_URL}/unassigned-users`);
+  getUnassignedUsers(params: GetUsersQuery): Promise<GetUsersListRes> {
+    return request(`${BASE_URL}/unassigned-users`, {
+      method: 'GET',
+      params
+    });
   },
 
   // 分配用户到部门
@@ -88,7 +95,27 @@ export const departmentApi = {
   // 从部门移除用户
   removeUsers(body: { deptId: string; userIds: string[] }): Promise<void> {
     return request(`${BASE_URL}/users`, {
-      method: 'DELETE',
+      method: 'PUT',
+      body
+    });
+  },
+
+  // 移动用户到其他部门
+  moveUsers(body: {
+    sourceDeptId: string;
+    targetDeptId: string;
+    userIds: string[];
+  }): Promise<void> {
+    return request(`${BASE_URL}/users/move`, {
+      method: 'POST',
+      body
+    });
+  },
+
+  // 添加人员调动接口
+  transferUser(body: TransferUserCommand): Promise<void> {
+    return request(`${BASE_URL}/transfer`, {
+      method: 'POST',
       body
     });
   }
