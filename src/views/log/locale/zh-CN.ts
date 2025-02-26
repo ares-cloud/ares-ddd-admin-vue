@@ -39,5 +39,12 @@ export default {
 
   'log.status.success': '成功',
   'log.status.fail': '失败',
-  'log.fetch.error': '获取日志列表失败'
+  'log.fetch.error': '获取日志列表失败',
+
+  'log.operation.detail.title': '操作日志详情',
+  'log.operation.detail.view': '详情',
+  'log.operation.detail.query': '查询参数',
+  'log.operation.detail.body': '请求体',
+  'log.operation.detail.userAgent': '用户代理',
+  'log.operation.detail.error': '错误信息'
 };

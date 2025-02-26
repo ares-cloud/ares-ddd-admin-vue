@@ -107,21 +107,38 @@
               {{ formatTimestamp(record.createdAt) }}
             </template>
           </a-table-column>
+          <a-table-column title="操作" fixed="right">
+            <template #cell="{ record }">
+              <a-button type="text" size="small" @click="openDetail(record)">
+                <template #icon>
+                  <icon-eye />
+                </template>
+                {{ t('log.operation.detail.view') }}
+              </a-button>
+            </template>
+          </a-table-column>
         </template>
       </a-table>
     </a-card>
   </div>
+
+  <detail-modal
+    v-model:visible="detailVisible"
+    :data="currentRecord!"
+    v-if="currentRecord"
+  />
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Message } from '@arco-design/web-vue';
-import { IconSearch, IconRefresh } from '@arco-design/web-vue/es/icon';
+import { IconSearch, IconRefresh, IconEye } from '@arco-design/web-vue/es/icon';
 import { OperationLogQueryParams, OperationLogRecord } from '@/types/api/log';
 import logApi from '@/api/log';
 import useLoading from '@/hooks/loading';
 import { formatTimestamp } from '@/filters/date';
+import DetailModal from './components/detail-modal.vue';
 
 const { t } = useI18n();
 const { loading, setLoading } = useLoading();
@@ -141,6 +158,9 @@ const pagination = reactive({
   showJumper: true,
   showPageSize: true
 });
+
+const detailVisible = ref(false);
+const currentRecord = ref<OperationLogRecord>();
 
 const fetchData = async () => {
   setLoading(true);
@@ -181,6 +201,11 @@ const onPageChange = (current: number) => {
   pagination.current = current;
   searchForm.current = current;
   fetchData();
+};
+
+const openDetail = (record: OperationLogRecord) => {
+  currentRecord.value = { ...record };
+  detailVisible.value = true;
 };
 
 fetchData();

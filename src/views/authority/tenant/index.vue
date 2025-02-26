@@ -125,7 +125,7 @@
               {{ formatTimestamp(record.updatedAt) }}
             </template>
           </a-table-column>
-          <a-table-column :title="t('common.operations')">
+          <a-table-column :title="t('common.operations')" fixed="right">
             <template #cell="{ record }">
               <a-space>
                 <a-button v-permission="['010206']" type="text" @click="openDetailModal(record)">

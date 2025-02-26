@@ -39,5 +39,12 @@ export default {
 
   'log.status.success': 'Success',
   'log.status.fail': 'Failed',
-  'log.fetch.error': 'Failed to fetch log list'
+  'log.fetch.error': 'Failed to fetch log list',
+
+  'log.operation.detail.title': 'Operation Log Detail',
+  'log.operation.detail.view': 'Detail',
+  'log.operation.detail.query': 'Query Parameters',
+  'log.operation.detail.body': 'Request Body',
+  'log.operation.detail.userAgent': 'User Agent',
+  'log.operation.detail.error': 'Error Message'
 };

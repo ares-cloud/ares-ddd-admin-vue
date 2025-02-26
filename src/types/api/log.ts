@@ -29,14 +29,12 @@ export interface LogQueryResult {
 
 export interface OperationLogRecord {
   id: number;
-  userId: string;
   username: string;
-  tenantId: string;
+  ip: string;
   method: string;
   path: string;
   query: string;
   body: string;
-  ip: string;
   userAgent: string;
   status: number;
   error: string;
