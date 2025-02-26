@@ -35,6 +35,9 @@ const useUserStore = defineStore('user', {
   getters: {
     userInfo(state: UserState): UserState {
       return { ...state };
+    },
+    isSuperAdmin(): boolean {
+      return this.roles.includes('superAdmin');
     }
   },
 

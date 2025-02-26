@@ -29,6 +29,7 @@
                 <div class="tree-node-content">
                   <div class="node-actions">
                     <a-button
+                      v-permission="['010501']"
                       class="node-action-btn"
                       type="text"
                       size="mini"
@@ -37,6 +38,7 @@
                       <icon-plus />
                     </a-button>
                     <a-button
+                      v-permission="['010502']"
                       class="node-action-btn"
                       type="text"
                       size="mini"
@@ -45,6 +47,7 @@
                       <icon-edit />
                     </a-button>
                     <a-button
+                      v-permission="['010503']"
                       class="node-action-btn"
                       type="text"
                       size="mini"
@@ -99,11 +102,11 @@
                 <a-table-column title="操作">
                   <template #cell="{ record }">
                     <a-space>
-                      <a-button type="text" size="small" @click="handleEdit(record)">
+                      <a-button v-permission="['010502']" type="text" size="small" @click="handleEdit(record)">
                         <icon-edit />
                         {{ t('authority.button.edit') }}
                       </a-button>
-                      <a-button type="text" size="small" @click="handleDelete(record)">
+                      <a-button v-permission="['010503']" type="text" size="small" @click="handleDelete(record)">
                         <icon-delete />
                         {{ t('authority.button.delete') }}
                       </a-button>

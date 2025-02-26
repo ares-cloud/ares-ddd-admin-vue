@@ -66,6 +66,9 @@ export default function useAuth() {
   };
 
   const checkPermission = (requiredPermissions: string[]): boolean => {
+    if (userStore.isSuperAdmin) {
+      return true;
+    }
     return requiredPermissions.some((permission) => userStore.permissions.includes(permission));
   };
   onMounted(() => {

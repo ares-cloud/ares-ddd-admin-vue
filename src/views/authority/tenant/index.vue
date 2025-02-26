@@ -52,7 +52,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button v-permission="['010101']" type="primary" @click="openCreateModal">
+            <a-button v-permission="['010201']" type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -128,21 +128,21 @@
           <a-table-column :title="t('common.operations')">
             <template #cell="{ record }">
               <a-space>
-                <a-button v-permission="['010103']" type="text" @click="openDetailModal(record)">
+                <a-button v-permission="['010206']" type="text" @click="openDetailModal(record)">
                   {{ t('authority.button.view') }}
                 </a-button>
-                <a-button v-permission="['010104']" type="text" @click="openEditModal(record)">
+                <a-button v-permission="['010202']" type="text" @click="openEditModal(record)">
                   {{ t('authority.button.edit') }}
                 </a-button>
                 <a-button
-                  v-permission="['010105']"
+                  v-permission="['010204']"
                   type="text"
                   @click="openAssignPermissionModal(record)"
                 >
                   {{ t('authority.button.assign') }}
                 </a-button>
                 <a-button
-                  v-permission="['010106']"
+                  v-permission="['010203']"
                   type="text"
                   status="danger"
                   @click="handleDelete(record)"
