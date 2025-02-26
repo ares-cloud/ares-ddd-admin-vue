@@ -266,9 +266,8 @@ const handleOk = async () => {
       ...currentDataRoles.value.map((role) => role.id)
     ];
 
-    await userApi.update({
-      id: props.userId,
-      ...currentUser.value,
+    await userApi.assignRole({
+      userId: props.userId,
       roleIds
     });
 

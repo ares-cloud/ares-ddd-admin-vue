@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-named-as-default
 import request from '@/utils/request';
-import type {
+import {
+  AssignRolePermissionsCommand, AssignUserRoleRequest,
   PermissionCreateRequest,
   PermissionModel,
   PermissionTreeNode,
@@ -15,7 +16,7 @@ import type {
   UserCreateRequest,
   UserModel,
   UserUpdateRequest
-} from '@/types/api/authority';
+} from "@/types/api/authority";
 import { SimplePermissionTreeNode } from '@/types/api/authority';
 import type { PageRequest, PageResult } from '@/types/api/base';
 
@@ -51,7 +52,11 @@ export const userApi = {
     request(`${BASE_URL}/user/${id}`, {
       method: 'DELETE'
     }),
-
+  assignRole: (data: AssignUserRoleRequest): Promise<void> =>
+    request(`${BASE_URL}/user/role`, {
+      method: 'PUT',
+      body: data
+    }),
   getById: (id: string): Promise<UserModel> =>
     request(`${BASE_URL}/user/${id}`, {
       method: 'GET'
@@ -77,7 +82,11 @@ export const roleApi = {
       method: 'PUT',
       body: data
     }),
-
+  assignPermission: (data: AssignRolePermissionsCommand): Promise<RoleModel> =>
+    request(`${BASE_URL}/role/permissions`, {
+      method: 'PUT',
+      body: data
+    }),
   delete: (id: number): Promise<void> =>
     request(`${BASE_URL}/role/${id}`, {
       method: 'DELETE'
@@ -153,7 +162,7 @@ export const permissionsApi = {
       method: 'DELETE'
     }),
 
-  getById: (id: string): Promise<PermissionModel> =>
+  getById: (id: number): Promise<PermissionModel> =>
     request(`${BASE_URL}/permissions/${id}`, {
       method: 'GET'
     }),

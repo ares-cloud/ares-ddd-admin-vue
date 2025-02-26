@@ -179,10 +179,10 @@ const handleOk = async () => {
     // 合并选中的ID和父节点ID
     const allIds = [...new Set([...assignedIds.value, ...selectedParentIds])];
     // 直接更新角色的权限
-    await roleApi.update({
-      id: props.roleId,
+    await roleApi.assignPermission({
+      role_id: props.roleId,
       ...currentRole.value,
-      permIds: allIds
+      permission_ids: allIds
     });
 
     Message.success(t('authority.role.permission.assign.success'));

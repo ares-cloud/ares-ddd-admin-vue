@@ -45,7 +45,7 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button v-permission="['010402']" type="primary" @click="search">
+            <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
@@ -64,7 +64,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button v-permission="['010401']" type="primary" @click="openCreateModal">
+            <a-button  type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -101,17 +101,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, getCurrentInstance, h, reactive, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { Message, Modal } from '@arco-design/web-vue';
-import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-import { IconPlus, IconRefresh, IconSearch } from '@arco-design/web-vue/es/icon';
-import { roleApi } from '@/api/authority';
-import type { RoleModel } from '@/types/api/authority';
-import { formatTimestamp } from '@/filters/date';
-import Permission from '@/components/check-permission/index.vue';
-import EditModal from './components/edit-modal.vue';
-import AssignPermissionModal from './components/assign-permission-modal.vue';
+import { computed, h, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { Message, Modal } from "@arco-design/web-vue";
+import type { TableColumnData } from "@arco-design/web-vue/es/table/interface";
+import { IconPlus, IconRefresh, IconSearch } from "@arco-design/web-vue/es/icon";
+import { roleApi } from "@/api/authority";
+import type { RoleModel } from "@/types/api/authority";
+import { formatTimestamp } from "@/filters/date";
+import Permission from "@/components/check-permission/index.vue";
+import EditModal from "./components/edit-modal.vue";
+import AssignPermissionModal from "./components/assign-permission-modal.vue";
 
 const { t } = useI18n();
 
@@ -326,7 +326,7 @@ const columns = computed<TableColumnData[]>(() => [
         record.type === 1 &&
           h(
             Permission,
-            { requiredPermissions: ['010306'] },
+            { requiredPermissions: ['010305'] },
             {
               default: () =>
                 h(

@@ -192,14 +192,30 @@ const handleOk = async () => {
 const handleCancel = () => {
   emit('update:visible', false);
 };
-
+/**
+ * 获取数据
+ * @param id
+ */
+const loadData = async (id?:number) => {
+  console.log(id)
+  if (id && id !== 0 && props.visible) {
+    const md = await permissionsApi.getById(id);
+    Object.assign(form, md);
+  } else {
+    console.log("设为默认")
+    Object.assign(form, props.data);
+  }
+}
 watch(
-  () => props.data,
+  () => props.visible,
   (val) => {
-    Object.assign(form, val);
+    if (val){
+      loadData(props.data.id);
+    }
   },
   { deep: true }
 );
+
 </script>
 
 <style scoped lang="less">

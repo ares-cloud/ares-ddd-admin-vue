@@ -55,7 +55,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button v-permission="['010301']" type="primary" @click="openCreateModal">
+            <a-button v-permission="['010101']" type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -266,7 +266,7 @@ const columns: TableColumnData[] = [
       return h('div', [
         h(
           Permission,
-          { requiredPermissions: ['010303'] },
+          { requiredPermissions: ['010102'] },
           {
             default: () =>
               h(
@@ -281,7 +281,7 @@ const columns: TableColumnData[] = [
         ),
         h(
           Permission,
-          { requiredPermissions: ['010306'] },
+          { requiredPermissions: ['010106'] },
           {
             default: () =>
               h(
@@ -296,7 +296,7 @@ const columns: TableColumnData[] = [
         ),
         h(
           Permission,
-          { requiredPermissions: ['010305'] },
+          { requiredPermissions: ['010105'] },
           {
             default: () =>
               h(
@@ -314,7 +314,7 @@ const columns: TableColumnData[] = [
         ),
         h(
           Permission,
-          { requiredPermissions: ['010304'] },
+          { requiredPermissions: ['010103'] },
           {
             default: () =>
               h(
@@ -322,7 +322,7 @@ const columns: TableColumnData[] = [
                 {
                   style: { color: '#FF7D00' },
                   onClick: () => handleDelete(record as UserModel),
-                  directives: [{ name: 'permission', value: ['010304'] }] // 添加权限指令
+                  directives: [{ name: 'permission', value: ['010103'] }] // 添加权限指令
                 },
                 t('authority.button.delete')
               )

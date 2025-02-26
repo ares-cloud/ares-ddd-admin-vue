@@ -52,7 +52,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button v-permission="['010201']" type="primary" @click="openCreateModal">
+            <a-button  type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -281,19 +281,12 @@ const columns: TableColumnData[] = [
     render: ({ record }) => {
       return h('div', [
         h(
-          Permission,
-          { requiredPermissions: ['010203'] },
+          'a',
           {
-            default: () =>
-              h(
-                'a',
-                {
-                  style: { marginRight: '15px' },
-                  onClick: () => openEditModal(record as PermissionModel)
-                },
-                t('authority.button.edit')
-              )
-          }
+            style: { marginRight: '15px' },
+            onClick: () => openEditModal(record as PermissionModel)
+          },
+          t('authority.button.edit')
         ),
         h(
           Permission,

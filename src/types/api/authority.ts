@@ -32,6 +32,12 @@ export interface UserUpdateRequest {
   roleIds?: number[];
   status?: number;
 }
+
+export interface AssignUserRoleRequest {
+  userId?: string;
+  roleIds: number[];
+}
+
 export interface GetUsersQuery {
   current?: number;
   size?: number;
@@ -72,6 +78,10 @@ export interface RoleUpdateRequest extends Partial<RoleCreateRequest> {
   permIds: number[];
 }
 
+export interface AssignRolePermissionsCommand {
+  role_id?: number;
+  permission_ids: number[];
+}
 // 权限相关类型
 export interface ResourceModel {
   method: string | undefined;
