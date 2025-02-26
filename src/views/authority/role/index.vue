@@ -64,7 +64,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button  type="primary" @click="openCreateModal">
+            <a-button v-permission="['010301']" type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -309,7 +309,7 @@ const columns = computed<TableColumnData[]>(() => [
         // 编辑按钮
         h(
           Permission,
-          { requiredPermissions: ['010403'] },
+          { requiredPermissions: ['010302'] },
           {
             default: () =>
               h(
