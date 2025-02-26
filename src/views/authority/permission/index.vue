@@ -52,7 +52,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button  type="primary" @click="openCreateModal">
+            <a-button v-permission="['010401']" type="primary" @click="openCreateModal">
               <template #icon>
                 <icon-plus />
               </template>
@@ -79,16 +79,16 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, h, reactive, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { Message, Modal } from '@arco-design/web-vue';
-import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-import { IconPlus, IconRefresh, IconSearch } from '@arco-design/web-vue/es/icon';
-import { permissionsApi } from '@/api/authority';
-import type { PermissionModel, ResourceModel } from '@/types/api/authority';
-import Permission from '@/components/check-permission/index.vue';
-import { formatTimestamp } from '@/filters/date';
-import EditModal from './components/edit-modal.vue';
+import { getCurrentInstance, h, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { Message, Modal } from "@arco-design/web-vue";
+import type { TableColumnData } from "@arco-design/web-vue/es/table/interface";
+import { IconPlus, IconRefresh, IconSearch } from "@arco-design/web-vue/es/icon";
+import { permissionsApi } from "@/api/authority";
+import type { PermissionModel, ResourceModel } from "@/types/api/authority";
+import Permission from "@/components/check-permission/index.vue";
+import { formatTimestamp } from "@/filters/date";
+import EditModal from "./components/edit-modal.vue";
 
 const { t } = useI18n();
 const instance = getCurrentInstance();
@@ -281,16 +281,23 @@ const columns: TableColumnData[] = [
     render: ({ record }) => {
       return h('div', [
         h(
-          'a',
+          Permission,
+          { requiredPermissions: ['010402'] },
           {
-            style: { marginRight: '15px' },
-            onClick: () => openEditModal(record as PermissionModel)
-          },
-          t('authority.button.edit')
+            default: () =>
+              h(
+                'a',
+                {
+                  style: { marginRight: '15px' },
+                  onClick: () => openEditModal(record as PermissionModel)
+                },
+                t('authority.button.edit')
+              )
+          }
         ),
         h(
           Permission,
-          { requiredPermissions: ['010204'] },
+          { requiredPermissions: ['010403'] },
           {
             default: () =>
               h(
